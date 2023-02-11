@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+
+/*
+  Base styles
+*/
+.container {
+  @apply mx-auto max-w-7xl;
+}
+
+.btn {
+  @apply px-6 py-3 font-semibold rounded-3xl;
+  @apply border border-transparent;
+  @apply hover:bg-opacity-95 hover:bg-brand-purple;
+  @apply text-white bg-brand-purple;
+}
+
+.btn-outline {
+  @apply btn;
+  @apply text-black bg-white border-brand-purple hover:bg-opacity-10;
+}
+
+.flex,
+.inline-flex {
+  @apply items-center;
+}
+
+/* When last, this ensures inline styles take priority */
+@tailwind utilities;

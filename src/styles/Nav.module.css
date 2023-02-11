@@ -1,0 +1,12 @@
+.nav {
+  @apply flex space-x-8 text-xl;
+  /* @apply text-gray-500; */
+}
+
+.nav a {
+  @apply px-3 py-1;
+  @apply rounded-lg;
+}
+.nav a:hover {
+  @apply bg-gray-100;
+}
