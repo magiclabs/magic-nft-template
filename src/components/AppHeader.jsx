@@ -27,7 +27,7 @@ export default function AppHeader({}) {
 
         <div className="">
           {user?.isLoggedIn ? (
-            <>
+            <div className="space-x-3">
               <button
                 onClick={() => openWallet()}
                 type="button"
@@ -35,7 +35,15 @@ export default function AppHeader({}) {
               >
                 {user?.shortAddress || "Open wallet"}
               </button>
-            </>
+
+              <button
+                onClick={() => magic.connect.disconnect()}
+                type="button"
+                className="btn"
+              >
+                Disconnect
+              </button>
+            </div>
           ) : (
             <button
               onClick={() => loginWithConnect()}
