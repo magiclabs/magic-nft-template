@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import Link from "next/link";
 import AppNavigation from "./AppNavigation";
@@ -27,9 +27,15 @@ export default function AppHeader({}) {
 
         <div className="">
           {user?.isLoggedIn ? (
-            <button onClick={() => openWallet()} type="button" className="btn">
-              Open Wallet
-            </button>
+            <>
+              <button
+                onClick={() => openWallet()}
+                type="button"
+                className="btn"
+              >
+                {user?.shortAddress || "Open wallet"}
+              </button>
+            </>
           ) : (
             <button
               onClick={() => loginWithConnect()}
