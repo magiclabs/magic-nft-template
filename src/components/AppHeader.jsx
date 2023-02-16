@@ -2,17 +2,33 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import Link from "next/link";
 import AppNavigation from "./AppNavigation";
-import { magic } from "@/lib/magic";
+import { loginViaMagicConnect, magic } from "@/lib/magic";
 
 export default function AppHeader({}) {
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   function openWallet() {
     magic.connect.showWallet().catch((err) => console.log(err));
   }
 
+  function disconnect() {
+    // disconnect from magic
+    magic.connect.disconnect();
+
+    // clear the state
+    setUser({});
+  }
+
   function loginWithConnect() {
-    magic.wallet.connectWithUI().catch((err) => console.log(err));
+    console.log("loginWithConnect");
+    magic.wallet
+      .connectWithUI()
+      .then((res) => {
+        (async () => {
+          await loginViaMagicConnect().then((data) => setUser(data));
+        })();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -37,7 +53,7 @@ export default function AppHeader({}) {
               </button>
 
               <button
-                onClick={() => magic.connect.disconnect()}
+                onClick={() => disconnect()}
                 type="button"
                 className="btn"
               >
@@ -49,8 +65,9 @@ export default function AppHeader({}) {
               onClick={() => loginWithConnect()}
               type="button"
               className="btn"
+              disabled={user?.loading}
             >
-              Login with Connect
+              {user?.loading ? "loading" : "Login with Connect"}
             </button>
           )}
         </div>
