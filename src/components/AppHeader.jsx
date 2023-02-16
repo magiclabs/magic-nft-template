@@ -8,7 +8,13 @@ export default function AppHeader({}) {
   const [user, setUser] = useContext(UserContext);
 
   function openWallet() {
-    magic.connect.showWallet().catch((err) => console.log(err));
+    magic.wallet.getInfo().then((walletInfo) => {
+      // NOTE: this will only work if the user has connected via a
+      // magic wallet, not via browser wallet (e.g. MetaMask)
+      if (walletInfo?.walletType == "magic")
+        magic.connect.showWallet().catch((err) => console.log(err));
+      else alert("A non-magic walllet was connected");
+    });
   }
 
   function disconnect() {
@@ -20,7 +26,6 @@ export default function AppHeader({}) {
   }
 
   function loginWithConnect() {
-    console.log("loginWithConnect");
     magic.wallet
       .connectWithUI()
       .then((res) => {

@@ -24,7 +24,9 @@ export const magic = createMagic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY);
 
 */
 export async function loginViaMagicConnect() {
-  return await magic.connect
+  let data = {};
+
+  data = await magic.connect
     .getWalletInfo()
     .then(async (walletInfo) => {
       let user;
@@ -37,6 +39,11 @@ export async function loginViaMagicConnect() {
       const web3 = new Web3(magic.rpcProvider);
       const address = (await web3.eth.getAccounts())[0];
 
+      // get the wallet's current ETH balance
+      const balance = await web3.eth
+        .getBalance(address)
+        .then((wei) => web3.utils.fromWei(wei));
+
       // compute the short address for display in the UI
       let shortAddress = `${address?.substring(0, 5)}...${address?.substring(
         address.length - 4
@@ -48,12 +55,15 @@ export async function loginViaMagicConnect() {
         isLoggedIn: true,
         loading: false,
         address,
+        balance,
         shortAddress,
       };
     })
     .catch((err) => {
       console.log("no user authenticated via Connect");
-      // console.log("connect error:");
-      // console.log(err);
+      console.log("connect error:");
+      console.log(err);
     });
+
+  return data;
 }
