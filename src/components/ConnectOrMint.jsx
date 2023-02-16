@@ -1,13 +1,9 @@
-import Link from "next/link";
 import { useContext } from "react";
 import { UserContext } from "@/lib/UserContext";
-import { loginViaMagicConnect, magic } from "@/lib/magic";
+import { getUserData, magic } from "@/lib/magic";
 
 export default function ConnectOrMint({}) {
   const [user] = useContext(UserContext);
-
-  // only show this component when a user is connected, and they are low on balance
-  // if (!user?.address) return <></>;
 
   return (
     <section className="space-x-4">
@@ -29,7 +25,7 @@ export default function ConnectOrMint({}) {
                 .connectWithUI()
                 .then((res) => {
                   (async () => {
-                    await loginViaMagicConnect().then((data) => setUser(data));
+                    await getUserData().then((data) => setUser(data));
                   })();
                 })
                 .catch((err) => console.log(err));

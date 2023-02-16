@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import { useState, useEffect } from "react";
 import { UserContext } from "@/lib/UserContext";
-import { loginViaMagicConnect } from "@/lib/magic";
+import { getUserData } from "@/lib/magic";
 
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState();
@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
 
     // create an execute the async function
     (async () => {
-      await loginViaMagicConnect().then((data) => setUser(data));
+      await getUserData().then((data) => setUser(data));
     })();
   }, []);
 

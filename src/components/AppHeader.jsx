@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "@/lib/UserContext";
 import Link from "next/link";
 import AppNavigation from "./AppNavigation";
-import { loginViaMagicConnect, magic } from "@/lib/magic";
+import { getUserData, magic } from "@/lib/magic";
 
 export default function AppHeader({}) {
   const [user, setUser] = useContext(UserContext);
@@ -30,7 +30,7 @@ export default function AppHeader({}) {
       .connectWithUI()
       .then((res) => {
         (async () => {
-          await loginViaMagicConnect().then((data) => setUser(data));
+          await getUserData().then((data) => setUser(data));
         })();
       })
       .catch((err) => console.log(err));

@@ -21,16 +21,18 @@ const createMagic = (key) => {
 export const magic = createMagic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY);
 
 /*
-
+  Helper function to collect all the desired connected user's data,
+  both from Magic.link and the blockchain
 */
-export async function loginViaMagicConnect() {
+export async function getUserData() {
   let data = {};
 
   data = await magic.connect
     .getWalletInfo()
     .then(async (walletInfo) => {
       let user;
-      // request the user's info from magic.link, for later storing it in the state
+      // you can also request the user's info from magic.link
+      // (e.g. email address), for later storing it in the state
       // user = await magic.connect.requestUserInfo().catch((err) => {
       //   console.log(err);
       // });
@@ -52,6 +54,7 @@ export async function loginViaMagicConnect() {
       // return the user's data for the state
       return {
         ...user,
+        ...walletInfo,
         isLoggedIn: true,
         loading: false,
         address,
@@ -64,6 +67,8 @@ export async function loginViaMagicConnect() {
       console.log("connect error:");
       console.log(err);
     });
+
+  console.log(data);
 
   return data;
 }
