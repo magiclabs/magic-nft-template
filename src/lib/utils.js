@@ -1,5 +1,8 @@
+import { contractABI } from "./abi";
 import { magic } from "./magic";
 import { web3 } from "./web3";
+
+export const contractAddress = "0xD7b9De00D2ca41137C95183DcA01E53Bf185F661";
 
 /*
   Helper function to collect all the desired connected user's data,
@@ -53,4 +56,48 @@ export async function getUserData() {
   console.log(data);
 
   return data;
+}
+
+// handler function to attempt a mint of the NFT collection
+export async function requestMintNFT(address) {
+  console.log(`Request to mint an NFT to address ${address}...`);
+
+  let txHash = false;
+
+  try {
+    //
+    const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+    const name = await contract.methods.name();
+    // console.log("Name:", name);
+
+    // estimate the amount of gas required
+    const gas = await contract.methods
+      .safeMint(address)
+      .estimateGas({ from: address });
+    console.log(`Estimated gas: ${gas}`);
+
+    //
+    // contract.methods
+    //   .safeMint(name)
+    //   .send({
+    //     from: address,
+    //     gas,
+    //   })
+    //   .on("transactionHash", (hash) => {
+    //     txHash = hash;
+    //     console.log("Transaction hash:", hash);
+    //   })
+    //   .then((receipt) => {
+    //     console.log("Transaction receipt:", receipt);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+
+    return txHash;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
