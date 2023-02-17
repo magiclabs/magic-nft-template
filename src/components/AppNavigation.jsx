@@ -8,10 +8,10 @@ export default function AppNavigation({}) {
         <Link href={"/"}>Home</Link>
       </li>
       <li>
-        <Link href={"/"}>Guest Area</Link>
+        <Link href={"/collectables"}>My Collectables</Link>
       </li>
       <li>
-        <Link href={"/"}>Member Area</Link>
+        <Link href={"/holders"}>Holders Only</Link>
       </li>
     </ul>
   );

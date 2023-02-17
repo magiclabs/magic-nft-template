@@ -14,9 +14,13 @@ export default function Home() {
 
   return (
     <Layout title="Home" className="">
-      <h1 className="text-5xl font-semibold text-center">
-        Magic Carpet NFT Collection
-      </h1>
+      <section className="space-y-3 text-center">
+        <h1 className="text-5xl font-semibold">Magic Carpet NFT Collection</h1>
+
+        <p className="text-gray-500">
+          Connect a wallet or use Magic.link to mint a free NFT
+        </p>
+      </section>
 
       <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
         {tokens.slice(0, 4).map((item, id) => (
