@@ -6,12 +6,13 @@ export default function FaucetSection({}) {
   const [user] = useContext(UserContext);
 
   // only show this component when a user is connected, and they are low on balance
-  if (!user?.address || !user?.balance <= 0.01) return <></>;
+  // if (!user?.address || !user?.balance >= 0.01) return <></>;
 
   return (
     <section className="my-8 space-y-2">
       <div className="inline-flex justify-between space-x-4">
         <button
+          className="btn-outline"
           onClick={() => {
             if (!user?.address) return alert("Please connect!");
 
@@ -23,7 +24,6 @@ export default function FaucetSection({}) {
                 )
               );
           }}
-          className="inline-flex space-x-3 text-xl btn-outline"
         >
           Copy Wallet Address
         </button>
@@ -32,13 +32,14 @@ export default function FaucetSection({}) {
           href={"https://goerlifaucet.com/"}
           target={"_blank"}
           rel={"noreferrer"}
-          className="inline-flex space-x-3 text-xl btn-outline"
+          className="btn-outline"
         >
-          ETH faucet
+          Open ETH faucet
         </Link>
       </div>
 
       <p>Low ETH balance? Get free testnet ETH from the faucet.</p>
+      <p className="text-sm text-gray-500">*Goerli faucet powered by Alchemy</p>
     </section>
   );
 }
