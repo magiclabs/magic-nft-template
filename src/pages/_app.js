@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import { useState, useEffect } from "react";
 import { UserContext } from "@/lib/UserContext";
-import { getUserData } from "@/lib/magic";
+import { getUserData } from "@/lib/utils";
 
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState();
@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     setUser({ loading: true });
 
-    // create an execute the async function
+    // auto load the userData and store it in the state
     (async () => {
       await getUserData().then((data) => setUser(data));
     })();

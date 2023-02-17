@@ -1,15 +1,24 @@
 import { useContext } from "react";
 import { UserContext } from "@/lib/UserContext";
-import { getUserData, magic } from "@/lib/magic";
+import { magic } from "@/lib/magic";
+import { getUserData } from "@/lib/utils";
 
 export default function ConnectOrMint({}) {
   const [user] = useContext(UserContext);
+
+  // handler function to attempt a mint of the NFT collection
+  function requestMintNFT() {
+    console.log("Request to mint an NFT...");
+  }
 
   return (
     <section className="space-x-4">
       {user?.address ? (
         <div>
-          <button className="inline-flex space-x-3 text-xl btn">
+          <button
+            className="inline-flex space-x-3 text-xl btn"
+            onClick={() => requestMintNFT()}
+          >
             Mint a Magic Carpet NFT
           </button>
 

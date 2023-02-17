@@ -2,7 +2,9 @@ import { useContext } from "react";
 import { UserContext } from "@/lib/UserContext";
 import Link from "next/link";
 import AppNavigation from "./AppNavigation";
-import { getUserData, magic } from "@/lib/magic";
+
+import { magic } from "@/lib/magic";
+import { getUserData } from "@/lib/utils";
 
 export default function AppHeader({}) {
   const [user, setUser] = useContext(UserContext);
