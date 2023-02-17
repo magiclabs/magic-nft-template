@@ -7,11 +7,11 @@ import LoginWithMagic from "@/components/LoginWithMagic";
 import MintNFTButton from "@/components/MintNFTButton";
 import { fetchJSONfromURI, fetchNFTs } from "@/lib/utils";
 
-export default function CollectablesPage() {
+export default function CollectiblesPage() {
   const [user, setUser] = useContext(UserContext);
 
   // initialize the state used to track the current page's data
-  const [collectables, setCollectables] = useState([]);
+  const [collectibles, setCollectibles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // const address = "0xfBb0C937C780D345CFD4ef41071504931F46E5C8";
@@ -31,7 +31,7 @@ export default function CollectablesPage() {
       // console.log("tokenURIs listing found:", tokenURIs);
 
       // update the stored state
-      setCollectables(tokenURIs);
+      setCollectibles(tokenURIs);
       setLoading(false);
     })();
   }, [user]);
@@ -54,11 +54,11 @@ export default function CollectablesPage() {
 
           {loading ? (
             <p className="font-bold text-center">
-              loading your collectables from the blockchain
+              loading your collectibles from the blockchain
             </p>
           ) : (
             <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-              {collectables.map((uri, id) => (
+              {collectibles.map((uri, id) => (
                 <CollectibleCard key={id} tokenURI={uri} />
               ))}
             </section>
@@ -70,7 +70,7 @@ export default function CollectablesPage() {
 
           <p className="text-lg">
             Connect your wallet or login with Magic.link to view your
-            collectables
+            collectibles
           </p>
         </section>
       )}
