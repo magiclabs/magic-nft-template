@@ -9,12 +9,13 @@ export default function ConnectOrMint({}) {
     <section className="space-x-4">
       {user?.address ? (
         <div>
-          <button className="inline-flex space-x-3 text-xl btn-outline">
+          <button className="inline-flex space-x-3 text-xl btn">
             Mint a Magic Carpet NFT
           </button>
 
           <p>
-            Your ETH balance is <span className="">{user?.balance} ETH</span>
+            Your ETH balance is{" "}
+            <span className="italic underline">{user?.balance}</span> ETH
           </p>
         </div>
       ) : (
