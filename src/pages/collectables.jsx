@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 
 import CollectibleCard from "@/components/CollectibleCard";
-import ConnectOrMint from "@/components/ConnectOrMint";
+import LoginWithMagic from "@/components/LoginWithMagic";
+import MintNFTButton from "@/components/MintNFTButton";
 
 export default function CollectablesPage() {
   const [user, setUser] = useContext(UserContext);
@@ -31,14 +32,18 @@ export default function CollectablesPage() {
       </section>
 
       {user?.address ? (
-        <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-          {collectables.slice(0, 4).map((item, id) => (
-            <CollectibleCard key={id} item={item} />
-          ))}{" "}
-        </section>
+        <>
+          <MintNFTButton className="mx-auto text-center" />
+
+          <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
+            {collectables.map((item, id) => (
+              <CollectibleCard key={id} item={item} />
+            ))}
+          </section>
+        </>
       ) : (
         <section className="py-10 space-y-3 text-center">
-          <ConnectOrMint />
+          <LoginWithMagic />
 
           <p className="text-lg">
             Connect your wallet or login with Magic.link to view your
