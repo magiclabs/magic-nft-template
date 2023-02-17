@@ -9,11 +9,18 @@ export default function AppHeader({}) {
 
   function openWallet() {
     magic.wallet.getInfo().then((walletInfo) => {
-      // NOTE: this will only work if the user has connected via a
-      // magic wallet, not via browser wallet (e.g. MetaMask)
-      if (walletInfo?.walletType == "magic")
+      if (walletInfo?.walletType == "magic") {
+        // NOTE: this will only work if the user has connected via a
+        // magic wallet, not via browser wallet (e.g. MetaMask)
         magic.connect.showWallet().catch((err) => console.log(err));
-      else alert("A non-magic walllet was connected");
+      } else {
+        // for non-magic wallets, copy the full wallet address to the clipboard
+        navigator.clipboard
+          .writeText(user?.address)
+          .then((res) =>
+            alert(`ETH wallet address coppied to clipboard: ${user?.address}`)
+          );
+      }
     });
   }
 
