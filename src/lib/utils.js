@@ -52,13 +52,15 @@ export async function getUserData() {
     });
 
   // log the user's data into the console
-  console.log("Current connected user:");
-  console.log(data);
+  // console.log("Current connected user:");
+  // console.log(data);
 
   return data;
 }
 
-// handler function to attempt a mint of the NFT collection
+/*
+  Handler function to attempt to mint an NFT from the collection
+*/
 export async function requestMintNFT(address) {
   console.log(`Request to mint an NFT to address ${address}...`);
 
@@ -68,7 +70,7 @@ export async function requestMintNFT(address) {
     //
     const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-    const name = await contract.methods.name();
+    const name = await contract.methods.name().call();
     // console.log("Name:", name);
 
     // estimate the amount of gas required
@@ -100,4 +102,69 @@ export async function requestMintNFT(address) {
     console.error(error);
     return false;
   }
+}
+
+/*
+  Helper function to fetch all the metadata URIs from 
+  the collection (owned by the given `address`) 
+*/
+export async function fetchNFTs(address) {
+  console.log(`Fetch the NFTs owned by ${address} from the collection...`);
+
+  try {
+    //
+    const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+    // get the total count of tokens owned by the `address`
+    const tokenBalance = await contract.methods.balanceOf(address).call();
+    // console.log("tokenBalance:", tokenBalance);
+
+    //
+    let tokens = [];
+
+    for (let i = 0; i < tokenBalance; i++) {
+      await contract.methods
+        .tokenOfOwnerByIndex(address, i)
+        .call()
+        .then((tokenIndex) => {
+          // console.log(`token ID ${tokenIndex} found`);
+
+          // fetch the tokenURI for the given owned token's index
+          (async () => {
+            await contract.methods
+              .tokenURI(tokenIndex)
+              .call()
+              .then((uri) => {
+                // console.log(`Token ID ${tokenIndex} has URI of ${uri}`);
+                tokens.push(uri);
+              })
+              .catch((err) => console.warn(err));
+          })();
+        })
+        .catch((err) => console.warn(err));
+    }
+
+    // console.log("tokens found:", tokens);
+
+    return tokens;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+/*
+  Wrapper function to fetch a token's JSON metadata from the given URI stored on-chain
+*/
+export async function fetchJSONfromURI(url) {
+  // console.log(`Fetching metadata from ${url}...`);
+
+  return fetch(url)
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }

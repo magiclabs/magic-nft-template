@@ -5,19 +5,36 @@ import { UserContext } from "@/lib/UserContext";
 import CollectibleCard from "@/components/CollectibleCard";
 import LoginWithMagic from "@/components/LoginWithMagic";
 import MintNFTButton from "@/components/MintNFTButton";
+import { fetchJSONfromURI, fetchNFTs } from "@/lib/utils";
 
 export default function CollectablesPage() {
   const [user, setUser] = useContext(UserContext);
 
+  // initialize the state used to track the current page's data
   const [collectables, setCollectables] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const address = "0xfBb0C937C780D345CFD4ef41071504931F46E5C8";
+  // const address = "0xfBb0C937C780D345CFD4ef41071504931F46E5C8";
 
   // fetch the list of current NFTs owned by the connected user
   useEffect(() => {
-    // update the stored state
-    setCollectables([0, 0, 0]);
-  }, []);
+    // only attempt to fetch the NFTs if a user is connected
+    if (!user?.address) return;
+
+    // fetch the listing of the user's NFT from the blockchain
+    (async () => {
+      let tokenURIs = await fetchNFTs(user.address).then((res) => {
+        console.log("Completed fetching token uri listing");
+        return res;
+      });
+
+      // console.log("tokenURIs listing found:", tokenURIs);
+
+      // update the stored state
+      setCollectables(tokenURIs);
+      setLoading(false);
+    })();
+  }, [user]);
 
   return (
     <Layout title="My Collection" className="">
@@ -35,11 +52,17 @@ export default function CollectablesPage() {
         <>
           <MintNFTButton className="mx-auto text-center" />
 
-          <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-            {collectables.map((item, id) => (
-              <CollectibleCard key={id} item={item} />
-            ))}
-          </section>
+          {loading ? (
+            <p className="font-bold text-center">
+              loading your collectables from the blockchain
+            </p>
+          ) : (
+            <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
+              {collectables.map((uri, id) => (
+                <CollectibleCard key={id} tokenURI={uri} />
+              ))}
+            </section>
+          )}
         </>
       ) : (
         <section className="py-10 space-y-3 text-center">
