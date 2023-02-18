@@ -17,7 +17,7 @@ export default function LoginWithMagic({ className = "" }) {
                 await getUserData().then((data) => setUser(data));
               })();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.error(err));
         }}
         className="inline-flex space-x-3 text-xl btn-outline"
       >

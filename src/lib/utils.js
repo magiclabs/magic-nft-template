@@ -15,7 +15,7 @@ export async function getUserData() {
       // you can also request the user's info from magic.link
       // (e.g. email address), for later storing it in the state
       // user = await magic.connect.requestUserInfo().catch((err) => {
-      //   console.log(err);
+      //   console.error(err);
       // });
 
       // connect and retreive the user's primary wallet address
@@ -43,9 +43,9 @@ export async function getUserData() {
       };
     })
     .catch((err) => {
-      console.log("no user authenticated via Connect");
-      console.log("connect error:");
-      console.log(err);
+      console.log("no user authenticated via Magic.link");
+      // console.log("error:");
+      // console.error(err);
     });
 
   // log the user's data into the console
