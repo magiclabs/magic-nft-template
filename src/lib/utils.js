@@ -1,8 +1,5 @@
-import { contractABI } from "./abi";
 import { magic } from "./magic";
-import { web3 } from "./web3";
-
-export const contractAddress = "0xD7b9De00D2ca41137C95183DcA01E53Bf185F661";
+import { web3, contract } from "./web3";
 
 /*
   Helper function to collect all the desired connected user's data,
@@ -67,9 +64,6 @@ export async function requestMintNFT(address) {
   let txHash = false;
 
   try {
-    //
-    const contract = new web3.eth.Contract(contractABI, contractAddress);
-
     const name = await contract.methods.name().call();
     // console.log("Name:", name);
 
@@ -112,9 +106,6 @@ export async function fetchNFTs(address) {
   console.log(`Fetch the NFTs owned by ${address} from the collection...`);
 
   try {
-    //
-    const contract = new web3.eth.Contract(contractABI, contractAddress);
-
     // get the total count of tokens owned by the `address`
     const tokenBalance = await contract.methods.balanceOf(address).call();
     // console.log("tokenBalance:", tokenBalance);
