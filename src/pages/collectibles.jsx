@@ -1,11 +1,11 @@
 import Layout from "@/components/layout";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 
 import CollectibleCard from "@/components/CollectibleCard";
 import LoginWithMagic from "@/components/LoginWithMagic";
 import MintNFTButton from "@/components/MintNFTButton";
-import { fetchJSONfromURI, fetchNFTs } from "@/lib/utils";
+import { fetchNFTs } from "@/lib/utils";
 
 export default function CollectiblesPage() {
   const [user, setUser] = useContext(UserContext);
@@ -14,27 +14,47 @@ export default function CollectiblesPage() {
   const [collectibles, setCollectibles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // const address = "0xfBb0C937C780D345CFD4ef41071504931F46E5C8";
-
   // fetch the list of current NFTs owned by the connected user
+  // const listing = useMemo(() => {
+  //   // only attempt to fetch the NFTs if a user is connected
+  //   if (!user?.address) return;
+  //   let derp = "nope";
+
+  //   // fetch the listing of the user's NFT from the blockchain
+  //   (async () => {
+  //     let tokenURIs = await fetchNFTs(user.address).then((res) => {
+  //       // console.log("Completed fetching token uri listing");
+  //       return res;
+  //     });
+
+  //     console.log("listing found:", tokenURIs);
+
+  //     // update the stored state
+  //     setCollectibles(tokenURIs);
+  //     setLoading(false);
+  //     derp = "derp";
+  //   })();
+
+  //   console.log(derp);
+
+  //   console.log("listing complete");
+  // }, [user?.loading, user?.address]);
+
   useEffect(() => {
     // only attempt to fetch the NFTs if a user is connected
-    if (!user?.address) return;
+    if (user?.loading || !user?.address) return;
 
     // fetch the listing of the user's NFT from the blockchain
     (async () => {
       let tokenURIs = await fetchNFTs(user.address).then((res) => {
-        console.log("Completed fetching token uri listing");
-        return res;
+        // console.log("Completed fetching token uri listing");
+
+        // update the tracked state
+        setCollectibles(res.reverse());
+        setLoading(false);
       });
-
-      // console.log("tokenURIs listing found:", tokenURIs);
-
-      // update the stored state
-      setCollectibles(tokenURIs);
-      setLoading(false);
     })();
-  }, [user]);
+  }, [user?.address, user?.refreshCollectibles]);
 
   return (
     <Layout title="My Collection" className="">
@@ -58,7 +78,7 @@ export default function CollectiblesPage() {
             </p>
           ) : (
             <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-              {collectibles.map((uri, id) => (
+              {collectibles?.map((uri, id) => (
                 <CollectibleCard key={id} tokenURI={uri} />
               ))}
             </section>

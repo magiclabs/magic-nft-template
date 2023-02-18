@@ -7,7 +7,7 @@ import FaucetSection from "@/components/FaucetSection";
 import ConnectOrMint from "@/components/ConnectOrMint";
 
 //
-const tokens = [0, 0, 0, 0];
+const tokens = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
 
 export default function Home() {
   const [user, setUser] = useContext(UserContext);

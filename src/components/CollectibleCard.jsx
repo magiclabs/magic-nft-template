@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchJSONfromURI } from "@/lib/utils";
+import { fetchJSONfromURI, ipfsToHttps } from "@/lib/utils";
 
 export default function CollectibleCard({ item, tokenURI }) {
   let [metadata, setMetadata] = useState({});
@@ -7,15 +7,17 @@ export default function CollectibleCard({ item, tokenURI }) {
   // auto fetch the token's metadata from the given `tokenURI` url
   useEffect(() => {
     // when provided, set the `item` as the `metadata`
-    if (item) return setMetadata(item);
+    if (item?.image) return setMetadata(item);
+    else if (!tokenURI) return;
 
     (async () => {
       await fetchJSONfromURI(tokenURI).then((data) => {
-        console.log("metadata:", data);
+        data.image = ipfsToHttps(data?.image);
+        // console.log("metadata:", data);
         setMetadata(data);
       });
     })();
-  }, []);
+  }, [item, tokenURI]);
 
   // do not attempt to show the collectible card if a metadata image is not provided
   if (!metadata?.image) return <></>;

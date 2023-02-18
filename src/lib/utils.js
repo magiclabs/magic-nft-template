@@ -73,23 +73,24 @@ export async function requestMintNFT(address) {
       .estimateGas({ from: address });
     console.log(`Estimated gas: ${gas}`);
 
-    //
-    // contract.methods
-    //   .safeMint(name)
-    //   .send({
-    //     from: address,
-    //     gas,
-    //   })
-    //   .on("transactionHash", (hash) => {
-    //     txHash = hash;
-    //     console.log("Transaction hash:", hash);
-    //   })
-    //   .then((receipt) => {
-    //     console.log("Transaction receipt:", receipt);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    // construct and send the mint request to the blockchain
+    await contract.methods
+      .safeMint(address)
+      .send({
+        from: address,
+        gas,
+      })
+      .on("transactionHash", (hash) => {
+        txHash = hash;
+        console.log("Transaction hash:", hash);
+      })
+      .then((receipt) => {
+        console.log("Transaction receipt:", receipt);
+        return txHash;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
     return txHash;
   } catch (error) {
@@ -110,32 +111,49 @@ export async function fetchNFTs(address) {
     const tokenBalance = await contract.methods.balanceOf(address).call();
     // console.log("tokenBalance:", tokenBalance);
 
-    //
+    // init tracking arrays
+    let promisesForIds = [];
+    let promisesForUris = [];
     let tokens = [];
 
+    // build the listing of promises to fetch the owned token IDs
     for (let i = 0; i < tokenBalance; i++) {
-      await contract.methods
-        .tokenOfOwnerByIndex(address, i)
-        .call()
-        .then((tokenIndex) => {
-          // console.log(`token ID ${tokenIndex} found`);
-
-          // fetch the tokenURI for the given owned token's index
-          (async () => {
-            await contract.methods
-              .tokenURI(tokenIndex)
-              .call()
-              .then((uri) => {
-                // console.log(`Token ID ${tokenIndex} has URI of ${uri}`);
-                tokens.push(uri);
-              })
-              .catch((err) => console.warn(err));
-          })();
-        })
-        .catch((err) => console.warn(err));
+      promisesForIds.push(
+        await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call()
+          .then((tokenIndex) => {
+            // console.log(`token ID ${tokenIndex} found`);
+            return tokenIndex;
+          })
+          .catch((err) => console.warn(err))
+      );
     }
 
-    // console.log("tokens found:", tokens);
+    // await all promises to fetch the owned token IDs
+    await Promise.allSettled(promisesForIds).then(async (tokenIDs) => {
+      for (let i = 0; i < tokenIDs.length; i++) {
+        // console.log("id:", i, ":", tokenIDs[i].status);
+        // console.log(tokenIDs[i]);
+
+        // add each token id to the next round of promises
+        promisesForUris.push(
+          await contract.methods
+            .tokenURI(tokenIDs[i].value)
+            .call()
+            .then((uri) => {
+              uri = ipfsToHttps(uri);
+              // console.log(`Token ID ${result.value} has URI of ${uri}`);
+              tokens.push(uri);
+              return uri;
+            })
+            .catch((err) => console.warn(err))
+        );
+      }
+    });
+
+    // await all promises for fetching the token URIs
+    await Promise.allSettled(promisesForUris);
 
     return tokens;
   } catch (error) {
@@ -149,13 +167,20 @@ export async function fetchNFTs(address) {
 */
 export async function fetchJSONfromURI(url) {
   // console.log(`Fetching metadata from ${url}...`);
-
-  return fetch(url)
-    .then((res) => res.json())
+  return fetch(ipfsToHttps(url))
+    .then((res) => res?.json())
     .then((res) => {
       return res;
     })
     .catch((err) => {
       console.error(err);
     });
+}
+
+/*
+  parse ipfs address into https
+*/
+export function ipfsToHttps(uri) {
+  uri = uri.replace("ipfs://", "https://nftstorage.link/ipfs/").toString();
+  return uri;
 }

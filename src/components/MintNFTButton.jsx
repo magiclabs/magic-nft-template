@@ -16,7 +16,12 @@ export default function MintNFTButton({ className = "" }) {
 
           (async () => {
             await requestMintNFT(user.address)
-              .then((res) => console.log(res))
+              .then((res) => {
+                console.log("Mint complete!");
+
+                // update the `user.refreshCollectibles` values to auto reload the owned NFTs
+                setUser({ ...user, refreshCollectibles: true });
+              })
               .finally((res) => setLoading(false));
           })();
         }}
