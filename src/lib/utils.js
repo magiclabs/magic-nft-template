@@ -88,13 +88,15 @@ export async function requestMintNFT(address) {
         console.log("Transaction receipt:", receipt);
         return txHash;
       })
-      .catch((error) => {
-        console.error(error);
+      .catch((err) => {
+        console.error(err);
+        throw error;
       });
 
     return txHash;
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    // console.error(error);
+    throw err;
     return false;
   }
 }

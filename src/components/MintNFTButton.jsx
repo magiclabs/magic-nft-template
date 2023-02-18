@@ -8,6 +8,11 @@ export default function MintNFTButton({ className = "" }) {
 
   return (
     <div className={className}>
+      <p className="py-2">
+        Your ETH balance is{" "}
+        <span className="italic underline">{user?.balance}</span> ETH
+      </p>
+
       <button
         className={`inline-flex space-x-3 text-xl btn ${loading && "loading"}`}
         disabled={loading}
@@ -22,6 +27,10 @@ export default function MintNFTButton({ className = "" }) {
                 // update the `user.refreshCollectibles` values to auto reload the owned NFTs
                 setUser({ ...user, refreshCollectibles: true });
               })
+              .catch((err) => {
+                console.warn(err);
+                setLoading(false);
+              })
               .finally((res) => setLoading(false));
           })();
         }}
@@ -29,10 +38,13 @@ export default function MintNFTButton({ className = "" }) {
         {loading ? "minting NFT..." : "Mint a Magic Carpet NFT"}
       </button>
 
-      <p className="py-1">
-        Your ETH balance is{" "}
-        <span className="italic underline">{user?.balance}</span> ETH
-      </p>
+      {loading && (
+        <p className="text-gray-500 font-sm">
+          *minting may take around 30 seconds.
+          <br />
+          please be patient!
+        </p>
+      )}
     </div>
   );
 }
