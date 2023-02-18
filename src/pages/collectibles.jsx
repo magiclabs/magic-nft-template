@@ -15,32 +15,6 @@ export default function CollectiblesPage() {
   const [collectibles, setCollectibles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // fetch the list of current NFTs owned by the connected user
-  // const listing = useMemo(() => {
-  //   // only attempt to fetch the NFTs if a user is connected
-  //   if (!user?.address) return;
-  //   let derp = "nope";
-
-  //   // fetch the listing of the user's NFT from the blockchain
-  //   (async () => {
-  //     let tokenURIs = await fetchNFTs(user.address).then((res) => {
-  //       // console.log("Completed fetching token uri listing");
-  //       return res;
-  //     });
-
-  //     console.log("listing found:", tokenURIs);
-
-  //     // update the stored state
-  //     setCollectibles(tokenURIs);
-  //     setLoading(false);
-  //     derp = "derp";
-  //   })();
-
-  //   console.log(derp);
-
-  //   console.log("listing complete");
-  // }, [user?.loading, user?.address]);
-
   useEffect(() => {
     // only attempt to fetch the NFTs if a user is connected
     if (user?.loading || !user?.address) return;
