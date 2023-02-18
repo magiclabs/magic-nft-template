@@ -5,8 +5,10 @@ import { useContext } from "react";
 export default function FaucetSection({}) {
   const [user] = useContext(UserContext);
 
-  // only show this component when a user is connected, and they are low on balance
-  // if (!user?.address || !user?.balance >= 0.01) return <></>;
+  // only show this component when a user is connected
+  if (!user?.address) return <></>;
+  // (optioanl) only show if the user.address is low on balance
+  // else if (!user?.balance >= 0.01) return <></>;
 
   return (
     <section className="my-8 space-y-2">

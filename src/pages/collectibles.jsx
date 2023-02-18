@@ -16,6 +16,13 @@ export default function CollectiblesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // clear the state of tracked collectibles on logout
+    if (!user?.address) {
+      setCollectibles([]);
+      setLoading(true);
+      return;
+    }
+
     // only attempt to fetch the NFTs if a user is connected
     if (user?.loading || !user?.address) return;
 
@@ -29,7 +36,7 @@ export default function CollectiblesPage() {
         setLoading(false);
       });
     })();
-  }, [user?.address, user?.refreshCollectibles]);
+  }, [user?.address, user?.loading, user?.refreshCollectibles]);
 
   return (
     <Layout title="My Collection" className="">

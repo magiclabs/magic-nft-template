@@ -88,13 +88,15 @@ export async function requestMintNFT(address) {
         console.log("Transaction receipt:", receipt);
         return txHash;
       })
-      .catch((error) => {
-        console.error(error);
+      .catch((err) => {
+        console.error(err);
+        throw err;
       });
 
     return txHash;
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    // console.error(err);
+    throw err;
     return false;
   }
 }
@@ -156,8 +158,8 @@ export async function fetchNFTs(address) {
     await Promise.allSettled(promisesForUris);
 
     return tokens;
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return false;
   }
 }
