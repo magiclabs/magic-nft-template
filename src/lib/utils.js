@@ -8,13 +8,13 @@ import { web3, contract } from "./web3";
 export async function getUserData() {
   let data = {};
 
-  data = await magic.connect
-    .getWalletInfo()
+  data = await magic.wallet
+    .getInfo()
     .then(async (walletInfo) => {
-      let user;
+      let userInfo;
       // you can also request the user's info from magic.link
       // (e.g. email address), for later storing it in the state
-      // user = await magic.connect.requestUserInfo().catch((err) => {
+      // userInfo = await magic.wallet.requestUserInfoWithUI().catch((err) => {
       //   console.error(err);
       // });
 
@@ -33,7 +33,7 @@ export async function getUserData() {
 
       // return the user's data for the state
       return {
-        ...user,
+        ...userInfo,
         ...walletInfo,
         isLoggedIn: true,
         loading: false,

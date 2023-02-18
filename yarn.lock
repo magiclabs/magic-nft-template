@@ -244,11 +244,6 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@magic-ext/connect@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@magic-ext/connect/-/connect-6.3.0.tgz#50049f3eaa331588a39f4d5d5fae8c17af07106e"
-  integrity sha512-4HLq76ZCEvLZxd3pjvdwSWP167v3DuJfiXRU/aCT4lDrgnAwepDA2twm3s2MbCTX7ZNgVCq2OBux52WxQMXX8w==
-
 "@magic-sdk/commons@^9.2.0":
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/@magic-sdk/commons/-/commons-9.2.0.tgz#ed1b1c2ea94d2735b0dc59f8b9a08fa3304a5de0"

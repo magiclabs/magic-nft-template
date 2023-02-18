@@ -14,7 +14,7 @@ export default function AppHeader({}) {
       if (walletInfo?.walletType == "magic") {
         // NOTE: this will only work if the user has connected via a
         // magic wallet, not via browser wallet (e.g. MetaMask)
-        magic.connect.showWallet().catch((err) => console.error(err));
+        magic.wallet.showUI().catch((err) => console.error(err));
       } else {
         // for non-magic wallets, copy the full wallet address to the clipboard
         navigator.clipboard
@@ -28,7 +28,7 @@ export default function AppHeader({}) {
 
   function disconnect() {
     // disconnect from magic
-    magic.connect.disconnect();
+    magic.wallet.disconnect();
 
     // clear the state
     setUser({});
