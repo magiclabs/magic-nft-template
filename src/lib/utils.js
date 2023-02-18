@@ -94,9 +94,8 @@ export async function requestMintNFT(address) {
       });
 
     return txHash;
-  } catch (err) {
-    // console.error(err);
-    throw err;
+  } catch (error) {
+    console.error(error);
     return false;
   }
 }
