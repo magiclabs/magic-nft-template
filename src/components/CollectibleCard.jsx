@@ -25,7 +25,7 @@ export default function CollectibleCard({ item, tokenURI }) {
   return (
     <div className="w-64 h-64 mx-auto overflow-hidden border border-gray-200 rounded-3xl">
       {metadata?.name && (
-        <div className="absolute w-full px-4 py-2 font-semibold bg-white bg-opacity-80">
+        <div className="w-full px-4 py-2 font-semibold bg-white bg-opacity-80">
           {metadata.name}
         </div>
       )}

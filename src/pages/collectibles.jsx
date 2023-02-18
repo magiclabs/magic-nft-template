@@ -2,6 +2,7 @@ import Layout from "@/components/layout";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 
+import LoadingWrapper from "@/components/LoadingWrapper";
 import CollectibleCard from "@/components/CollectibleCard";
 import LoginWithMagic from "@/components/LoginWithMagic";
 import MintNFTButton from "@/components/MintNFTButton";
@@ -86,12 +87,14 @@ export default function CollectiblesPage() {
         </>
       ) : (
         <section className="py-10 space-y-3 text-center">
-          <LoginWithMagic />
+          <LoadingWrapper>
+            <LoginWithMagic />
 
-          <p className="text-lg">
-            Connect your wallet or login with Magic.link to view your
-            collectibles
-          </p>
+            <p className="text-lg">
+              Connect your wallet or login with Magic.link to view your
+              collectibles
+            </p>
+          </LoadingWrapper>
         </section>
       )}
     </Layout>

@@ -2,12 +2,18 @@ import Layout from "@/components/layout";
 import { useContext } from "react";
 import { UserContext } from "@/lib/UserContext";
 
+import LoadingWrapper from "@/components/LoadingWrapper";
 import CollectibleCard from "@/components/CollectibleCard";
 import FaucetSection from "@/components/FaucetSection";
 import ConnectOrMint from "@/components/ConnectOrMint";
 
-//
-const tokens = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
+// store a default listing of NFT images from the collection for display on the page
+const tokens = [
+  { id: 0, name: "", image: "/img/0.jpg" },
+  { id: 1, name: "", image: "/img/1.jpg" },
+  { id: 4, name: "", image: "/img/4.jpg" },
+  { id: 5, name: "", image: "/img/5.jpg" },
+];
 
 export default function Home() {
   const [user, setUser] = useContext(UserContext);
@@ -29,9 +35,11 @@ export default function Home() {
       </section>
 
       <section className="mx-auto space-y-8 text-center">
-        <ConnectOrMint />
+        <LoadingWrapper>
+          <ConnectOrMint />
 
-        <FaucetSection />
+          <FaucetSection />
+        </LoadingWrapper>
       </section>
     </Layout>
   );
