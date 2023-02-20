@@ -18,7 +18,7 @@ export async function getUserData() {
       //   console.error(err);
       // });
 
-      // connect and retreive the user's primary wallet address
+      // connect and retrieve the user's primary wallet address
       const address = (await web3.eth.getAccounts())[0];
 
       // get the wallet's current ETH balance

@@ -6,7 +6,7 @@ import { getUserData } from "@/lib/utils";
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState();
 
-  // auto load the user's antenticated state via magic
+  // auto load the user's authenticated state via magic
   useEffect(() => {
     setUser({ loading: true });
 

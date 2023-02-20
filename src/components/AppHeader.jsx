@@ -20,7 +20,7 @@ export default function AppHeader({}) {
         navigator.clipboard
           .writeText(user?.address)
           .then((res) =>
-            alert(`ETH wallet address coppied to clipboard: ${user?.address}`)
+            alert(`ETH wallet address copied to clipboard: ${user?.address}`)
           );
       }
     });

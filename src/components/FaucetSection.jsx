@@ -7,7 +7,7 @@ export default function FaucetSection({}) {
 
   // only show this component when a user is connected
   if (!user?.address) return <></>;
-  // (optioanl) only show if the user.address is low on balance
+  // (optional) only show if the user.address is low on balance
   // else if (!user?.balance >= 0.01) return <></>;
 
   return (
@@ -22,7 +22,7 @@ export default function FaucetSection({}) {
               .writeText(user?.address)
               .then((res) =>
                 alert(
-                  `ETH wallet address coppied to clipboard: ${user?.address}`
+                  `ETH wallet address copied to clipboard: ${user?.address}`
                 )
               );
           }}
