@@ -28,18 +28,18 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-        {tokens.slice(0, 4).map((item, id) => (
-          <CollectibleCard key={id} item={item} />
-        ))}
-      </section>
-
       <section className="mx-auto space-y-8 text-center">
         <LoadingWrapper>
           <ConnectOrMint />
 
           <FaucetSection />
         </LoadingWrapper>
+      </section>
+
+      <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
+        {tokens.slice(0, 4).map((item, id) => (
+          <CollectibleCard key={id} item={item} />
+        ))}
       </section>
     </Layout>
   );

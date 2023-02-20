@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchJSONfromURI, ipfsToHttps } from "@/lib/utils";
+import Image from "next/image";
 
 export default function CollectibleCard({ item, tokenURI }) {
   let [metadata, setMetadata] = useState({});
@@ -30,7 +31,12 @@ export default function CollectibleCard({ item, tokenURI }) {
         </div>
       )}
 
-      <img src={metadata.image} className="w-64 h-64" />
+      <Image
+        src={metadata.image}
+        width={256}
+        height={256}
+        alt="Magic Carpet NFT"
+      />
     </div>
   );
 }
