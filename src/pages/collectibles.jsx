@@ -14,7 +14,7 @@ export default function CollectiblesPage() {
   const [loading, setLoading] = useState(user?.refreshCollectibles);
 
   useEffect(() => {
-    // clear the state of tracked collectibles on logout
+    // do nothing if the user is not logged in
     if (!user?.address) {
       setLoading(true);
       return;
@@ -25,12 +25,7 @@ export default function CollectiblesPage() {
       setLoading(false);
       return;
     }
-  }, [
-    user?.address,
-    user?.loading,
-    user?.refreshCollectibles,
-    user?.collectibles,
-  ]);
+  }, [user?.address, user?.refreshCollectibles, user?.collectibles]);
 
   return (
     <Layout title="My Collection" className="">
