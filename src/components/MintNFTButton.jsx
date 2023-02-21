@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
-import { getUserData, requestMintNFT } from "@/lib/utils";
+import { requestMintNFT } from "@/lib/utils";
 import { web3 } from "@/lib/web3";
 
 export default function MintNFTButton({
@@ -31,26 +31,35 @@ export default function MintNFTButton({
 
           (async () => {
             const status = await requestMintNFT(user.address)
-              .then((res) => {
+              .then(async (res) => {
+                if (!res) {
+                  console.log("Mint failed (or was canceled by the user).");
+                  return;
+                }
+
                 console.log("Mint complete!");
 
                 // update the `user.refreshCollectibles` values to auto reload the owned NFTs
-                setUser({ ...user, refreshCollectibles: true });
-              })
-              .catch((err) => {
-                console.warn(err);
-                setLoading(false);
-              })
-              .finally(async (res) => {
-                setLoading(false);
+                setUser({
+                  ...user,
+                  refreshCollectibles: true,
+                  tokenIdForModal: res?.tokenId, // track the id to show the success modal
+                });
 
-                console.log("refetch the user data");
+                console.log("Updating the user's balance...");
 
                 // get and set the user's new balance after the mint
                 const balance = await web3.eth
                   .getBalance(user.address)
                   .then((wei) => web3.utils.fromWei(wei));
+
                 setUser({ ...user, balance });
+              })
+              .catch((err) => {
+                console.warn(err);
+              })
+              .finally(() => {
+                setLoading(false);
               });
           })();
         }}

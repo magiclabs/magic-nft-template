@@ -32,7 +32,7 @@ export async function getUserData() {
 
       // compute the short address for display in the UI
       let shortAddress = `${address?.substring(0, 5)}...${address?.substring(
-        address.length - 4
+        address.length - 4,
       )}`;
 
       // return the user's data for the state
@@ -67,7 +67,7 @@ export async function getUserData() {
 export async function requestMintNFT(address) {
   console.log(`Request to mint an NFT to address ${address}...`);
 
-  let txHash = false;
+  let txData = false;
 
   try {
     const name = await contract.methods.name().call();
@@ -80,26 +80,32 @@ export async function requestMintNFT(address) {
     console.log(`Estimated gas: ${gas}`);
 
     // construct and send the mint request to the blockchain
-    await contract.methods
+    const receipt = await contract.methods
       .safeMint(address)
       .send({
         from: address,
         gas,
       })
       .on("transactionHash", (hash) => {
-        txHash = hash;
+        txData = { hash };
         console.log("Transaction hash:", hash);
       })
       .then((receipt) => {
         console.log("Transaction receipt:", receipt);
-        return txHash;
+
+        // extract the minted tokenId from the transaction response
+        const tokenId = receipt?.events?.Transfer?.returnValues?.tokenId;
+        console.log("Minted tokenId:", tokenId);
+        txData.tokenId = tokenId;
+
+        return txData;
       })
       .catch((err) => {
         console.error(err);
         throw err;
       });
 
-    return txHash;
+    return txData;
   } catch (error) {
     console.error(error);
     return false;
@@ -133,7 +139,7 @@ export async function fetchNFTs(address) {
             // console.log(`token ID ${tokenIndex} found`);
             return tokenIndex;
           })
-          .catch((err) => console.warn(err))
+          .catch((err) => console.warn(err)),
       );
     }
 
@@ -154,7 +160,7 @@ export async function fetchNFTs(address) {
               tokens.push(uri);
               return uri;
             })
-            .catch((err) => console.warn(err))
+            .catch((err) => console.warn(err)),
         );
       }
     });
