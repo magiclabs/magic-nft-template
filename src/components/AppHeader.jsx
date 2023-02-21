@@ -113,7 +113,7 @@ export default function AppHeader({}) {
                 onClick={() => loginWithConnect()}
                 type="button"
                 className="btn"
-                disabled={user?.loading}
+                // disabled={user?.loading}
               >
                 {user?.loading ? "Log In" : "Log In"}
               </button>

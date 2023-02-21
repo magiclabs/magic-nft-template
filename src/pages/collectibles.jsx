@@ -1,42 +1,36 @@
 import Layout from "@/components/layout";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
 import CollectibleCard from "@/components/CollectibleCard";
 import LoginWithMagic from "@/components/LoginWithMagic";
 import MintNFTButton from "@/components/MintNFTButton";
-import { fetchNFTs } from "@/lib/utils";
 
 export default function CollectiblesPage() {
   const [user, setUser] = useContext(UserContext);
 
   // initialize the state used to track the current page's data
-  const [collectibles, setCollectibles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(user?.refreshCollectibles);
 
   useEffect(() => {
     // clear the state of tracked collectibles on logout
     if (!user?.address) {
-      setCollectibles([]);
       setLoading(true);
       return;
     }
 
-    // only attempt to fetch the NFTs if a user is connected
-    if (user?.loading || !user?.address) return;
-
-    // fetch the listing of the user's NFT from the blockchain
-    (async () => {
-      let tokenURIs = await fetchNFTs(user.address).then((res) => {
-        // console.log("Completed fetching token uri listing");
-
-        // update the tracked state
-        setCollectibles(res.reverse());
-        setLoading(false);
-      });
-    })();
-  }, [user?.address, user?.loading, user?.refreshCollectibles]);
+    // disable the loading after collectibles have already been loaded
+    if (user?.address && !user?.refreshCollectibles && user?.collectibles) {
+      setLoading(false);
+      return;
+    }
+  }, [
+    user?.address,
+    user?.loading,
+    user?.refreshCollectibles,
+    user?.collectibles,
+  ]);
 
   return (
     <Layout title="My Collection" className="">
@@ -60,7 +54,7 @@ export default function CollectiblesPage() {
             message="fetching your NFTs from the blockchain"
           >
             <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-              {collectibles?.map((uri, id) => (
+              {user?.collectibles?.map((uri, id) => (
                 <CollectibleCard key={id} tokenURI={uri} />
               ))}
             </section>

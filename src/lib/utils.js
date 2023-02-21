@@ -44,6 +44,8 @@ export async function getUserData() {
         address,
         balance,
         shortAddress,
+        collectibles: undefined,
+        refreshCollectibles: true,
       };
     })
     .catch((err) => {
@@ -159,6 +161,8 @@ export async function fetchNFTs(address) {
 
     // await all promises for fetching the token URIs
     await Promise.allSettled(promisesForUris);
+
+    console.log("Total NFTs found:", tokens?.length);
 
     return tokens;
   } catch (err) {
