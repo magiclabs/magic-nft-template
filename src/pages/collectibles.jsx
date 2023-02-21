@@ -52,19 +52,21 @@ export default function CollectiblesPage() {
 
       {user?.address ? (
         <>
-          <MintNFTButton className="mx-auto text-center" />
+          <MintNFTButton
+            buttonText="Mint Another NFT"
+            className="mx-auto text-center"
+          />
 
-          {loading ? (
-            <p className="font-bold text-center">
-              loading your collectibles from the blockchain
-            </p>
-          ) : (
+          <LoadingWrapper
+            loading={loading}
+            message="fetching NFTs from the blockchain"
+          >
             <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
               {collectibles?.map((uri, id) => (
                 <CollectibleCard key={id} tokenURI={uri} />
               ))}
             </section>
-          )}
+          </LoadingWrapper>
         </>
       ) : (
         <section className="py-10 space-y-3 text-center">

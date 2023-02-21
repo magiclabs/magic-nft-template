@@ -2,7 +2,10 @@ import { useContext, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import { requestMintNFT } from "@/lib/utils";
 
-export default function MintNFTButton({ className = "" }) {
+export default function MintNFTButton({
+  className = "",
+  buttonText = "Mint a Magic Carpet NFT",
+}) {
   const [user, setUser] = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
@@ -41,7 +44,7 @@ export default function MintNFTButton({ className = "" }) {
           })();
         }}
       >
-        {loading ? "minting NFT..." : "Mint a Magic Carpet NFT"}
+        {loading ? "minting NFT..." : buttonText}
       </button>
 
       {loading && (

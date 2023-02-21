@@ -1,17 +1,30 @@
 import { UserContext } from "@/lib/UserContext";
+import Image from "next/image";
 import { useContext } from "react";
 
-export default function LoadingWrapper({ children }) {
+export default function LoadingWrapper({
+  children,
+  loading = false,
+  message = "loading, please wait...",
+}) {
   const [user] = useContext(UserContext);
 
   return (
     <>
-      {!user?.loading ? (
+      {!loading && !user?.loading ? (
         <>{children}</>
       ) : (
-        <p className="font-bold text-center">
-          connecting to wallet, please wait...
-        </p>
+        <div className="text-xl text-center">
+          <Image
+            src={"/img/spinner.svg"}
+            width={64}
+            height={64}
+            alt="loading spinner"
+            className="block mx-auto"
+          />
+
+          <p>{message}</p>
+        </div>
       )}
     </>
   );
