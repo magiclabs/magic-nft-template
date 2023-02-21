@@ -115,7 +115,7 @@ export default function AppHeader({}) {
                 className="btn"
                 disabled={user?.loading}
               >
-                {user?.loading ? "loading" : "Login with Connect"}
+                {user?.loading ? "Log In" : "Log In"}
               </button>
             )}
           </div>

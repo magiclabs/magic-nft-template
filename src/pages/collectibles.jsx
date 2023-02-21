@@ -41,9 +41,7 @@ export default function CollectiblesPage() {
   return (
     <Layout title="My Collection" className="">
       <section className="space-y-3 text-center">
-        <h1 className="text-5xl font-semibold">
-          My Collection of Magic Carpets
-        </h1>
+        <h1 className="text-5xl font-semibold">My Collection</h1>
 
         <p className="text-gray-500">
           View your current owned NFTs from the Magic Carpet collection
