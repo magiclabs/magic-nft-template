@@ -3,7 +3,7 @@ import styles from "@/styles/Nav.module.css";
 
 export default function AppNavigation({}) {
   return (
-    <ul className={styles.nav}>
+    <ul className={styles.linkArea}>
       <li>
         <Link href={"/"}>Home</Link>
       </li>
