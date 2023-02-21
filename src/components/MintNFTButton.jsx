@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
-import { requestMintNFT } from "@/lib/utils";
+import { getUserData, requestMintNFT } from "@/lib/utils";
+import { web3 } from "@/lib/web3";
 
 export default function MintNFTButton({
   className = "",
@@ -29,7 +30,7 @@ export default function MintNFTButton({
           setLoading(true);
 
           (async () => {
-            await requestMintNFT(user.address)
+            const status = await requestMintNFT(user.address)
               .then((res) => {
                 console.log("Mint complete!");
 
@@ -40,7 +41,17 @@ export default function MintNFTButton({
                 console.warn(err);
                 setLoading(false);
               })
-              .finally((res) => setLoading(false));
+              .finally(async (res) => {
+                setLoading(false);
+
+                console.log("refetch the user data");
+
+                // get and set the user's new balance after the mint
+                const balance = await web3.eth
+                  .getBalance(user.address)
+                  .then((wei) => web3.utils.fromWei(wei));
+                setUser({ ...user, balance });
+              });
           })();
         }}
       >

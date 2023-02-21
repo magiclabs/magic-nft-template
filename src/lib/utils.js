@@ -11,6 +11,8 @@ export async function getUserData() {
   data = await magic.wallet
     .getInfo()
     .then(async (walletInfo) => {
+      // console.log("connected via magic!");
+
       let userInfo;
       // you can also request the user's info from magic.link
       // (e.g. email address), for later storing it in the state
@@ -20,11 +22,13 @@ export async function getUserData() {
 
       // connect and retrieve the user's primary wallet address
       const address = (await web3.eth.getAccounts())[0];
+      // console.log("address:", address);
 
       // get the wallet's current ETH balance
       const balance = await web3.eth
         .getBalance(address)
         .then((wei) => web3.utils.fromWei(wei));
+      // console.log("balance:", balance);
 
       // compute the short address for display in the UI
       let shortAddress = `${address?.substring(0, 5)}...${address?.substring(

@@ -59,7 +59,7 @@ export default function CollectiblesPage() {
 
           <LoadingWrapper
             loading={loading}
-            message="fetching NFTs from the blockchain"
+            message="fetching your NFTs from the blockchain"
           >
             <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
               {collectibles?.map((uri, id) => (
