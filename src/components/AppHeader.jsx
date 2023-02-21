@@ -89,7 +89,7 @@ export default function AppHeader({}) {
         >
           <AppNavigation />
 
-          <div className={navbarOpen && styles.actionAreaMobile}>
+          <div className={navbarOpen ? styles.actionAreaMobile : ""}>
             {user?.isLoggedIn ? (
               <div className="space-x-3">
                 <button
