@@ -11,10 +11,10 @@ export default function FaucetSection({}) {
   // else if (!user?.balance >= 0.01) return <></>;
 
   return (
-    <section className="my-8 space-y-2">
-      <div className="inline-flex justify-between space-x-4">
+    <section className="max-w-lg mx-auto space-y-2">
+      <div className="justify-between space-y-2 md:space-x-4 md:space-y-0 md:flex">
         <button
-          className="btn-outline"
+          className="block w-full btn-outline"
           onClick={() => {
             if (!user?.address) return alert("Please connect!");
 
@@ -34,7 +34,7 @@ export default function FaucetSection({}) {
           href={"https://goerlifaucet.com/"}
           target={"_blank"}
           rel={"noreferrer"}
-          className="btn-outline"
+          className="block w-full btn-outline"
         >
           Open ETH faucet
         </Link>
