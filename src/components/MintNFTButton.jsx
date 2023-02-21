@@ -10,7 +10,13 @@ export default function MintNFTButton({ className = "" }) {
     <div className={className}>
       <p className="py-2">
         Your ETH balance is{" "}
-        <span className="italic underline">{user?.balance}</span> ETH
+        <span className="italic underline">
+          {new Intl.NumberFormat(undefined, {
+            minimumSignificantDigits: 1,
+            maximumSignificantDigits: 4,
+          }).format(user?.balance)}
+        </span>{" "}
+        ETH
       </p>
 
       <button
