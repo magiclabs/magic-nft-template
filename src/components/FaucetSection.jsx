@@ -11,7 +11,14 @@ export default function FaucetSection({}) {
   // else if (!user?.balance >= 0.01) return <></>;
 
   return (
-    <section className="max-w-lg mx-auto space-y-2">
+    <section className="max-w-lg mx-auto space-y-3">
+      <div>
+        <p>Add free ETH to your wallet using Goerli testnet.</p>
+        <p className="text-sm text-gray-500">
+          *You will need to create an account using Alchemy
+        </p>
+      </div>
+
       <div className="justify-between space-y-2 md:space-x-4 md:space-y-0 md:flex">
         <button
           className="block w-full btn-outline"
@@ -22,8 +29,8 @@ export default function FaucetSection({}) {
               .writeText(user?.address)
               .then((res) =>
                 alert(
-                  `ETH wallet address copied to clipboard: ${user?.address}`
-                )
+                  `ETH wallet address copied to clipboard: ${user?.address}`,
+                ),
               );
           }}
         >
@@ -34,14 +41,11 @@ export default function FaucetSection({}) {
           href={"https://goerlifaucet.com/"}
           target={"_blank"}
           rel={"noreferrer"}
-          className="block w-full btn-outline"
+          className="block w-full btn-light"
         >
           Open ETH faucet
         </Link>
       </div>
-
-      <p>Low ETH balance? Get free testnet ETH from the faucet.</p>
-      <p className="text-sm text-gray-500">*Goerli faucet powered by Alchemy</p>
     </section>
   );
 }

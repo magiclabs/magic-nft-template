@@ -95,7 +95,7 @@ export default function AppHeader({}) {
                 <button
                   onClick={() => openWallet()}
                   type="button"
-                  className="btn"
+                  className="btn-light"
                 >
                   {user?.shortAddress || "Open wallet"}
                 </button>

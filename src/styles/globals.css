@@ -21,12 +21,26 @@
 
 .btn-outline {
   @apply btn;
-  @apply text-black bg-white border-brand-purple hover:bg-opacity-10;
+  @apply text-black bg-white border-gray-300 hover:bg-opacity-10;
+}
+.btn-light {
+  @apply btn;
+  @apply text-brand-purple-text bg-brand-purple-light hover:bg-opacity-10;
 }
 
 .badge {
   @apply px-3 py-1 text-sm font-semibold tracking-wide uppercase rounded-lg;
   @apply text-brand-purple-text bg-brand-purple-light;
+}
+
+.hero {
+  @apply space-y-3 text-center;
+}
+h1 {
+  @apply text-6xl font-extrabold;
+}
+.hero p {
+  @apply text-xl;
 }
 
 .flex,

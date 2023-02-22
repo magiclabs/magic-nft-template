@@ -25,8 +25,8 @@ export default function CollectiblesPage() {
 
   return (
     <Layout title="Holders Only Area" className="">
-      <section className="space-y-3 text-center">
-        <h1 className="text-5xl font-semibold">Holders Only Area</h1>
+      <section className="hero">
+        <h1>Holders Only Area</h1>
       </section>
 
       {user?.address && !loading ? (
@@ -55,7 +55,7 @@ export default function CollectiblesPage() {
           />
         </section>
       ) : (
-        <p className="max-w-md mx-auto text-xl text-center text-gray-500">
+        <p className="max-w-md mx-auto text-xl text-center">
           Log in to access exclusive content{" "}
           <span className="italic font-semibold">only</span> available to NFT
           collection holders.
