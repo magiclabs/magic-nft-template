@@ -28,11 +28,12 @@
 }
 
 .linkArea {
-  @apply flex flex-col justify-start text-xl list-none lg:flex-row;
+  @apply flex flex-col justify-start list-none lg:flex-row;
+  @apply text-base lg:space-x-4;
 }
 .linkArea a {
   @apply block;
-  @apply px-5 py-3 lg:px-3 lg:py-1;
+  @apply px-5 py-3 lg:px-4 lg:py-2;
   @apply rounded-lg;
   @apply whitespace-nowrap;
 }
