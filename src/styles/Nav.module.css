@@ -2,9 +2,9 @@
   Style the header and navigation for the site
 */
 
-.header {
+/* .header {
   @apply border-b border-gray-300;
-}
+} */
 
 .navContainer {
   @apply items-center justify-between flex-grow w-full bg-white lg:flex;
