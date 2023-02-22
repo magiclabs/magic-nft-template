@@ -24,7 +24,7 @@ export default function AppHeader({}) {
         navigator.clipboard
           .writeText(user?.address)
           .then((res) =>
-            alert(`ETH wallet address copied to clipboard: ${user?.address}`)
+            alert(`ETH wallet address copied to clipboard: ${user?.address}`),
           );
       }
     });
@@ -55,7 +55,7 @@ export default function AppHeader({}) {
         <section className={styles.staticArea}>
           <Link href={"/"} className="flex space-x-3">
             <img src={"/logo.svg"} alt="Magic.link" />
-            <h2 className="text-2xl font-bold">demo</h2>
+            <span className="badge">demo</span>
           </Link>
 
           <button
@@ -115,7 +115,7 @@ export default function AppHeader({}) {
                 className="btn"
                 // disabled={user?.loading}
               >
-                {user?.loading ? "Log In" : "Log In"}
+                {user?.loading ? "Connect Wallet" : "Connect Wallet"}
               </button>
             )}
           </div>

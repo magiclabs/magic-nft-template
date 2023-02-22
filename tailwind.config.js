@@ -10,6 +10,8 @@ module.exports = {
       },
       colors: {
         "brand-purple": "#6851ff",
+        "brand-purple-text": "#522FD4",
+        "brand-purple-light": "#EDEBFF",
       },
     },
   },

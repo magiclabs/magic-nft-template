@@ -24,6 +24,11 @@
   @apply text-black bg-white border-brand-purple hover:bg-opacity-10;
 }
 
+.badge {
+  @apply px-3 py-1 text-sm font-semibold tracking-wide uppercase rounded-lg;
+  @apply text-brand-purple-text bg-brand-purple-light;
+}
+
 .flex,
 .inline-flex {
   @apply items-center;
