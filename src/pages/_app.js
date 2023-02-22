@@ -3,6 +3,13 @@ import { useState, useEffect } from "react";
 import { UserContext } from "@/lib/UserContext";
 import { fetchNFTs, getUserData } from "@/lib/utils";
 
+import { Inter } from "@next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState();
 
@@ -46,6 +53,14 @@ export default function App({ Component, pageProps }) {
 
   return (
     <UserContext.Provider value={[user, setUser]}>
+      <style jsx global>
+        {`
+          :root {
+            --font-inter: ${inter.style.fontFamily};
+          }
+        `}
+      </style>
+
       <Component {...pageProps} />
     </UserContext.Provider>
   );
