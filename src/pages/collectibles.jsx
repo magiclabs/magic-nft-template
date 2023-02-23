@@ -35,36 +35,36 @@ export default function CollectiblesPage() {
         <p>View your current owned NFTs from the Magic Carpet collection</p>
       </section>
 
-      {user?.address ? (
-        <>
-          <MintNFTButton
-            buttonText="Mint Another NFT"
-            className="mx-auto text-center"
-          />
+      <LoadingWrapper>
+        {user?.address ? (
+          <>
+            <MintNFTButton
+              buttonText="Mint Another NFT"
+              className="mx-auto text-center"
+            />
 
-          <LoadingWrapper
-            loading={loading}
-            message="fetching your NFTs from the blockchain"
-          >
-            <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-              {user?.collectibles?.map((uri, id) => (
-                <CollectibleCard key={id} tokenURI={uri} />
-              ))}
-            </section>
-          </LoadingWrapper>
-        </>
-      ) : (
-        <section className="py-10 space-y-3 text-center">
-          <LoadingWrapper>
+            <LoadingWrapper
+              loading={loading}
+              message="fetching your NFTs from the blockchain"
+            >
+              <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
+                {user?.collectibles?.map((uri, id) => (
+                  <CollectibleCard key={id} tokenURI={uri} />
+                ))}
+              </section>
+            </LoadingWrapper>
+          </>
+        ) : (
+          <section className="py-10 space-y-3 text-center">
             <LoginWithMagic />
 
             <p className="text-lg">
               Connect your wallet or login with Magic.link to view your
               collectibles
             </p>
-          </LoadingWrapper>
-        </section>
-      )}
+          </section>
+        )}
+      </LoadingWrapper>
     </Layout>
   );
 }

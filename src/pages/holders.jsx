@@ -2,6 +2,7 @@ import Layout from "@/components/layout";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import MintNFTButton from "@/components/MintNFTButton";
+import LoadingWrapper from "@/components/LoadingWrapper";
 
 export default function CollectiblesPage() {
   const [user, setUser] = useContext(UserContext);
@@ -29,38 +30,42 @@ export default function CollectiblesPage() {
         <h1>Holders Only Area</h1>
       </section>
 
-      {user?.address && !loading ? (
-        <section className="space-y-4 text-center">
-          {user?.collectibles?.length > 0 ? (
-            <>
-              <h2 className="text-2xl">Super secret area</h2>
-              <p className="max-w-md mx-auto">
-                Welcome NFT holder! By owning an NFT from our collection, you
-                get exclusive private access to this private page.
-              </p>
-            </>
-          ) : (
-            <p className="max-w-md mx-auto">
-              This area is for holders of the NFT collection only.
-            </p>
-          )}
+      <LoadingWrapper>
+        {user?.address ? (
+          <section className="space-y-4 text-center">
+            <LoadingWrapper loading={loading}>
+              {user?.collectibles?.length > 0 ? (
+                <>
+                  <h2 className="text-2xl">Super secret area</h2>
+                  <p className="max-w-md mx-auto">
+                    Welcome NFT holder! By owning an NFT from our collection,
+                    you get exclusive private access to this private page.
+                  </p>
+                </>
+              ) : (
+                <p className="max-w-md mx-auto">
+                  This area is for holders of the NFT collection only.
+                </p>
+              )}
 
-          <MintNFTButton
-            buttonText={
-              user?.collectibles?.length > 0
-                ? "Mint Another NFT"
-                : "Mint an NFT"
-            }
-            className="mx-auto text-center"
-          />
-        </section>
-      ) : (
-        <p className="max-w-md mx-auto text-xl text-center">
-          Log in to access exclusive content{" "}
-          <span className="italic font-semibold">only</span> available to NFT
-          collection holders.
-        </p>
-      )}
+              <MintNFTButton
+                buttonText={
+                  user?.collectibles?.length > 0
+                    ? "Mint Another NFT"
+                    : "Mint an NFT"
+                }
+                className="mx-auto text-center"
+              />
+            </LoadingWrapper>
+          </section>
+        ) : (
+          <p className="max-w-md mx-auto text-xl text-center">
+            Log in to access exclusive content{" "}
+            <span className="italic font-semibold">only</span> available to NFT
+            collection holders.
+          </p>
+        )}
+      </LoadingWrapper>
     </Layout>
   );
 }

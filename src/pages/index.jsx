@@ -26,19 +26,19 @@ export default function Home() {
         <p>Connect a wallet or use Magic.link to mint a free NFT</p>
       </section>
 
-      <section className="mx-auto space-y-8 text-center">
-        <LoadingWrapper>
+      <LoadingWrapper>
+        <section className="mx-auto space-y-8 text-center">
           <ConnectOrMint />
 
           <FaucetSection />
-        </LoadingWrapper>
-      </section>
+        </section>
 
-      <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-        {tokens.slice(0, 4).map((item, id) => (
-          <CollectibleCard key={id} item={item} />
-        ))}
-      </section>
+        <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
+          {tokens.slice(0, 4).map((item, id) => (
+            <CollectibleCard key={id} item={item} />
+          ))}
+        </section>
+      </LoadingWrapper>
     </Layout>
   );
 }

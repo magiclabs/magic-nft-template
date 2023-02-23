@@ -1,6 +1,7 @@
 import { UserContext } from "@/lib/UserContext";
 import Image from "next/image";
 import { useContext } from "react";
+import { AnimatedLoader } from "./AnimatedLoader";
 
 export default function LoadingWrapper({
   children,
@@ -10,22 +11,6 @@ export default function LoadingWrapper({
   const [user] = useContext(UserContext);
 
   return (
-    <>
-      {!loading && !user?.loading ? (
-        <>{children}</>
-      ) : (
-        <div className="text-xl text-center">
-          <Image
-            src={"/img/spinner.svg"}
-            width={64}
-            height={64}
-            alt="loading spinner"
-            className="block mx-auto"
-          />
-
-          <p>{message}</p>
-        </div>
-      )}
-    </>
+    <>{!loading && !user?.loading ? <>{children}</> : <AnimatedLoader />}</>
   );
 }
