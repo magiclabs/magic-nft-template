@@ -24,7 +24,7 @@ export default function CollectibleCard({ item, tokenURI }) {
   if (!metadata?.image) return <></>;
 
   return (
-    <div className="w-64 h-64 mx-auto overflow-hidden border border-gray-200 bg-gray-50 rounded-xl drop-shadow-brand">
+    <div className="w-64 h-64 mx-auto overflow-hidden border border-gray-200 bg-gray-50 rounded-xl shadow-brand">
       {metadata?.name && (
         <div className="w-full px-4 py-2 font-semibold bg-white bg-opacity-80">
           {metadata.name}
