@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+
+/*
+  Base styles
+*/
+.container {
+  @apply mx-auto max-w-7xl;
+}
+
+.btn {
+  @apply px-6 py-3 font-semibold rounded-3xl;
+  @apply border border-transparent;
+  @apply hover:bg-opacity-95 hover:bg-brand-purple;
+  @apply text-white bg-brand-purple;
+}
+
+.loading {
+  @apply text-gray-500 bg-gray-400 hover:bg-gray-400;
+}
+
+.btn-outline {
+  @apply btn;
+  @apply text-black bg-white border-gray-300 hover:bg-opacity-10;
+}
+.btn-light {
+  @apply btn;
+  @apply text-brand-purple-text bg-brand-purple-light hover:bg-opacity-10;
+}
+
+.badge {
+  @apply px-3 py-1 text-sm font-semibold tracking-wide uppercase rounded-lg;
+  @apply text-brand-purple-text bg-brand-purple-light;
+}
+
+.hero {
+  @apply space-y-3 text-center;
+}
+h1 {
+  @apply text-6xl font-extrabold;
+}
+.hero p {
+  @apply text-xl;
+}
+
+.flex,
+.inline-flex {
+  @apply items-center;
+}
+
+/* When last, this ensures inline styles take priority */
+@tailwind utilities;
