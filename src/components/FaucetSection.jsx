@@ -43,7 +43,7 @@ export default function FaucetSection({}) {
           rel={"noreferrer"}
           className="block w-full btn-light"
         >
-          Open ETH faucet
+          Open Goerli ETH faucet
         </Link>
       </div>
     </section>

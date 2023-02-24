@@ -38,7 +38,7 @@ export default function CollectiblesPage() {
                 <>
                   <h2 className="text-2xl">Super secret area</h2>
                   <p className="max-w-md mx-auto">
-                    Host and display exclusive content that's
+                    Host and display exclusive content that&apos;s
                     only available to NFT holders.
                   </p>
                 </>
