@@ -53,7 +53,7 @@ export default function MintNFTButton({
           })();
         }}
       >
-        {loading ? "minting NFT..." : buttonText}
+        {loading ? "Minting NFT..." : buttonText}
       </button>
 
       <p className="py-2">

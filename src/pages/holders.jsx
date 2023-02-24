@@ -51,7 +51,7 @@ export default function CollectiblesPage() {
               <MintNFTButton
                 buttonText={
                   user?.collectibles?.length > 0
-                    ? "Mint Another NFT"
+                    ? "Mint another NFT"
                     : "Mint an NFT"
                 }
                 className="mx-auto text-center"

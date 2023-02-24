@@ -21,7 +21,7 @@ export default function LoginWithMagic({ className = "" }) {
         }}
         className="inline-flex space-x-3 text-lg btn"
       >
-        <span>Sign Up</span>
+        <span>Sign up</span>
         {/* <img src="/logo.svg" className="h-8" /> */}
       </button>
     </div>

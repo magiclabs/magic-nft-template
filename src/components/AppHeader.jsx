@@ -115,7 +115,7 @@ export default function AppHeader({}) {
                 className="btn"
                 // disabled={user?.loading}
               >
-                {user?.loading ? "Connect Wallet" : "Connect Wallet"}
+                {user?.loading ? "Connect wallet" : "Connect wallet"}
               </button>
             )}
           </div>

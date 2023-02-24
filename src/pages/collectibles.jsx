@@ -39,7 +39,7 @@ export default function CollectiblesPage() {
         {user?.address ? (
           <>
             <MintNFTButton
-              buttonText="Mint Another NFT"
+              buttonText="Mint another NFT"
               className="mx-auto text-center"
             />
 

@@ -84,7 +84,7 @@ export default function Modal() {
               </button>
 
               <Link href="/collectibles" className="mx-auto btn">
-                View All Collectibles
+                View all collectibles
               </Link>
             </div>
           </div>

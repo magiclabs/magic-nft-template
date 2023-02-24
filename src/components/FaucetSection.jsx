@@ -34,7 +34,7 @@ export default function FaucetSection({}) {
               );
           }}
         >
-          Copy Wallet Address
+          Copy wallet address
         </button>
 
         <Link
