@@ -32,16 +32,20 @@ export default function CollectiblesPage() {
       <section className="hero">
         <h1>My Collection</h1>
 
-        <p>View your current owned NFTs from the Hiro collection</p>
+        <p>Show users the NFTs from your collection that they own</p>
       </section>
 
       <LoadingWrapper>
         {user?.address ? (
           <>
             <MintNFTButton
-              buttonText="Mint another NFT"
-              className="mx-auto text-center"
-            />
+                buttonText={
+                  user?.collectibles?.length > 0
+                    ? "Mint another NFT"
+                    : "Mint an NFT"
+                }
+                className="mx-auto text-center"
+              />
 
             <LoadingWrapper
               loading={loading}

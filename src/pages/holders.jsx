@@ -38,8 +38,8 @@ export default function CollectiblesPage() {
                 <>
                   <h2 className="text-2xl">Super secret area</h2>
                   <p className="max-w-md mx-auto">
-                    Welcome NFT holder! By owning an NFT from our collection,
-                    you get exclusive private access to this private page.
+                    Host and display exclusive content that's
+                    only available to NFT holders.
                   </p>
                 </>
               ) : (

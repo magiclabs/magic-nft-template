@@ -23,11 +23,17 @@ export default function Home() {
       <section className="hero">
         <h1>Magic NFT Demo Site</h1>
 
-        <p>Connect a wallet or use Magic.link to mint a free NFT</p>
+        <p className="max-w-xl mx-auto">
+          Welcome to Magic's NFT Demo Site! <a href="https://magic.link" target="_blank" class="underline text-brand-purple">Magic</a> is
+          a frictionless solution to Web3 onboarding.
+          Use this site as a starting point for learning and creating
+          your own project.
+          Take a look at our <a href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md" target="_blank" class="underline text-brand-purple">guide</a> to get started!
+        </p>
       </section>
 
       <LoadingWrapper>
-        <section className="mx-auto space-y-8 text-center">
+        <section className="mx-auto space-y-4 text-center">
           <ConnectOrMint />
 
           <FaucetSection />
