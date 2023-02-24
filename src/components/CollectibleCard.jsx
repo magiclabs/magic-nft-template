@@ -35,7 +35,7 @@ export default function CollectibleCard({ item, tokenURI }) {
         src={metadata.image}
         width={256}
         height={256}
-        alt="Magic Carpet NFT"
+        alt="Hiro Collectible NFT"
       />
     </div>
   );

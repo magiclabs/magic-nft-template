@@ -9,10 +9,10 @@ import ConnectOrMint from "@/components/ConnectOrMint";
 
 // store a default listing of NFT images from the collection for display on the page
 const tokens = [
-  { id: 0, image: "/img/0.jpg" },
-  { id: 1, image: "/img/1.jpg" },
-  { id: 4, image: "/img/4.jpg" },
-  { id: 5, image: "/img/5.jpg" },
+  { id: 0, image: "/img/Ace Hiro.png" },
+  { id: 3, image: "/img/Jack Hiro.png" },
+  { id: 9, image: "/img/Queen Hiro.png" },
+  { id: 4, image: "/img/King Hiro.png" },
 ];
 
 export default function Home() {

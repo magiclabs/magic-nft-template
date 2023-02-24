@@ -32,7 +32,7 @@ export default function CollectiblesPage() {
       <section className="hero">
         <h1>My Collection</h1>
 
-        <p>View your current owned NFTs from the Magic Carpet collection</p>
+        <p>View your current owned NFTs from the Hiro collection</p>
       </section>
 
       <LoadingWrapper>
