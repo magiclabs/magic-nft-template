@@ -13,6 +13,9 @@ module.exports = {
         "brand-purple-text": "#522FD4",
         "brand-purple-light": "#EDEBFF",
       },
+      dropShadow: {
+        brand: "0 12px 56px rgba(119, 118, 122, .15)",
+      },
     },
   },
   plugins: [],
