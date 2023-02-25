@@ -12,4 +12,4 @@ A similar guide will be released soon detailing how to set up an on-chain contra
 
 ## Already know what you're doing?
 
-Dive right into the [frontend](./frontend/) and/or [contract](./contract/) directories and use them as a starting point for creating your own NFT project with Magic.
+Feel free to fork and clone this repository and use it as a starting point for creating your own NFT projects, integrated with magic!
