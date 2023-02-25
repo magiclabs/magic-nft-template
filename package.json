@@ -1,26 +1,25 @@
 {
-  "name": "magic-poc",
-  "version": "0.1.0",
+  "name": "magic-nft-demo",
+  "version": "1.0.0",
+  "description": "Magic NFT Starter Pack!",
+  "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "@next/font": "13.1.6",
-    "eslint": "8.34.0",
-    "eslint-config-next": "13.1.6",
-    "magic-sdk": "^13.2.0",
-    "next": "13.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "web3": "^1.8.2"
+  "workspaces": [
+    "contract",
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magiclabs/magic-nft-template.git"
   },
-  "devDependencies": {
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.6"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/magiclabs/magic-nft-template/issues"
+  },
+  "homepage": "https://github.com/magiclabs/magic-nft-template#readme"
 }

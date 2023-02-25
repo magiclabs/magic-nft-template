@@ -1,15 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+coverage.json
 
 # next.js
-/.next/
+.next
 /out/
 
 # production
@@ -31,3 +32,11 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# typechain
+typechain
+typechain-types
+
+#Hardhat files
+cache
+artifacts
