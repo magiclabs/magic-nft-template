@@ -12,4 +12,4 @@ A similar guide will be released soon detailing how to set up an on-chain contra
 
 ## Already know what you're doing?
 
-Feel free to fork and clone this repository and use it as a starting point for creating your own NFT projects, integrated with magic!
+Feel free to fork and clone this repository and use it as a starting point for creating your own NFT projects, integrated with Magic!
