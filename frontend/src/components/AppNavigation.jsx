@@ -5,13 +5,13 @@ export default function AppNavigation({}) {
   return (
     <ul className={styles.linkArea}>
       <li>
-        <Link href={"/"}>Home</Link>
+        <Link href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md" target="_blank">Guide</Link>
       </li>
       <li>
-        <Link href={"/collectibles"}>My Collectibles</Link>
+        <Link href={"/collectibles"}>Collection</Link>
       </li>
       <li>
-        <Link href={"/holders"}>Holders Only</Link>
+        <Link href={"/holders"}>Token-Gated Perks</Link>
       </li>
     </ul>
   );

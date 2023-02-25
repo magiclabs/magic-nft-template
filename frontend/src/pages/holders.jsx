@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import MintNFTButton from "@/components/MintNFTButton";
 import LoadingWrapper from "@/components/LoadingWrapper";
+import LoginWithMagic from "@/components/LoginWithMagic";
 
 export default function CollectiblesPage() {
   const [user, setUser] = useContext(UserContext);
@@ -27,27 +28,20 @@ export default function CollectiblesPage() {
   return (
     <Layout title="Holders Only Area" className="">
       <section className="hero">
-        <h1>Holders Only Area</h1>
+        <h1>Token-Gated Perks</h1>
+        <p className="max-w-xl mx-auto">
+          You must be logged in with a wallet holding an NFT
+          to see hidden content. At Magic, we're seeing a
+          rising number of sophisticated token-gating use
+          cases at large enterprises. <a href="https://magic.link/contact" rel="noreferrer" target="_blank" className="underline text-brand-purple">Contact us</a> if you'd
+          like our help with your project.
+        </p>
       </section>
 
       <LoadingWrapper>
         {user?.address ? (
           <section className="space-y-4 text-center">
             <LoadingWrapper loading={loading}>
-              {user?.collectibles?.length > 0 ? (
-                <>
-                  <h2 className="text-2xl">Super secret area</h2>
-                  <p className="max-w-md mx-auto">
-                    Host and display exclusive content that&apos;s
-                    only available to NFT holders.
-                  </p>
-                </>
-              ) : (
-                <p className="max-w-md mx-auto">
-                  This area is for holders of the NFT collection only.
-                </p>
-              )}
-
               <MintNFTButton
                 buttonText={
                   user?.collectibles?.length > 0
@@ -59,11 +53,9 @@ export default function CollectiblesPage() {
             </LoadingWrapper>
           </section>
         ) : (
-          <p className="max-w-md mx-auto text-xl text-center">
-            Log in to access exclusive content{" "}
-            <span className="italic font-semibold">only</span> available to NFT
-            collection holders.
-          </p>
+          <section className="py-10 space-y-3 text-center">
+            <LoginWithMagic />
+          </section>
         )}
       </LoadingWrapper>
     </Layout>

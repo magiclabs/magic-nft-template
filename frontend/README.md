@@ -1,6 +1,6 @@
-# Magic NFT Starter Pack - Frontend Guide
+# Magic NFT Starter Kit - Frontend Guide
 
-[Magic](https://magic.link) makes it super simple to spin up secure, non-custodial wallets for users while also supporting third party wallets. This NFT Starter Pack illustrates how to integrate [Magic Connect](https://magic.link/connect) with a basic NFT site that allows users to mint and view NFTs from a particular NFT collection. The guide below walks through the Magic Connect integration as well as the remaining items that may be new for developers just getting into Web3 (e.g. connecting to the Ethereum network, reading data from the network, submitting transactions, etc.)
+[Magic](https://magic.link) makes it super simple to spin up secure, non-custodial wallets for users while also supporting third party wallets. This NFT Starter Kit illustrates how to integrate [Magic Connect](https://magic.link/connect) with a basic NFT site that allows users to mint and view NFTs from a particular NFT collection. The guide below walks through the Magic Connect integration as well as the remaining items that may be new for developers just getting into Web3 (e.g. connecting to the Ethereum network, reading data from the network, submitting transactions, etc.)
 
 ## Magic Connect
 

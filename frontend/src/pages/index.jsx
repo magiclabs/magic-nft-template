@@ -21,14 +21,12 @@ export default function Home() {
   return (
     <Layout title="Home" className="">
       <section className="hero">
-        <h1>Magic NFT Demo Site</h1>
-
+        <h1>Magic NFT dApp Template</h1>
         <p className="max-w-xl mx-auto">
-          Welcome to Magic&apos;s NFT Demo Site! <a href="https://magic.link" rel="noreferrer" target="_blank" className="underline text-brand-purple">Magic</a> is
-          a frictionless solution to Web3 onboarding.
-          Use this site as a starting point for learning and creating
-          your own project.
-          Take a look at our <a href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md" rel="noreferrer" target="_blank" className="underline text-brand-purple">guide</a> to get started!
+          Follow our <a href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md" rel="noreferrer" target="_blank" className="underline text-brand-purple">NFT developer guide</a> to
+          clone this open source template as your NFT starter kit.
+          This demo includes code for authentication, wallet onboarding,
+          NFT minting, NFT checkout, NFT viewing, and token gating.
         </p>
       </section>
 

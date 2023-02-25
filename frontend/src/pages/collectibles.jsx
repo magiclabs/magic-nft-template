@@ -32,7 +32,7 @@ export default function CollectiblesPage() {
       <section className="hero">
         <h1>My Collection</h1>
 
-        <p>Show users the NFTs from your collection that they own</p>
+        <p>Users can see their purchased NFTs.</p>
       </section>
 
       <LoadingWrapper>
@@ -61,11 +61,6 @@ export default function CollectiblesPage() {
         ) : (
           <section className="py-10 space-y-3 text-center">
             <LoginWithMagic />
-
-            <p className="text-lg">
-              Connect your wallet or login with Magic.link to view your
-              collectibles
-            </p>
           </section>
         )}
       </LoadingWrapper>
