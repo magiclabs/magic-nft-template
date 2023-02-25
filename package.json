@@ -9,8 +9,7 @@
   },
   "workspaces": [
     "contract",
-    "frontend",
-    "test"
+    "frontend"
   ],
   "repository": {
     "type": "git",
