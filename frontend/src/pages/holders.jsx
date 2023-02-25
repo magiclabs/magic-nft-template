@@ -31,10 +31,10 @@ export default function CollectiblesPage() {
         <h1>Token-Gated Perks</h1>
         <p className="max-w-xl mx-auto">
           You must be logged in with a wallet holding an NFT
-          to see hidden content. At Magic, we're seeing a
+          to see hidden content. At Magic, we&apos;re seeing a
           rising number of sophisticated token-gating use
-          cases at large enterprises. <a href="https://magic.link/contact" rel="noreferrer" target="_blank" className="underline text-brand-purple">Contact us</a> if you'd
-          like our help with your project.
+          cases at large enterprises. <a href="https://magic.link/contact" rel="noreferrer" target="_blank" className="underline text-brand-purple">Contact us</a> if
+          you&apos;d like our help with your project.
         </p>
       </section>
 
