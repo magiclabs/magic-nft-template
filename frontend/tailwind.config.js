@@ -14,7 +14,7 @@ module.exports = {
         "brand-purple-light": "#EDEBFF",
       },
       boxShadow: {
-        brand: "0 12px 56px rgba(119, 118, 122, .15)",
+        brand: "8 8px 48px rgba(24, 23, 26, .2)",
       },
     },
   },
