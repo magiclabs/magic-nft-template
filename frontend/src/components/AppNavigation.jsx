@@ -8,7 +8,7 @@ export default function AppNavigation({}) {
         <Link href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md" target="_blank">Guide</Link>
       </li>
       <li>
-        <Link href={"/collectibles"}>Collection</Link>
+        <Link href={"/collectibles"}>My Collection</Link>
       </li>
       <li>
         <Link href={"/holders"}>Token-Gated Perks</Link>
