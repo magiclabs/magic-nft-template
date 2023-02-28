@@ -4,6 +4,7 @@ import { UserContext } from "@/lib/UserContext";
 import MintNFTButton from "@/components/MintNFTButton";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import LoginWithMagic from "@/components/LoginWithMagic";
+import MerchForm from "@/components/MerchForm";
 
 export default function CollectiblesPage() {
   const [user, setUser] = useContext(UserContext);
@@ -29,12 +30,19 @@ export default function CollectiblesPage() {
     <Layout title="Holders Only Area" className="">
       <section className="hero">
         <h1>Token-Gated Perks</h1>
-        <p className="max-w-xl mx-auto">
-          You must be logged in with a wallet holding an NFT
-          to see hidden content. At Magic, we&apos;re seeing a
-          rising number of sophisticated token-gating use
-          cases at large enterprises. <a href="https://magic.link/contact" rel="noreferrer" target="_blank" className="underline text-brand-purple">Contact us</a> if
-          you&apos;d like our help with your project.
+        <p>
+          This page only shows content to users with a Hiro NFT. At Magic,
+          we&apos;re seeing a rising number of sophisticated token-gating use
+          cases at large enterprises.{" "}
+          <a
+            href="https://magic.link/contact"
+            rel="noreferrer"
+            target="_blank"
+            className="underline text-brand-purple"
+          >
+            Contact us
+          </a>{" "}
+          if you&apos;d like our help with your project.
         </p>
       </section>
 
@@ -42,14 +50,11 @@ export default function CollectiblesPage() {
         {user?.address ? (
           <section className="space-y-4 text-center">
             <LoadingWrapper loading={loading}>
-              <MintNFTButton
-                buttonText={
-                  user?.collectibles?.length > 0
-                    ? "Mint another NFT"
-                    : "Mint an NFT"
-                }
-                className="mx-auto text-center"
-              />
+              <p className="max-w-xl mx-auto">
+                Everyone loves free merch. Complete the form below for a chance
+                to win our monthly swag giveaway!
+              </p>
+              <MerchForm className="max-w-lg mx-auto" />
             </LoadingWrapper>
           </section>
         ) : (

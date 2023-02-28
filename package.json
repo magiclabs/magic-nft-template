@@ -1,7 +1,7 @@
 {
   "name": "magic-nft-demo",
   "version": "1.0.0",
-  "description": "Magic NFT Starter Pack!",
+  "description": "Magic NFT Starter Kit!",
   "main": "index.js",
   "private": true,
   "scripts": {

@@ -40,6 +40,7 @@ h1 {
   @apply text-6xl font-extrabold;
 }
 .hero p {
+  @apply max-w-3xl mx-auto;
   @apply text-xl;
 }
 
