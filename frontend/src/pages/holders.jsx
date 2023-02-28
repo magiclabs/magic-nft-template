@@ -50,11 +50,11 @@ export default function CollectiblesPage() {
         {user?.address ? (
           <section className="space-y-4 text-center">
             <LoadingWrapper loading={loading}>
-              <p className="max-w-xl mx-auto">
+              <p className="max-w-lg mx-auto">
                 Everyone loves free merch. Complete the form below for a chance
                 to win our monthly swag giveaway!
               </p>
-              <MerchForm className="max-w-lg mx-auto" />
+              <MerchForm />
             </LoadingWrapper>
           </section>
         ) : (

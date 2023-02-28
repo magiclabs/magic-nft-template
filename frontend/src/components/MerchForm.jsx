@@ -24,7 +24,7 @@ export default function MerchForm() {
 
   return (
     <div>
-      <div id="hubspotForm"></div>
+      <div className="max-w-lg mx-auto" id="hubspotForm"></div>
     </div>
   );
 }
