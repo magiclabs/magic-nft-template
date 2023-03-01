@@ -41,9 +41,7 @@ The remainder of the app uses the [Wallet module](https://magic.link/docs/connec
     magic.wallet
     .connectWithUI()
     .then((res) => {
-      (async () => {
-        await getUserData().then((data) => setUser(data));
-      })();
+      getUserData().then((data) => setUser(data));
     })
     ```
 

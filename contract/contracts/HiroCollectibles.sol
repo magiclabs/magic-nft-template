@@ -31,7 +31,7 @@ contract HiroCollectibles is ERC721, ERC721Enumerable, Ownable {
         return
             string(
                 abi.encodePacked(
-                    "ipfs://bafybeif43x6ys7n3hfyuurvihqocxdgism3pjeeu22ro4nhfvqgjoqhzua/",
+                    "ipfs://bafybeifxytkexhg2t7uhlukb3vcphu4y6dxp7666ovt7ujryjtjdebtfba/",
                     uriId.toString(),
                     ".json"
                 )

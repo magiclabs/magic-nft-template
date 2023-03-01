@@ -57,7 +57,7 @@ export default function CollectiblesPage() {
                     Everyone loves free merch. Complete the form below for a
                     chance to win our monthly swag giveaway!
                   </p>
-                  <div className="flex items-start justify-center mx-auto space-x-12">
+                  <div className="flex items-start justify-center pt-6 mx-auto space-x-12">
                     <div className="grid grid-cols-2 gap-6">
                       <div>
                         <Image

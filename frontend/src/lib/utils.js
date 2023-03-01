@@ -144,26 +144,25 @@ export async function fetchNFTs(address) {
     }
 
     // await all promises to fetch the owned token IDs
-    await Promise.allSettled(promisesForIds).then(async (tokenIDs) => {
-      for (let i = 0; i < tokenIDs.length; i++) {
-        // console.log("id:", i, ":", tokenIDs[i].status);
-        // console.log(tokenIDs[i]);
+    const tokenIDs = await Promise.allSettled(promisesForIds);
+    for (let i = 0; i < tokenIDs.length; i++) {
+      // console.log("id:", i, ":", tokenIDs[i].status);
+      // console.log(tokenIDs[i]);
 
-        // add each token id to the next round of promises
-        promisesForUris.push(
-          await contract.methods
-            .tokenURI(tokenIDs[i].value)
-            .call()
-            .then((uri) => {
-              uri = ipfsToHttps(uri);
-              // console.log(`Token ID ${result.value} has URI of ${uri}`);
-              tokens.push(uri);
-              return uri;
-            })
-            .catch((err) => console.warn(err)),
-        );
-      }
-    });
+      // add each token id to the next round of promises
+      promisesForUris.push(
+        await contract.methods
+          .tokenURI(tokenIDs[i].value)
+          .call()
+          .then((uri) => {
+            uri = ipfsToHttps(uri);
+            // console.log(`Token ID ${result.value} has URI of ${uri}`);
+            tokens.push(uri);
+            return uri;
+          })
+          .catch((err) => console.warn(err)),
+      );
+    }
 
     // await all promises for fetching the token URIs
     await Promise.allSettled(promisesForUris);

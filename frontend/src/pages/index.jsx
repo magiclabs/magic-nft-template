@@ -39,7 +39,7 @@ export default function Home() {
       </section>
 
       <LoadingWrapper>
-        <section className="mx-auto space-t-4 text-center">
+        <section className="mx-auto text-center space-t-4">
           <ConnectOrMint />
         </section>
 

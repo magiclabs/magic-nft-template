@@ -39,13 +39,13 @@ export default function CollectiblesPage() {
         {user?.address ? (
           <>
             <MintNFTButton
-                buttonText={
-                  user?.collectibles?.length > 0
-                    ? "Mint another NFT"
-                    : "Mint an NFT"
-                }
-                className="mx-auto text-center"
-              />
+              buttonText={
+                user?.collectibles?.length > 0
+                  ? "Mint another NFT"
+                  : "Mint an NFT"
+              }
+              className="mx-auto text-center"
+            />
 
             <LoadingWrapper
               loading={loading}
@@ -53,7 +53,7 @@ export default function CollectiblesPage() {
             >
               <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
                 {user?.collectibles?.map((uri, id) => (
-                  <CollectibleCard key={id} tokenURI={uri} />
+                  <CollectibleCard key={id} tokenURI={uri} linkToOS />
                 ))}
               </section>
             </LoadingWrapper>
