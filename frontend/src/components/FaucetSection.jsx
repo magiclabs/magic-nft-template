@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { UserContext } from "@/lib/UserContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function FaucetSection({}) {
   const [user] = useContext(UserContext);
+  const [copyState, setCopyState] = useState({
+    copied: false,
+    text: "Copy wallet address",
+  });
 
   // only show this component when a user is connected
   if (!user?.address) return <></>;
@@ -21,20 +25,21 @@ export default function FaucetSection({}) {
 
       <div className="justify-between space-y-2 md:space-x-4 md:space-y-0 md:flex">
         <button
-          className="block w-full btn-outline"
+          className={`${
+            copyState.copied ? "text-[#00875F]" : ""
+          } block w-full btn-outline`}
           onClick={() => {
             if (!user?.address) return alert("Please connect!");
 
-            navigator.clipboard
-              .writeText(user?.address)
-              .then((res) =>
-                alert(
-                  `ETH wallet address copied to clipboard: ${user?.address}`,
-                ),
-              );
+            navigator.clipboard.writeText(user?.address).then((res) => {
+              setTimeout(() => {
+                setCopyState({ copied: false, text: "Copy wallet address" });
+              }, 5000);
+              setCopyState({ copied: true, text: "Copied!" });
+            });
           }}
         >
-          Copy wallet address
+          {copyState.text}
         </button>
 
         <Link

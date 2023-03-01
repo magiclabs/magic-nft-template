@@ -5,6 +5,7 @@ import MintNFTButton from "@/components/MintNFTButton";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import LoginWithMagic from "@/components/LoginWithMagic";
 import MerchForm from "@/components/MerchForm";
+import Image from "next/image";
 
 export default function CollectiblesPage() {
   const [user, setUser] = useContext(UserContext);
@@ -50,11 +51,51 @@ export default function CollectiblesPage() {
         {user?.address ? (
           <section className="space-y-4 text-center">
             <LoadingWrapper loading={loading}>
-              <p className="max-w-lg mx-auto">
+              <p className="max-w-5xl mx-auto">
                 Everyone loves free merch. Complete the form below for a chance
                 to win our monthly swag giveaway!
               </p>
-              <MerchForm />
+              <div className="flex items-start justify-center mx-auto space-x-12">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <Image
+                      className="block shadow-image"
+                      src="/img/swag-buckethat.png"
+                      height={250}
+                      width={250}
+                      alt="Hat swag"
+                    />
+                  </div>
+                  <div>
+                    <Image
+                      className="block shadow-image"
+                      src="/img/swag-tote.png"
+                      height={250}
+                      width={250}
+                      alt="Hat swag"
+                    />
+                  </div>
+                  <Image
+                    className="block shadow-image"
+                    src="/img/swag-jacket.png"
+                    height={250}
+                    width={250}
+                    alt="Hat swag"
+                  />
+                  <div>
+                    <Image
+                      className="block shadow-image"
+                      src="/img/swag-cards.png"
+                      height={250}
+                      width={250}
+                      alt="Hat swag"
+                    />
+                  </div>
+                </div>
+                <div className="p-8 bg-white shadow-form rounded-3xl">
+                  <MerchForm />
+                </div>
+              </div>
             </LoadingWrapper>
           </section>
         ) : (

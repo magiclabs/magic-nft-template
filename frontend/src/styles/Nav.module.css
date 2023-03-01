@@ -29,7 +29,7 @@
 
 .linkArea {
   @apply flex flex-col justify-start list-none lg:flex-row;
-  @apply text-base lg:space-x-4;
+  @apply text-base lg:space-x-4 text-brand-ink;
 }
 .linkArea a {
   @apply block;

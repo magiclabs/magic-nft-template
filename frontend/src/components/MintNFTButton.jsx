@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import { requestMintNFT } from "@/lib/utils";
 import { web3 } from "@/lib/web3";
+import { AnimatedLoader } from "./AnimatedLoader";
 
 export default function MintNFTButton({
   className = "",
@@ -13,7 +14,7 @@ export default function MintNFTButton({
   return (
     <div className={className}>
       <button
-        className={`inline-flex space-x-3 text-xl btn ${loading && "loading"}`}
+        className={`inline-flex space-x-3 btn-lg relative justify-center`}
         disabled={loading}
         onClick={() => {
           setLoading(true);
@@ -53,7 +54,15 @@ export default function MintNFTButton({
           })();
         }}
       >
-        {loading ? "Minting NFT..." : buttonText}
+        <span className={loading ? "opacity-0" : "opacity-100"}>
+          {buttonText}
+        </span>
+
+        {loading ? (
+          <span className="absolute">
+            <AnimatedLoader width={40} height={40} fill="#FFFFFF" />
+          </span>
+        ) : null}
       </button>
 
       <p className="py-2">
@@ -66,14 +75,9 @@ export default function MintNFTButton({
         </span>{" "}
         ETH
       </p>
-
-      {loading && (
-        <p className="font-sm">
-          *minting may take around 30 seconds.
-          <br />
-          please be patient!
-        </p>
-      )}
+      <p className={loading ? "font-sm" : "font-sm opacity-0"}>
+        *minting may take around 30 seconds
+      </p>
     </div>
   );
 }

@@ -76,14 +76,14 @@ export default function Modal() {
 
             <div className={styles.footer}>
               <button
-                className="mx-auto btn btn-outline"
+                className="w-full mx-auto btn btn-light"
                 type="button"
                 onClick={() => setShowModal(false)}
               >
                 Close
               </button>
 
-              <Link href="/collectibles" className="mx-auto btn">
+              <Link href="/collectibles" className="mx-auto btn full-w">
                 View all collectibles
               </Link>
             </div>
