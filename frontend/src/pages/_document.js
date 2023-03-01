@@ -9,10 +9,10 @@ export default function Document() {
         <meta name="twitter:creator" content={twitterHandle} key="twhandle" /> */}
 
         {/* Open Graph */}
-        {/* <meta property="og:url" content={currentURL} key="ogurl" /> */}
+        <meta property="og:url" content={process.env.HOST} key="ogurl" />
         <meta
           property="og:image"
-          content="/OG Card - Next.js NFT Template.png"
+          content={`${process.env.HOST}/OG Card - Next.js NFT Template.png`}
           key="ogimage"
         />
         <meta
@@ -27,7 +27,7 @@ export default function Document() {
         />
         <meta
           property="og:description"
-          content="Clone to get auth, wallet, onramp, minting, viewing, and token gating out of the box."
+          content="Clone this template from Magic to get auth, wallet, onramp, minting, viewing, and token gating out of the box."
           key="ogdesc"
         />
         <title>Next.js NFT Template</title>
