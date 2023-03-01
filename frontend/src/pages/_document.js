@@ -4,11 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Twitter */}
-        {/* <meta name="twitter:card" content="summary" key="twcard" />
-        <meta name="twitter:creator" content={twitterHandle} key="twhandle" /> */}
-
-        {/* Open Graph */}
         <meta
           property="og:url"
           content={process.env.NEXT_PUBLIC_HOST}
@@ -31,7 +26,7 @@ export default function Document() {
         />
         <meta
           property="og:description"
-          content="Clone this template from Magic to get auth, wallet, onramp, minting, viewing, and token gating out of the box."
+          content="Use this template to kickstart your Next.js NFT marketplace or dApp, reducing hours of work to minutes. This Next.js NFT template comes out of the box with code for authentication, fiat onramp, minting NFTs, viewing NFT collections, and web3 token gating."
           key="ogdesc"
         />
         <title>Next.js NFT Template</title>
