@@ -42,11 +42,11 @@
   @apply space-y-3 text-center;
 }
 h1 {
-  @apply text-6xl font-extrabold;
+  @apply pt-6 text-6xl font-extrabold;
   @apply text-brand-ink
 }
 .hero p {
-  @apply max-w-2xl mx-auto;
+  @apply max-w-2xl pt-6 mx-auto;
   @apply text-lg;
 }
 

@@ -17,11 +17,9 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     setUser({ loading: true });
 
-    (async () => {
-      // auto load the userData and store it in the state
-      console.log("Checking if a user is already logged in...");
-      await getUserData().then((data) => setUser(data));
-    })();
+    // auto load the userData and store it in the state
+    console.log("Checking if a user is already logged in...");
+    getUserData().then((data) => setUser(data));
   }, []);
 
   useEffect(() => {
@@ -35,20 +33,18 @@ export default function App({ Component, pageProps }) {
     if (user?.loading || !user?.address || !user?.refreshCollectibles) return;
 
     // fetch the listing of the user's NFT from the blockchain
-    (async () => {
-      console.log("Refreshing collectibles...");
-      // update the fetching status
-      setUser({ ...user, refreshCollectibles: true });
+    console.log("Refreshing collectibles...");
+    // update the fetching status
+    setUser({ ...user, refreshCollectibles: true });
 
-      await fetchNFTs(user.address).then((res) => {
-        // update the tracked state
-        setUser({
-          ...user,
-          collectibles: res.reverse(),
-          refreshCollectibles: false,
-        });
+    fetchNFTs(user.address).then((res) => {
+      // update the tracked state
+      setUser({
+        ...user,
+        collectibles: res.reverse(),
+        refreshCollectibles: false,
       });
-    })();
+    });
   }, [user?.address, user?.loading, user?.refreshCollectibles]);
 
   return (

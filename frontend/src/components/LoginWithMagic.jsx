@@ -13,9 +13,7 @@ export default function LoginWithMagic({ className = "" }) {
           magic.wallet
             .connectWithUI()
             .then((res) => {
-              (async () => {
-                await getUserData().then((data) => setUser(data));
-              })();
+              getUserData().then((data) => setUser(data));
             })
             .catch((err) => console.error(err));
         }}
