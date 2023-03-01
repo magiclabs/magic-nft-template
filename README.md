@@ -6,9 +6,14 @@ Welcome to the Magic NFT Starter Kit!
 
 ## New to Magic and/or Web3?
 
-Check out the [**Frontend Guide**](./frontend/README.md)! It walks through the basics of the site, the Magic SDK, and interacting with the blockchain from a client.
+We've got plenty of resources to help you get started on your journey!
 
-A similar guide will be released soon detailing how to set up an on-chain contract for an NFT project.
+- Our [**Frontend Guide**](./frontend/README.md) is a great place to start! It walks through the basics of this repo, the Magic SDK, and interacting with the blockchain from a client.
+- [Magic Connect documentation](https://magic.link/docs/connect/overview) is another great resource for understanding what Magic has to offer.
+
+In addition to the Frontend Guide, this repository stores the code we used to generate the Ethereum contract for the NFT collection. Take a look at the `contract` directory as part of getting started with your Web3 journey! We'll update this repository with a guide for the on-chain portion soon.
+
+We'll also be releasing more guides, templates, and tutorials over time so be sure to follow along here and on [our blog](https://magic.link/blogs)!
 
 ## Already know what you're doing?
 
