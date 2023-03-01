@@ -42,5 +42,5 @@
 }
 
 .burger {
-  @apply block md:hidden;
+  @apply block lg:hidden;
 }
