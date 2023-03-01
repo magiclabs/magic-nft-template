@@ -9,10 +9,14 @@ export default function Document() {
         <meta name="twitter:creator" content={twitterHandle} key="twhandle" /> */}
 
         {/* Open Graph */}
-        <meta property="og:url" content={process.env.HOST} key="ogurl" />
+        <meta
+          property="og:url"
+          content={process.env.NEXT_PUBLIC_HOST}
+          key="ogurl"
+        />
         <meta
           property="og:image"
-          content={`${process.env.HOST}/OG Card - Next.js NFT Template.png`}
+          content={`${process.env.NEXT_PUBLIC_HOST}/OG Card - Next.js NFT Template.png`}
           key="ogimage"
         />
         <meta
