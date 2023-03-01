@@ -91,7 +91,21 @@ export default function AppHeader({}) {
 
           <div className={navbarOpen ? styles.actionAreaMobile : ""}>
             {user?.isLoggedIn ? (
-              <div className="space-x-3">
+              <div className="flex space-x-3">
+                <Link
+                  href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md"
+                  target="_blank"
+                  className="flex justify-center gap-3 btn-neutral"
+                >
+                  Guide
+                  <Image
+                    src={"/img/github-mark.png"}
+                    width={24}
+                    height={24}
+                    alt="Github"
+                  />
+                </Link>
+
                 <button
                   onClick={() => openWallet()}
                   type="button"
@@ -109,14 +123,30 @@ export default function AppHeader({}) {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={() => loginWithConnect()}
-                type="button"
-                className="btn"
-                // disabled={user?.loading}
-              >
-                {user?.loading ? "Connect wallet" : "Connect wallet"}
-              </button>
+              <div className="flex space-x-3">
+                <Link
+                  href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md"
+                  target="_blank"
+                  className="flex justify-center gap-3 btn-neutral"
+                >
+                  Guide
+                  <Image
+                    src={"/img/github-mark.png"}
+                    width={24}
+                    height={24}
+                    alt="Github"
+                  />
+                </Link>
+
+                <button
+                  onClick={() => loginWithConnect()}
+                  type="button"
+                  className="btn"
+                  // disabled={user?.loading}
+                >
+                  Connect wallet
+                </button>
+              </div>
             )}
           </div>
         </nav>

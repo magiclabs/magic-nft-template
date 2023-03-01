@@ -28,6 +28,10 @@
   @apply btn;
   @apply text-brand-purple-text bg-brand-purple-light hover:bg-opacity-10;
 }
+.btn-neutral {
+  @apply btn;
+  @apply text-brand-ink bg-[#F8F8FA] hover:bg-[#EDEDF3]
+}
 
 .badge {
   @apply px-3 py-1 text-sm font-semibold tracking-wide uppercase rounded-lg;
