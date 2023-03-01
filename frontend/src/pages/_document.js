@@ -14,7 +14,7 @@ export default function Document() {
         />
         <meta
           property="og:image"
-          content={`${process.env.NEXT_PUBLIC_HOST}/OG Card - Next.js NFT Template.png`}
+          content={`${process.env.NEXT_PUBLIC_HOST}/og-card.png`}
           key="ogimage"
         />
         <meta
