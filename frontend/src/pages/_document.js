@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <meta property="og:type" content="website" key="ogtype" />
         <meta
           property="og:url"
           content={process.env.NEXT_PUBLIC_HOST}
