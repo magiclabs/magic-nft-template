@@ -10,7 +10,7 @@
   @apply items-center justify-between flex-grow w-full bg-white lg:flex;
 }
 .navOpen {
-  @apply absolute left-0 block p-5 mt-3 border-gray-300 shadow border-y;
+  @apply absolute left-0 z-10 block p-5 mt-3 border-gray-300 shadow border-y;
 }
 .navClosed {
   @apply hidden lg:flex;

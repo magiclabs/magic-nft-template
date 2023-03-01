@@ -89,11 +89,11 @@ export default function AppHeader({}) {
 
           <div className={navbarOpen ? styles.actionAreaMobile : ""}>
             {user?.isLoggedIn ? (
-              <div className="flex space-x-3">
+              <div className="grid grid-cols-2 gap-3 lg:space-x-3 lg:flex image.png">
                 <Link
                   href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md"
                   target="_blank"
-                  className="flex justify-center gap-3 btn-neutral"
+                  className="flex justify-center col-span-2 gap-3 btn-neutral"
                 >
                   Guide
                   <Image
