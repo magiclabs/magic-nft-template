@@ -210,3 +210,9 @@ yarn dev
 The development server will run on port 3000 if available. If port 3000 is already in use, it'll use another one. You'll be able to see which port is being used in the console.
 
 Open [http://localhost:3000](http://localhost:3000) (or whichever port the development server is running on) with your browser to see the result.
+
+### Goerli Testnet
+
+This template uses the Goerli Testnet so that you can experiment without using real ETH. Goerli is an Ethereum test network, or testnet. Testnets are designed to be as close as possible to the production network without requiring tokens to have actual value. That way, you can execute transactions, deploy contracts, mint, and generally just experiment, without fear of losing money.
+
+Before using Goerli, you will need to first acquire some Goerli ETH. To do so, you can use a faucet such as https://goerlifaucet.com/. Faucets are sites that send you test ETH. At the time of writing, https://goerlifaucet.com/ requires creating an Alchemy account, but once you have an account you can get 0.5 Goerli ETH for testing. Once you have your Goerli ETH, you are ready to begin minting!
