@@ -37,6 +37,11 @@
     @apply flex flex-col items-center gap-6;
   }
 }
+@media (max-width: 639px) {
+  .footerReverse {
+    flex-direction: column-reverse;
+  }
+}
 @media (min-width: 640px) {
   .footer {
     @apply grid items-center grid-cols-2 gap-6 border-solid rounded-b border-slate-200;

@@ -77,14 +77,9 @@ export default function Modal() {
               {tokenURI && <CollectibleCard tokenURI={tokenURI} />}
             </div>
 
-            <div className={styles.footer}>
-              <Link
-                href="/collectibles"
-                className="w-full mx-auto btn text-center"
-              >
-                View all collectibles
-              </Link>
-
+            <div
+              className={`${styles.footer} flex flex-col md:flex-row ${styles.footerReverse}`}
+            >
               <button
                 className="w-full mx-auto btn btn-light"
                 type="button"
@@ -92,6 +87,13 @@ export default function Modal() {
               >
                 Close
               </button>
+
+              <Link
+                href="/collectibles"
+                className="w-full mx-auto btn text-center"
+              >
+                View all collectibles
+              </Link>
             </div>
           </div>
         </div>
