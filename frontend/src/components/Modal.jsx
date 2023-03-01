@@ -63,7 +63,10 @@ export default function Modal() {
             <div className={styles.header}>
               <h3>Congratulations 🥳</h3>
 
-              <button onClick={() => setShowModal(false)}>
+              <button
+                onClick={() => setShowModal(false)}
+                className="hidden sm:block"
+              >
                 <img src="/img/close.svg" width={16} height={16} alt="X" />
               </button>
             </div>
@@ -74,7 +77,9 @@ export default function Modal() {
               {tokenURI && <CollectibleCard tokenURI={tokenURI} />}
             </div>
 
-            <div className={styles.footer}>
+            <div
+              className={`${styles.footer} flex flex-col md:flex-row ${styles.footerReverse}`}
+            >
               <button
                 className="w-full mx-auto btn btn-light"
                 type="button"
@@ -83,7 +88,10 @@ export default function Modal() {
                 Close
               </button>
 
-              <Link href="/collectibles" className="mx-auto btn full-w">
+              <Link
+                href="/collectibles"
+                className="w-full mx-auto btn text-center"
+              >
                 View all collectibles
               </Link>
             </div>

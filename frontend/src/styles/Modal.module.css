@@ -26,11 +26,26 @@
 }
 
 .header button {
-  @apply absolute right-10;
+  @apply absolute right-4 px-4;
 }
 
 .footer {
-  @apply grid items-center grid-cols-2 gap-6 p-6 border-t border-solid rounded-b border-slate-200;
+  @apply p-6 border-t;
+}
+@media (max-width: 639px) {
+  .footer {
+    @apply flex flex-col items-center gap-6;
+  }
+}
+@media (max-width: 639px) {
+  .footerReverse {
+    flex-direction: column-reverse;
+  }
+}
+@media (min-width: 640px) {
+  .footer {
+    @apply grid items-center grid-cols-2 gap-6 border-solid rounded-b border-slate-200;
+  }
 }
 
 .content {
