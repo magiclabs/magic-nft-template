@@ -4,8 +4,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <meta name="twitter:card" content="summary" key="twcard" />
-        <meta name="twitter:creator" content="@magic_labs" key="twhandle" />
+        <meta name="twitter:card" content="summary_large_image" key="twcard" />
+        <meta name="twitter:site" content="@magic_labs" key="twhandle" />
         <meta property="og:type" content="website" key="ogtype" />
         <meta
           property="og:url"
