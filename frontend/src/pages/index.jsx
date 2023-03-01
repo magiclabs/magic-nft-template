@@ -22,18 +22,28 @@ export default function Home() {
     <Layout title="Home" className="">
       <section className="hero">
         <h1>Magic NFT dApp Template</h1>
-        <p className="max-w-xl mx-auto">
-          Follow our <a href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md" rel="noreferrer" target="_blank" className="underline text-brand-purple">NFT developer guide</a> to
-          clone this open source template as your NFT starter kit.
-          This demo includes code for authentication, wallet onboarding,
-          NFT minting, NFT checkout, NFT viewing, and token gating.
+        <p>
+          Follow our{" "}
+          <a
+            href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md"
+            rel="noreferrer"
+            target="_blank"
+            className="underline text-brand-purple"
+          >
+            NFT developer guide
+          </a>{" "}
+          to clone this open source template as your NFT starter kit. This demo
+          includes code for authentication, wallet onboarding, NFT minting, NFT
+          viewing, and token gating.
         </p>
       </section>
 
       <LoadingWrapper>
-        <section className="mx-auto space-y-4 text-center">
+        <section className="mx-auto space-t-4 text-center">
           <ConnectOrMint />
+        </section>
 
+        <section className="mx-auto text-center">
           <FaucetSection />
         </section>
 

@@ -11,7 +11,7 @@
   @apply min-w-[20em];
 }
 .modalInner {
-  @apply relative w-auto max-w-3xl mx-auto my-6;
+  @apply relative w-auto mx-auto my-6;
 }
 
 .wrapper {
@@ -30,10 +30,9 @@
 }
 
 .footer {
-  @apply flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200;
+  @apply grid items-center grid-cols-2 gap-6 p-6 border-t border-solid rounded-b border-slate-200;
 }
 
 .content {
-  @apply relative flex-auto p-6 space-y-5;
-  @apply md:min-w-[40em];
+  @apply relative flex-auto px-4 py-6 space-y-5;
 }
