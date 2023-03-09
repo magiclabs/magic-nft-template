@@ -10,9 +10,9 @@ export default function MerchForm() {
     document.body.appendChild(script);
 
     script.addEventListener("load", () => {
-      // @TS-ignore
+      // @ts-ignore
       if (window.hbspt) {
-        // @TS-ignore
+        // @ts-ignore
         window.hbspt.forms.create({
           portalId: "20846682",
           formId: "5f4c070b-7ff0-4ead-8161-b9b54bcb9778",

@@ -3,8 +3,24 @@ import { fetchJSONfromURI, ipfsToHttps } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CollectibleCard({ item, tokenURI, linkToOS }) {
-  let [metadata, setMetadata] = useState({});
+interface Metadata {
+  name?: string;
+  image?: string;
+  tokenId?: string;
+}
+
+interface CollectibleCardProps {
+  item?: { id: number; image: string };
+  tokenURI?: string;
+  linkToOS?: boolean;
+}
+
+export default function CollectibleCard({
+  item,
+  tokenURI,
+  linkToOS,
+}: CollectibleCardProps) {
+  let [metadata, setMetadata] = useState<Metadata>({});
 
   // auto fetch the token's metadata from the given `tokenURI` url
   useEffect(() => {

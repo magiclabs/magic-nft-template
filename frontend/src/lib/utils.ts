@@ -64,10 +64,16 @@ export async function getUserData() {
 /*
   Handler function to attempt to mint an NFT from the collection
 */
+
+interface TxData {
+  hash?: string;
+  tokenId?: number;
+}
+
 export async function requestMintNFT(address) {
   console.log(`Request to mint an NFT to address ${address}...`);
 
-  let txData = false;
+  let txData: TxData = {};
 
   try {
     const name = await contract.methods.name().call();
@@ -113,8 +119,8 @@ export async function requestMintNFT(address) {
 }
 
 /*
-  Helper function to fetch all the metadata URIs from 
-  the collection (owned by the given `address`) 
+  Helper function to fetch all the metadata URIs from
+  the collection (owned by the given `address`)
 */
 export async function fetchNFTs(address) {
   console.log(`Fetch the NFTs owned by ${address} from the collection...`);
@@ -144,9 +150,11 @@ export async function fetchNFTs(address) {
     }
 
     // await all promises to fetch the owned token IDs
-    const tokenIDs = await Promise.allSettled(promisesForIds);
+    const tokenIDs = (await Promise.allSettled(promisesForIds)) as {
+      status: "fulfilled" | "rejected";
+      value: number;
+    }[];
     for (let i = 0; i < tokenIDs.length; i++) {
-      // console.log("id:", i, ":", tokenIDs[i].status);
       // console.log(tokenIDs[i]);
 
       // add each token id to the next round of promises

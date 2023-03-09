@@ -10,8 +10,19 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+interface UserData {
+  address?: string;
+  balance?: string;
+  collectibles?: string[];
+  isLoggedIn?: boolean;
+  loading?: boolean;
+  refreshCollectibles?: boolean;
+  shortAddress?: string;
+  walletType?: string;
+}
+
 export default function App({ Component, pageProps }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<UserData>();
 
   // auto load the user's authenticated state via magic
   useEffect(() => {
@@ -37,7 +48,7 @@ export default function App({ Component, pageProps }) {
     // update the fetching status
     setUser({ ...user, refreshCollectibles: true });
 
-    fetchNFTs(user.address).then((res) => {
+    fetchNFTs(user.address).then((res: string[]) => {
       // update the tracked state
       setUser({
         ...user,
