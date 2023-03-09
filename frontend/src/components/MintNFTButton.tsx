@@ -67,7 +67,7 @@ export default function MintNFTButton({
 
       <p className="py-2">
         Your test ETH balance:{" "}
-        <span className="italic underline">
+        <span>
           {new Intl.NumberFormat(undefined, {
             minimumSignificantDigits: 1,
             maximumSignificantDigits: 4,
