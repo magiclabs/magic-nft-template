@@ -17,7 +17,7 @@ export default function LoginWithMagic({ className = "" }) {
             })
             .catch((err) => console.error(err));
         }}
-        className="inline-flex space-x-3 text-lg btn"
+        className="btn inline-flex space-x-3 text-lg"
       >
         <span>Sign up</span>
         {/* <img src="/logo.svg" className="h-8" /> */}

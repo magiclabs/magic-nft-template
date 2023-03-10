@@ -9,7 +9,7 @@ export default function Layout({ children, title, className = "" }) {
 
       <Modal />
 
-      <main className={`px-3 container py-12 space-y-12 ${className}`}>
+      <main className={`container space-y-12 px-3 py-12 ${className}`}>
         {children}
       </main>
     </>

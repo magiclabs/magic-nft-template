@@ -89,11 +89,11 @@ export default function AppHeader({}) {
 
           <div className={navbarOpen ? styles.actionAreaMobile : ""}>
             {user?.isLoggedIn ? (
-              <div className="grid grid-cols-2 gap-3 lg:space-x-3 lg:flex image.png">
+              <div className="image.png grid grid-cols-2 gap-3 lg:flex lg:space-x-3">
                 <Link
                   href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md"
                   target="_blank"
-                  className="flex justify-center col-span-2 gap-3 btn-neutral"
+                  className="btn-neutral col-span-2 flex justify-center gap-3"
                 >
                   Guide
                   <Image
@@ -125,7 +125,7 @@ export default function AppHeader({}) {
                 <Link
                   href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md"
                   target="_blank"
-                  className="flex justify-center gap-3 btn-neutral"
+                  className="btn-neutral flex justify-center gap-3"
                 >
                   Guide
                   <Image

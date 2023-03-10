@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/magiclabs/magic-nft-template/issues"
   },
-  "homepage": "https://github.com/magiclabs/magic-nft-template#readme"
+  "homepage": "https://github.com/magiclabs/magic-nft-template#readme",
+  "devDependencies": {
+    "prettier": "^2.8.4",
+    "prettier-plugin-tailwindcss": "^0.2.4"
+  }
 }

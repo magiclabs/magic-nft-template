@@ -72,7 +72,7 @@ export default function Modal() {
             </div>
 
             <div className={styles.content}>
-              <p className="text-lg text-center">You have minted a new NFT!</p>
+              <p className="text-center text-lg">You have minted a new NFT!</p>
 
               {tokenURI && <CollectibleCard tokenURI={tokenURI} />}
             </div>
@@ -81,7 +81,7 @@ export default function Modal() {
               className={`${styles.footer} flex flex-col md:flex-row ${styles.footerReverse}`}
             >
               <button
-                className="w-full mx-auto btn btn-light"
+                className="btn btn-light mx-auto w-full"
                 type="button"
                 onClick={() => setShowModal(false)}
               >
@@ -90,7 +90,7 @@ export default function Modal() {
 
               <Link
                 href="/collectibles"
-                className="w-full mx-auto btn text-center"
+                className="btn mx-auto w-full text-center"
               >
                 View all collectibles
               </Link>

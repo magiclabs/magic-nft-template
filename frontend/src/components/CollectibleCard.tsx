@@ -45,9 +45,9 @@ export default function CollectibleCard({
           href={`https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}/${metadata.tokenId}`}
           target="_blank"
         >
-          <div className="w-64 h-64 mx-auto overflow-hidden border border-gray-200 bg-gray-50 rounded-xl shadow-brand">
+          <div className="mx-auto overflow-hidden rounded-xl border border-gray-200 bg-gray-50 shadow-brand">
             {metadata?.name && (
-              <div className="w-full px-4 py-2 font-semibold bg-white bg-opacity-80">
+              <div className="w-full bg-white bg-opacity-80 px-4 py-2 font-semibold">
                 {metadata.name}
               </div>
             )}
@@ -61,13 +61,7 @@ export default function CollectibleCard({
           </div>
         </Link>
       ) : (
-        <div className="w-64 h-64 mx-auto overflow-hidden border border-gray-200 bg-gray-50 rounded-xl shadow-brand">
-          {metadata?.name && (
-            <div className="w-full px-4 py-2 font-semibold bg-white bg-opacity-80">
-              {metadata.name}
-            </div>
-          )}
-
+        <div className="mx-auto overflow-hidden rounded-xl border border-gray-200 bg-gray-50 shadow-brand">
           <Image
             src={metadata.image}
             width={256}
