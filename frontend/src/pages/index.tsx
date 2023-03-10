@@ -21,7 +21,12 @@ export default function Home() {
   return (
     <Layout title="Home" className="">
       <section className="hero">
-        <h1>Magic NFT dApp Template</h1>
+        <h1 className="hidden custom-breakpoint-500:block">
+          Magic NFT dApp Template
+        </h1>
+        <h1 className="block custom-breakpoint-500:hidden">
+          Magic NFT dApp&nbsp;Template
+        </h1>
         <p>
           Follow our{" "}
           <a

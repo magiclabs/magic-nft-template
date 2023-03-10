@@ -9,33 +9,33 @@
 }
 
 .btn {
-  @apply px-6 py-3 text-base font-medium rounded-[300px];
+  @apply rounded-[300px] px-6 py-3 text-base font-medium;
   @apply border border-transparent;
-  @apply hover:bg-opacity-95 hover:bg-brand-purple;
-  @apply text-white bg-brand-purple;
+  @apply hover:bg-brand-purple hover:bg-opacity-95;
+  @apply bg-brand-purple text-white;
 }
 
 .btn-lg {
   @apply btn;
-  @apply px-6 py-4 text-lg font-semibold rounded-[80px];
+  @apply rounded-[80px] px-6 py-4 text-lg font-semibold;
 }
 
 .btn-outline {
   @apply btn;
-  @apply text-black bg-white border-gray-300 hover:bg-opacity-10;
+  @apply border-gray-300 bg-white text-black hover:bg-opacity-10;
 }
 .btn-light {
   @apply btn;
-  @apply text-brand-purple-text bg-brand-purple-light hover:bg-opacity-10;
+  @apply bg-brand-purple-light text-brand-purple-text hover:bg-opacity-10;
 }
 .btn-neutral {
   @apply btn;
-  @apply text-brand-ink bg-[#F8F8FA] hover:bg-[#EDEDF3]
+  @apply bg-[#F8F8FA] text-brand-ink hover:bg-[#EDEDF3];
 }
 
 .badge {
-  @apply px-3 py-1 text-sm font-semibold tracking-wide uppercase rounded-lg;
-  @apply text-brand-purple-text bg-brand-purple-light;
+  @apply rounded-lg px-3 py-1 text-sm font-semibold uppercase tracking-wide;
+  @apply bg-brand-purple-light text-brand-purple-text;
 }
 
 .hero {
@@ -43,10 +43,11 @@
 }
 h1 {
   @apply pt-6 text-6xl font-extrabold;
-  @apply text-brand-ink
+  @apply text-brand-ink;
+  line-height: 1.2;
 }
 .hero p {
-  @apply max-w-2xl pt-6 mx-auto;
+  @apply mx-auto max-w-2xl pt-6;
   @apply text-lg;
 }
 
