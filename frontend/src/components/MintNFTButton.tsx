@@ -14,7 +14,7 @@ export default function MintNFTButton({
   return (
     <div className={className}>
       <button
-        className={`inline-flex space-x-3 btn-lg relative justify-center`}
+        className={`btn-lg relative inline-flex justify-center space-x-3`}
         disabled={loading}
         onClick={() => {
           setLoading(true);

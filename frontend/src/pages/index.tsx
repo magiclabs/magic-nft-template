@@ -28,7 +28,7 @@ export default function Home() {
             href="https://github.com/magiclabs/magic-nft-template/blob/master/README.md"
             rel="noreferrer"
             target="_blank"
-            className="underline text-brand-purple"
+            className="text-brand-purple underline"
           >
             NFT developer guide
           </a>{" "}
@@ -39,7 +39,7 @@ export default function Home() {
       </section>
 
       <LoadingWrapper>
-        <section className="mx-auto text-center space-t-4">
+        <section className="space-t-4 mx-auto text-center">
           <ConnectOrMint />
         </section>
 
@@ -47,11 +47,13 @@ export default function Home() {
           <FaucetSection />
         </section>
 
-        <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-          {tokens.slice(0, 4).map((item, id) => (
-            <CollectibleCard key={id} item={item} />
-          ))}
-        </section>
+        <div className="flex justify-center">
+          <section className="inline-grid place-items-center gap-8 md:grid-cols-3 lg:grid-cols-4">
+            {tokens.slice(0, 4).map((item, id) => (
+              <CollectibleCard key={id} item={item} />
+            ))}
+          </section>
+        </div>
       </LoadingWrapper>
     </Layout>
   );

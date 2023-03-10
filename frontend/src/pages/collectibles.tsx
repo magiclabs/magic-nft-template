@@ -48,15 +48,17 @@ export default function CollectiblesPage() {
             />
 
             <LoadingWrapper loading={loading}>
-              <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
-                {user?.collectibles?.map((uri, id) => (
-                  <CollectibleCard key={id} tokenURI={uri} linkToOS />
-                ))}
-              </section>
+              <div className="flex justify-center">
+                <section className="mx-auto inline-grid gap-8 md:grid-cols-3 lg:grid-cols-4">
+                  {user?.collectibles?.map((uri, id) => (
+                    <CollectibleCard key={id} tokenURI={uri} linkToOS />
+                  ))}
+                </section>
+              </div>
             </LoadingWrapper>
           </>
         ) : (
-          <section className="py-10 space-y-3 text-center">
+          <section className="space-y-3 py-10 text-center">
             <LoginWithMagic />
           </section>
         )}

@@ -15,7 +15,7 @@ export default function FaucetSection({}) {
   // else if (!user?.balance >= 0.01) return <></>;
 
   return (
-    <section className="max-w-lg mx-auto space-y-3">
+    <section className="mx-auto max-w-lg space-y-3">
       <div>
         <p>Add free ETH to your wallet using Goerli testnet.</p>
         <p className="text-sm text-gray-500">
@@ -23,11 +23,11 @@ export default function FaucetSection({}) {
         </p>
       </div>
 
-      <div className="justify-between space-y-2 md:space-x-4 md:space-y-0 md:flex">
+      <div className="justify-between space-y-2 md:flex md:space-x-4 md:space-y-0">
         <button
           className={`${
             copyState.copied ? "text-[#00875F]" : ""
-          } block w-full btn-outline`}
+          } btn-outline block w-full`}
           onClick={() => {
             if (!user?.address) return alert("Please connect!");
 
@@ -46,7 +46,7 @@ export default function FaucetSection({}) {
           href={"https://goerlifaucet.com/"}
           target={"_blank"}
           rel={"noreferrer"}
-          className="block w-full btn-light"
+          className="btn-light block w-full"
         >
           Open Goerli ETH faucet
         </Link>
