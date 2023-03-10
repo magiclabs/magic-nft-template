@@ -23,7 +23,7 @@ export default function MerchForm() {
   }, [user?.address, user?.refreshCollectibles, user?.collectibles]);
 
   return (
-    <div className="mx-auto w-full md:min-w-[500px] lg:min-w-[400px]">
+    <div className="mx-auto w-full sm:min-w-[500px] md:min-w-[500px] lg:min-w-[400px]">
       <div className="mx-auto max-w-xl" id="hubspotForm"></div>
     </div>
   );
