@@ -47,10 +47,7 @@ export default function CollectiblesPage() {
               className="mx-auto text-center"
             />
 
-            <LoadingWrapper
-              loading={loading}
-              message="fetching your NFTs from the blockchain"
-            >
+            <LoadingWrapper loading={loading}>
               <section className="grid gap-8 mx-auto md:grid-cols-3 lg:grid-cols-4">
                 {user?.collectibles?.map((uri, id) => (
                   <CollectibleCard key={id} tokenURI={uri} linkToOS />
