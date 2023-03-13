@@ -24,7 +24,7 @@ export default function MerchForm() {
 
   return (
     <div className="min-w-[400px]">
-      <div className="max-w-xl mx-auto" id="hubspotForm"></div>
+      <div className="mx-auto max-w-xl" id="hubspotForm"></div>
     </div>
   );
 }

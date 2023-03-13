@@ -17,6 +17,9 @@ module.exports = {
       boxShadow: {
         brand: "8 8px 48px rgba(24, 23, 26, .2)",
       },
+      screens: {
+        "custom-breakpoint-500": { max: "500px" },
+      },
     },
   },
   plugins: [],

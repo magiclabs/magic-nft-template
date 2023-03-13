@@ -1,7 +1,6 @@
 import Layout from "@/components/layout";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
-import MintNFTButton from "@/components/MintNFTButton";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import LoginWithMagic from "@/components/LoginWithMagic";
 import MerchForm from "@/components/MerchForm";
@@ -39,7 +38,7 @@ export default function CollectiblesPage() {
             href="https://magic.link/contact"
             rel="noreferrer"
             target="_blank"
-            className="underline text-brand-purple"
+            className="text-brand-purple underline"
           >
             Contact us
           </a>{" "}
@@ -53,15 +52,15 @@ export default function CollectiblesPage() {
             <LoadingWrapper loading={loading}>
               {user?.collectibles?.length > 0 ? (
                 <div>
-                  <p className="max-w-5xl mx-auto">
+                  <p className="mx-auto max-w-5xl">
                     Everyone loves free merch. Complete the form below for a
                     chance to win our monthly swag giveaway!
                   </p>
-                  <div className="flex items-start justify-center pt-6 mx-auto space-x-12">
+                  <div className="mx-auto flex items-start justify-center space-x-12 pt-6">
                     <div className="grid grid-cols-2 gap-6">
                       <div>
                         <Image
-                          className="block shadow-image"
+                          className="shadow-image block"
                           src="/img/swag-buckethat.png"
                           height={250}
                           width={250}
@@ -70,7 +69,7 @@ export default function CollectiblesPage() {
                       </div>
                       <div>
                         <Image
-                          className="block shadow-image"
+                          className="shadow-image block"
                           src="/img/swag-tote.png"
                           height={250}
                           width={250}
@@ -78,7 +77,7 @@ export default function CollectiblesPage() {
                         />
                       </div>
                       <Image
-                        className="block shadow-image"
+                        className="shadow-image block"
                         src="/img/swag-jacket.png"
                         height={250}
                         width={250}
@@ -86,7 +85,7 @@ export default function CollectiblesPage() {
                       />
                       <div>
                         <Image
-                          className="block shadow-image"
+                          className="shadow-image block"
                           src="/img/swag-cards.png"
                           height={250}
                           width={250}
@@ -94,7 +93,7 @@ export default function CollectiblesPage() {
                         />
                       </div>
                     </div>
-                    <div className="p-8 bg-white shadow-form rounded-3xl">
+                    <div className="shadow-form rounded-3xl bg-white p-8">
                       <MerchForm />
                     </div>
                   </div>
@@ -103,7 +102,7 @@ export default function CollectiblesPage() {
             </LoadingWrapper>
           </section>
         ) : (
-          <section className="py-10 space-y-3 text-center">
+          <section className="space-y-3 py-10 text-center">
             <LoginWithMagic />
           </section>
         )}
