@@ -28,7 +28,6 @@ export default function MintNFTButton({
                 }
 
                 console.log("Mint complete!");
-                console.log(res);
 
                 // update the `user.refreshCollectibles` values to auto reload the owned NFTs
                 setUser({
