@@ -73,8 +73,11 @@ export default function Modal() {
 
             <div className={styles.content}>
               <p className="text-center text-lg">You have minted a new NFT!</p>
-
-              {tokenURI && <CollectibleCard tokenURI={tokenURI} />}
+              {tokenURI &&
+                <div className="mx-auto w-64">
+                  <CollectibleCard tokenURI={tokenURI} />
+                </div>
+              }
             </div>
 
             <div
