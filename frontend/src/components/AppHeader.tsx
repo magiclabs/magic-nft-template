@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,6 +12,7 @@ import { getUserData } from "@/lib/utils";
 export default function AppHeader({}) {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [user, setUser] = useContext(UserContext);
+  const navMenuRef = useRef(null);
 
   function openWallet() {
     magic.wallet.getInfo().then((walletInfo) => {
@@ -47,9 +48,30 @@ export default function AppHeader({}) {
       .catch((err) => console.error(err));
   }
 
+  const handleClickOutside = useCallback(
+    (event) => {
+      if (
+        navbarOpen &&
+        navMenuRef.current &&
+        !navMenuRef.current.contains(event.target)
+      ) {
+        setNavbarOpen(false);
+      }
+    },
+    [navbarOpen],
+  );
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
   return (
     <header className={styles.header}>
-      <nav className={"container " + styles.wrapper}>
+      <nav className={"container " + styles.wrapper} ref={navMenuRef}>
         <section className={styles.staticArea}>
           <Link href={"/"} className="flex space-x-3">
             <img src={"/logo.svg"} alt="Magic.link" />

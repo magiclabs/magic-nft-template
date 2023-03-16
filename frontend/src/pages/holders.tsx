@@ -56,8 +56,8 @@ export default function CollectiblesPage() {
                     Everyone loves free merch. Complete the form below for a
                     chance to win our monthly swag giveaway!
                   </p>
-                  <div className="mx-auto flex items-start justify-center space-x-12 pt-6">
-                    <div className="grid grid-cols-2 gap-6">
+                  <div className="mx-auto flex flex-col justify-center pt-6 lg:flex-row lg:items-start lg:space-x-12">
+                    <div className="inline-grid grid-cols-4 gap-6 lg:grid-cols-2 ">
                       <div>
                         <Image
                           className="shadow-image block"
@@ -93,7 +93,7 @@ export default function CollectiblesPage() {
                         />
                       </div>
                     </div>
-                    <div className="shadow-form rounded-3xl bg-white p-8">
+                    <div className="shadow-form mt-6 rounded-3xl bg-white p-8 lg:mt-0">
                       <MerchForm />
                     </div>
                   </div>
