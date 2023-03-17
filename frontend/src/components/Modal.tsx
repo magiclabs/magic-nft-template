@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/UserContext";
 import { requestMintNFT } from "@/lib/utils";
 import { contract, web3 } from "@/lib/web3";
+import Image from "next/image";
 
 import styles from "@/styles/Modal.module.css";
 import CollectibleCard from "./CollectibleCard";
@@ -67,7 +68,7 @@ export default function Modal() {
                 onClick={() => setShowModal(false)}
                 className="hidden sm:block"
               >
-                <img src="/img/close.svg" width={16} height={16} alt="X" />
+                <Image src="/img/close.svg" width={16} height={16} alt="X" />
               </button>
             </div>
 
@@ -94,6 +95,7 @@ export default function Modal() {
               <Link
                 href="/collectibles"
                 className="btn mx-auto w-full text-center"
+                onClick={() => setShowModal(false)}
               >
                 View all collectibles
               </Link>
