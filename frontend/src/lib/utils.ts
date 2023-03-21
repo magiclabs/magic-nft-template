@@ -1,4 +1,5 @@
 import { magic } from "./magic";
+import { TxData } from "../ts/interfaces/TxData";
 import { web3, contract } from "./web3";
 
 /*
@@ -22,13 +23,11 @@ export async function getUserData() {
 
       // connect and retrieve the user's primary wallet address
       const address = (await web3.eth.getAccounts())[0];
-      // console.log("address:", address);
 
       // get the wallet's current ETH balance
       const balance = await web3.eth
         .getBalance(address)
         .then((wei) => web3.utils.fromWei(wei));
-      // console.log("balance:", balance);
 
       // compute the short address for display in the UI
       let shortAddress = `${address?.substring(0, 5)}...${address?.substring(
@@ -50,24 +49,8 @@ export async function getUserData() {
     })
     .catch((err) => {
       console.log("no user authenticated via Magic.link");
-      // console.log("error:");
-      // console.error(err);
     });
-
-  // log the user's data into the console
-  // console.log("Current connected user:");
-  // console.log(data);
-
   return data;
-}
-
-/*
-  Handler function to attempt to mint an NFT from the collection
-*/
-
-interface TxData {
-  hash?: string;
-  tokenId?: number;
 }
 
 export async function requestMintNFT(address) {
@@ -77,7 +60,6 @@ export async function requestMintNFT(address) {
 
   try {
     const name = await contract.methods.name().call();
-    // console.log("Name:", name);
 
     // estimate the amount of gas required
     const gas = await contract.methods
@@ -128,7 +110,6 @@ export async function fetchNFTs(address) {
   try {
     // get the total count of tokens owned by the `address`
     const tokenBalance = await contract.methods.balanceOf(address).call();
-    // console.log("tokenBalance:", tokenBalance);
 
     // init tracking arrays
     let promisesForIds = [];
@@ -142,7 +123,6 @@ export async function fetchNFTs(address) {
           .tokenOfOwnerByIndex(address, i)
           .call()
           .then((tokenIndex) => {
-            // console.log(`token ID ${tokenIndex} found`);
             return tokenIndex;
           })
           .catch((err) => console.warn(err)),
@@ -155,7 +135,6 @@ export async function fetchNFTs(address) {
       value: number;
     }[];
     for (let i = 0; i < tokenIDs.length; i++) {
-      // console.log(tokenIDs[i]);
 
       // add each token id to the next round of promises
       promisesForUris.push(
@@ -164,7 +143,6 @@ export async function fetchNFTs(address) {
           .call()
           .then((uri) => {
             uri = ipfsToHttps(uri);
-            // console.log(`Token ID ${result.value} has URI of ${uri}`);
             tokens.push(uri);
             return uri;
           })
@@ -188,7 +166,6 @@ export async function fetchNFTs(address) {
   Wrapper function to fetch a token's JSON metadata from the given URI stored on-chain
 */
 export async function fetchJSONfromURI(url) {
-  // console.log(`Fetching metadata from ${url}...`);
   return fetch(ipfsToHttps(url))
     .then((res) => res?.json())
     .then((res) => {

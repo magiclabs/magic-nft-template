@@ -17,20 +17,12 @@ export default function Modal() {
     // // do nothing if the user is not logged in
     if (!user?.address || !user?.tokenIdForModal) return;
 
-    // //
-    // if (user?.address && !user?.refreshCollectibles && user?.collectibles) {
-    //   // setLoading(false);
-    //   return;
-    // }
-
     if (user?.tokenIdForModal) {
       setUser({ ...user, tokenIdForModal: false });
 
       (async () => {
-        // console.log("Fetch the newly minted NFT...");
         await contract.methods
           .tokenURI(user?.tokenIdForModal)
-          // .tokenURI(1)
           .call()
           .then((uri) => {
             console.log(`Token ID ${uri.value} has URI of ${uri}`);
@@ -44,8 +36,6 @@ export default function Modal() {
           .catch((err) => console.warn(err));
       })();
 
-      // remove the tracking of the tokenId for modal use
-      // setUser({ ...user, tokenIdForModal: false });
     }
   }, [
     user?.address,

@@ -61,6 +61,10 @@ export default function AppHeader({}) {
     [navbarOpen],
   );
 
+  const handleClose = () => {
+    setNavbarOpen(!navbarOpen);
+  };
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
@@ -74,14 +78,11 @@ export default function AppHeader({}) {
       <nav className={"container " + styles.wrapper} ref={navMenuRef}>
         <section className={styles.staticArea}>
           <Link href={"/"} className="flex space-x-3">
-            <img src={"/logo.svg"} alt="Magic.link" />
+            <Image src={"/logo.svg"} width={120} height={47} alt="Magic.link" />
             <span className="badge">demo</span>
           </Link>
 
-          <button
-            onClick={() => setNavbarOpen(!navbarOpen)}
-            className={styles.burger}
-          >
+          <button onClick={() => handleClose()} className={styles.burger}>
             {navbarOpen ? (
               <Image
                 src={"/img/close.svg"}
@@ -162,7 +163,6 @@ export default function AppHeader({}) {
                   onClick={() => loginWithConnect()}
                   type="button"
                   className="btn"
-                  // disabled={user?.loading}
                 >
                   Connect wallet
                 </button>
