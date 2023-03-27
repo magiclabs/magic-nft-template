@@ -11,48 +11,48 @@ export default function MintNFTButton({
   const [user, setUser] = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
+  const handleMint = async () => {
+    const status = await requestMintNFT(user.address)
+      .then(async (res) => {
+        if (!res) {
+          console.log("Mint failed (or was canceled by the user).");
+          return;
+        }
+        console.log("Mint complete!");
+        // update the `user.refreshCollectibles` values to auto reload the owned NFTs
+        setUser({
+          ...user,
+          refreshCollectibles: true,
+          tokenIdForModal: res?.tokenId, // track the id to show the success modal
+        });
+
+        console.log("Updating the user's balance...");
+
+        // get and set the user's new balance after the mint
+        const balance = await web3.eth
+          .getBalance(user.address)
+          .then((wei) => web3.utils.fromWei(wei));
+
+        setUser({ ...user, balance });
+      })
+      .catch((err) => {
+        console.warn(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  const handleClickMint = () => {
+    setLoading(true);
+    handleMint()
+  };
+
   return (
     <div className={className}>
       <button
         className={`btn-lg relative inline-flex justify-center space-x-3`}
         disabled={loading}
-        onClick={() => {
-          setLoading(true);
-
-          (async () => {
-            const status = await requestMintNFT(user.address)
-              .then(async (res) => {
-                if (!res) {
-                  console.log("Mint failed (or was canceled by the user).");
-                  return;
-                }
-
-                console.log("Mint complete!");
-
-                // update the `user.refreshCollectibles` values to auto reload the owned NFTs
-                setUser({
-                  ...user,
-                  refreshCollectibles: true,
-                  tokenIdForModal: res?.tokenId, // track the id to show the success modal
-                });
-
-                console.log("Updating the user's balance...");
-
-                // get and set the user's new balance after the mint
-                const balance = await web3.eth
-                  .getBalance(user.address)
-                  .then((wei) => web3.utils.fromWei(wei));
-
-                setUser({ ...user, balance });
-              })
-              .catch((err) => {
-                console.warn(err);
-              })
-              .finally(() => {
-                setLoading(false);
-              });
-          })();
-        }}
+        onClick={() => handleClickMint()}
       >
         <span className={loading ? "opacity-0" : "opacity-100"}>
           {buttonText}

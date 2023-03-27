@@ -2,18 +2,8 @@ import { useEffect, useState } from "react";
 import { fetchJSONfromURI, ipfsToHttps } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-
-interface Metadata {
-  name?: string;
-  image?: string;
-  tokenId?: string;
-}
-
-interface CollectibleCardProps {
-  item?: { id: number; image: string };
-  tokenURI?: string;
-  linkToOS?: boolean;
-}
+import { Metadata } from "../ts/interfaces/Metadata";
+import { CollectibleCardProps } from "../ts/interfaces/CollectibleCardProps";
 
 export default function CollectibleCard({
   item,

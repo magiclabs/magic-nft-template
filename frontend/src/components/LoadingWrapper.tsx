@@ -1,5 +1,4 @@
 import { UserContext } from "@/lib/UserContext";
-import Image from "next/image";
 import { useContext } from "react";
 import { AnimatedLoader } from "./AnimatedLoader";
 

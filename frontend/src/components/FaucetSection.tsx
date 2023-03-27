@@ -14,6 +14,17 @@ export default function FaucetSection({}) {
   // (optional) only show if the user.address is low on balance
   // else if (!user?.balance >= 0.01) return <></>;
 
+  const handleClick = () => {
+    if (!user?.address) return alert("Please connect!");
+
+    navigator.clipboard.writeText(user?.address).then((res) => {
+      setTimeout(() => {
+        setCopyState({ copied: false, text: "Copy wallet address" });
+      }, 5000);
+      setCopyState({ copied: true, text: "Copied!" });
+    });
+  }
+
   return (
     <section className="mx-auto max-w-lg space-y-3">
       <div>
@@ -28,16 +39,7 @@ export default function FaucetSection({}) {
           className={`${
             copyState.copied ? "text-[#00875F]" : ""
           } btn-outline block w-full`}
-          onClick={() => {
-            if (!user?.address) return alert("Please connect!");
-
-            navigator.clipboard.writeText(user?.address).then((res) => {
-              setTimeout(() => {
-                setCopyState({ copied: false, text: "Copy wallet address" });
-              }, 5000);
-              setCopyState({ copied: true, text: "Copied!" });
-            });
-          }}
+          onClick={() => handleClick()}
         >
           {copyState.text}
         </button>
