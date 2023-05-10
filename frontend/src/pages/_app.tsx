@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { useState, useEffect } from "react";
 import { UserContext } from "@/lib/UserContext";
 import { fetchNFTs, getUserData } from "@/lib/utils";
-
+import { web3 } from "@/lib/web3";
 import { Inter } from "@next/font/google";
 
 const inter = Inter({
@@ -26,12 +26,24 @@ export default function App({ Component, pageProps }) {
 
   // auto load the user's authenticated state via magic
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
     setUser({ loading: true });
 
-    // auto load the userData and store it in the state
     console.log("Checking if a user is already logged in...");
-    getUserData().then((data) => setUser(data));
-  }, []);
+    // if no user is logged in, this will return empty array
+    const account = await web3.eth.getAccounts();
+
+    if (account.length > 0) {
+      // auto load the userData and store it in the state
+      const data = await getUserData();
+      setUser(data);
+    } else {
+      setUser({ loading: false });
+    }
+  }
 
   useEffect(() => {
     // clear the state of tracked collectibles on logout

@@ -135,7 +135,6 @@ export async function fetchNFTs(address) {
       value: number;
     }[];
     for (let i = 0; i < tokenIDs.length; i++) {
-
       // add each token id to the next round of promises
       promisesForUris.push(
         await contract.methods

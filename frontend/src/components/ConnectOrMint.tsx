@@ -5,7 +5,7 @@ import LoginWithMagic from "./LoginWithMagic";
 import MintNFTButton from "./MintNFTButton";
 
 export default function ConnectOrMint({}) {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   return (
     <section className="space-x-4">

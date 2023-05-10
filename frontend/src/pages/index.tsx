@@ -16,8 +16,6 @@ const tokens = [
 ];
 
 export default function Home() {
-  const [user, setUser] = useContext(UserContext);
-
   return (
     <Layout title="Home" className="">
       <section className="hero">
