@@ -1,6 +1,6 @@
-import Layout from "@/components/layout";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/lib/UserContext";
+import Layout from "@/components/Layout";
+import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
 import CollectibleCard from "@/components/CollectibleCard";
@@ -8,7 +8,7 @@ import LoginWithMagic from "@/components/LoginWithMagic";
 import MintNFTButton from "@/components/MintNFTButton";
 
 export default function CollectiblesPage() {
-  const [user, setUser] = useContext(UserContext);
+  const { user } = useUser();
 
   // initialize the state used to track the current page's data
   const [loading, setLoading] = useState(user?.refreshCollectibles);
@@ -51,7 +51,7 @@ export default function CollectiblesPage() {
               <div className="flex justify-center">
                 <section className="mx-auto inline-grid gap-8 md:grid-cols-3 lg:grid-cols-4">
                   {user?.collectibles?.map((uri, id) => (
-                    <CollectibleCard key={id} tokenURI={uri} linkToOS />
+                    <CollectibleCard key={id} tokenURI={uri} />
                   ))}
                 </section>
               </div>

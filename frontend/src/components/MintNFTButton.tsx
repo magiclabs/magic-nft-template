@@ -1,50 +1,46 @@
-import { useContext, useState } from "react";
-import { UserContext } from "@/lib/UserContext";
+import { useState } from "react";
+import { useUser } from "@/context/UserContext";
 import { requestMintNFT } from "@/lib/utils";
-import { web3 } from "@/lib/web3";
 import { AnimatedLoader } from "./AnimatedLoader";
+import { useMagicContext } from "@/context/MagicContext";
 
 export default function MintNFTButton({
   className = "",
   buttonText = "Mint a Hiro NFT",
 }) {
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useUser();
+  const { web3, contract } = useMagicContext();
   const [loading, setLoading] = useState(false);
 
   const handleMint = async () => {
-    const status = await requestMintNFT(user.address)
-      .then(async (res) => {
-        if (!res) {
-          console.log("Mint failed (or was canceled by the user).");
-          return;
-        }
-        console.log("Mint complete!");
-        // update the `user.refreshCollectibles` values to auto reload the owned NFTs
-        setUser({
-          ...user,
-          refreshCollectibles: true,
-          tokenIdForModal: res?.tokenId, // track the id to show the success modal
-        });
-
-        console.log("Updating the user's balance...");
-
-        // get and set the user's new balance after the mint
-        const balance = await web3.eth
-          .getBalance(user.address)
-          .then((wei) => web3.utils.fromWei(wei));
-
-        setUser({ ...user, balance });
-      })
-      .catch((err) => {
-        console.warn(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-  const handleClickMint = () => {
     setLoading(true);
-    handleMint()
+
+    try {
+      const res = await requestMintNFT(user.address, contract);
+      if (!res) {
+        console.log("Mint failed (or was canceled by the user).");
+        return;
+      }
+      console.log("Mint complete!");
+      // update the `user.refreshCollectibles` values to auto reload the owned NFTs
+      setUser({
+        ...user,
+        refreshCollectibles: true,
+        tokenIdForModal: res?.tokenId, // track the id to show the success modal
+      });
+
+      console.log("Updating the user's balance...");
+
+      // get and set the user's new balance after the mint
+      const wei = await web3.eth.getBalance(user.address);
+      const balance = web3.utils.fromWei(wei);
+
+      setUser({ ...user, balance });
+    } catch (err) {
+      console.warn(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,7 +48,7 @@ export default function MintNFTButton({
       <button
         className={`btn-lg relative inline-flex justify-center space-x-3`}
         disabled={loading}
-        onClick={() => handleClickMint()}
+        onClick={handleMint}
       >
         <span className={loading ? "opacity-0" : "opacity-100"}>
           {buttonText}
@@ -71,7 +67,7 @@ export default function MintNFTButton({
           {new Intl.NumberFormat(undefined, {
             minimumSignificantDigits: 1,
             maximumSignificantDigits: 4,
-          }).format(user?.balance)}
+          }).format(Number(user?.balance))}
         </span>{" "}
         ETH
       </p>

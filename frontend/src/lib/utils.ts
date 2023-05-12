@@ -1,62 +1,37 @@
-import { magic } from "./magic";
-import { TxData } from "../ts/interfaces/TxData";
-import { web3, contract } from "./web3";
-
 /*
   Helper function to collect all the desired connected user's data,
   both from Magic.link and the blockchain
 */
-export async function getUserData() {
-  let data = {};
+export async function getUserData(magic, web3) {
+  try {
+    const walletInfo = await magic.wallet.getInfo();
+    const address = (await web3.eth.getAccounts())[0];
+    const balanceInWei = await web3.eth.getBalance(address);
+    const balance = web3.utils.fromWei(balanceInWei);
 
-  data = await magic.wallet
-    .getInfo()
-    .then(async (walletInfo) => {
-      // console.log("connected via magic!");
+    let shortAddress = `${address?.substring(0, 5)}...${address?.substring(
+      address.length - 4,
+    )}`;
 
-      let userInfo;
-      // you can also request the user's info from magic.link
-      // (e.g. email address), for later storing it in the state
-      // userInfo = await magic.wallet.requestUserInfoWithUI().catch((err) => {
-      //   console.error(err);
-      // });
-
-      // connect and retrieve the user's primary wallet address
-      const address = (await web3.eth.getAccounts())[0];
-
-      // get the wallet's current ETH balance
-      const balance = await web3.eth
-        .getBalance(address)
-        .then((wei) => web3.utils.fromWei(wei));
-
-      // compute the short address for display in the UI
-      let shortAddress = `${address?.substring(0, 5)}...${address?.substring(
-        address.length - 4,
-      )}`;
-
-      // return the user's data for the state
-      return {
-        ...userInfo,
-        ...walletInfo,
-        isLoggedIn: true,
-        loading: false,
-        address,
-        balance,
-        shortAddress,
-        collectibles: undefined,
-        refreshCollectibles: true,
-      };
-    })
-    .catch((err) => {
-      console.log("no user authenticated via Magic.link");
-    });
-  return data;
+    return {
+      ...walletInfo,
+      isLoggedIn: true,
+      loading: false,
+      address,
+      balance,
+      shortAddress,
+      collectibles: undefined,
+      refreshCollectibles: true,
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-export async function requestMintNFT(address) {
+export async function requestMintNFT(address, contract) {
   console.log(`Request to mint an NFT to address ${address}...`);
 
-  let txData: TxData = {};
+  let txData = {};
 
   try {
     const name = await contract.methods.name().call();
@@ -68,43 +43,34 @@ export async function requestMintNFT(address) {
     console.log(`Estimated gas: ${gas}`);
 
     // construct and send the mint request to the blockchain
-    const receipt = await contract.methods
-      .safeMint(address)
-      .send({
-        from: address,
-        gas,
-      })
-      .on("transactionHash", (hash) => {
-        txData = { hash };
-        console.log("Transaction hash:", hash);
-      })
-      .then((receipt) => {
-        console.log("Transaction receipt:", receipt);
+    const transaction = contract.methods.safeMint(address).send({
+      from: address,
+      gas,
+    });
 
-        // extract the minted tokenId from the transaction response
-        const tokenId = receipt?.events?.Transfer?.returnValues?.tokenId;
-        console.log("Minted tokenId:", tokenId);
-        txData.tokenId = tokenId;
+    // listen for the transactionHash event and populate txData
+    transaction.on("transactionHash", (hash) => {
+      txData = { hash };
+      console.log("Transaction hash:", hash);
+    });
 
-        return txData;
-      })
-      .catch((err) => {
-        console.error(err);
-        throw err;
-      });
+    // wait for the transaction to complete
+    const receipt = await transaction;
+    console.log("Transaction receipt:", receipt);
 
-    return txData;
+    // extract the minted tokenId from the transaction response
+    const tokenId = receipt?.events?.Transfer?.returnValues?.tokenId;
+    console.log("Minted tokenId:", tokenId);
+
+    // return the transaction data
+    return { ...txData, tokenId };
   } catch (error) {
     console.error(error);
     return false;
   }
 }
 
-/*
-  Helper function to fetch all the metadata URIs from
-  the collection (owned by the given `address`)
-*/
-export async function fetchNFTs(address) {
+export async function fetchNFTs(address, contract) {
   console.log(`Fetch the NFTs owned by ${address} from the collection...`);
 
   try {
@@ -118,15 +84,14 @@ export async function fetchNFTs(address) {
 
     // build the listing of promises to fetch the owned token IDs
     for (let i = 0; i < tokenBalance; i++) {
-      promisesForIds.push(
-        await contract.methods
+      try {
+        const tokenIndex = await contract.methods
           .tokenOfOwnerByIndex(address, i)
-          .call()
-          .then((tokenIndex) => {
-            return tokenIndex;
-          })
-          .catch((err) => console.warn(err)),
-      );
+          .call();
+        promisesForIds.push(tokenIndex);
+      } catch (err) {
+        console.warn(err);
+      }
     }
 
     // await all promises to fetch the owned token IDs
@@ -134,19 +99,17 @@ export async function fetchNFTs(address) {
       status: "fulfilled" | "rejected";
       value: number;
     }[];
+
     for (let i = 0; i < tokenIDs.length; i++) {
       // add each token id to the next round of promises
-      promisesForUris.push(
-        await contract.methods
-          .tokenURI(tokenIDs[i].value)
-          .call()
-          .then((uri) => {
-            uri = ipfsToHttps(uri);
-            tokens.push(uri);
-            return uri;
-          })
-          .catch((err) => console.warn(err)),
-      );
+      try {
+        const uri = await contract.methods.tokenURI(tokenIDs[i].value).call();
+        const httpsUri = ipfsToHttps(uri);
+        tokens.push(httpsUri);
+        promisesForUris.push(httpsUri);
+      } catch (err) {
+        console.warn(err);
+      }
     }
 
     // await all promises for fetching the token URIs

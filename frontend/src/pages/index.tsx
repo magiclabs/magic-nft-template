@@ -1,6 +1,4 @@
-import Layout from "@/components/layout";
-import { useContext } from "react";
-import { UserContext } from "@/lib/UserContext";
+import Layout from "@/components/Layout";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
 import CollectibleCard from "@/components/CollectibleCard";

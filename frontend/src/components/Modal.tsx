@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/lib/UserContext";
-import { requestMintNFT } from "@/lib/utils";
-import { contract, web3 } from "@/lib/web3";
+import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { useMagicContext } from "@/context/MagicContext";
 import Image from "next/image";
 
 import styles from "@/styles/Modal.module.css";
@@ -9,7 +8,8 @@ import CollectibleCard from "./CollectibleCard";
 import Link from "next/link";
 
 export default function Modal() {
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useUser();
+  const { contract } = useMagicContext();
   const [showModal, setShowModal] = useState(false);
   const [tokenURI, setTokenURI] = useState("");
 
@@ -21,30 +21,23 @@ export default function Modal() {
       setUser({ ...user, tokenIdForModal: false });
 
       (async () => {
-        await contract.methods
-          .tokenURI(user?.tokenIdForModal)
-          .call()
-          .then((uri) => {
-            console.log(`Token ID ${uri.value} has URI of ${uri}`);
+        try {
+          const uri = await contract.methods
+            .tokenURI(user?.tokenIdForModal)
+            .call();
+          console.log(`Token ID ${uri.value} has URI of ${uri}`);
 
-            setTokenURI(uri);
-            setShowModal(true);
-            console.log("show the minted modal");
-
-            return uri;
-          })
-          .catch((err) => console.warn(err));
+          setTokenURI(uri);
+          setShowModal(true);
+          console.log("show the minted modal");
+        } catch (err) {
+          console.warn(err);
+        }
       })();
-
     }
-  }, [
-    user?.address,
-    user?.refreshCollectibles,
-    user?.collectibles,
-    user?.tokenIdForModal,
-  ]);
+  }, [user?.address, user?.tokenIdForModal]);
 
-  if (!showModal) return <></>;
+  if (!showModal) return null;
 
   return (
     <>
@@ -64,11 +57,11 @@ export default function Modal() {
 
             <div className={styles.content}>
               <p className="text-center text-lg">You have minted a new NFT!</p>
-              {tokenURI &&
+              {tokenURI && (
                 <div className="mx-auto w-64">
                   <CollectibleCard tokenURI={tokenURI} />
                 </div>
-              }
+              )}
             </div>
 
             <div

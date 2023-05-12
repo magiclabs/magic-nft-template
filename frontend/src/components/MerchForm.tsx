@@ -1,9 +1,6 @@
-import { useContext, useEffect } from "react";
-import { UserContext } from "@/lib/UserContext";
+import { useEffect } from "react";
 
 export default function MerchForm() {
-  const [user, setUser] = useContext(UserContext);
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://js.hsforms.net/forms/v2.js";
@@ -20,7 +17,7 @@ export default function MerchForm() {
         });
       }
     });
-  }, [user?.address, user?.refreshCollectibles, user?.collectibles]);
+  }, []);
 
   return (
     <div className="mx-auto w-full sm:min-w-[500px] md:min-w-[500px] lg:min-w-[400px]">

@@ -1,52 +1,49 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { UserContext } from "@/lib/UserContext";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import styles from "@/styles/Nav.module.css";
 import AppNavigation from "./AppNavigation";
 
-import styles from "@/styles/Nav.module.css";
-
-import { magic } from "@/lib/magic";
+import { useMagicContext } from "@/context/MagicContext";
+import { useUser } from "@/context/UserContext";
 import { getUserData } from "@/lib/utils";
 
 export default function AppHeader({}) {
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useUser();
+  const { magic, web3 } = useMagicContext();
   const navMenuRef = useRef(null);
 
-  function openWallet() {
-    magic.wallet.getInfo().then((walletInfo) => {
-      if (walletInfo?.walletType == "magic") {
-        // NOTE: this will only work if the user has connected via a
-        // magic wallet, not via browser wallet (e.g. MetaMask)
-        magic.wallet.showUI().catch((err) => console.error(err));
-      } else {
-        // for non-magic wallets, copy the full wallet address to the clipboard
-        navigator.clipboard
-          .writeText(user?.address)
-          .then((res) =>
-            alert(`ETH wallet address copied to clipboard: ${user?.address}`),
-          );
-      }
-    });
-  }
+  const openWallet = async () => {
+    try {
+      // NOTE: this will only work if the user has connected via a
+      // magic wallet, not via browser wallet (e.g. MetaMask)
+      await magic.wallet.showUI();
+    } catch (error) {
+      console.error(error);
+      // for non-magic wallets, copy the full wallet address to the clipboard
+      await navigator.clipboard.writeText(user?.address);
+      alert(`ETH wallet address copied to clipboard: ${user?.address}`);
+    }
+  };
 
   function disconnect() {
     // disconnect from magic
     magic.wallet.disconnect();
 
     // clear the state
-    setUser({});
+    setUser(null);
   }
 
-  function loginWithConnect() {
-    magic.wallet
-      .connectWithUI()
-      .then((res) => {
-        getUserData().then((data) => setUser(data));
-      })
-      .catch((err) => console.error(err));
-  }
+  const loginWithConnect = async () => {
+    try {
+      await magic.wallet.connectWithUI();
+      const data = await getUserData(magic, web3);
+      setUser(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleClickOutside = useCallback(
     (event) => {

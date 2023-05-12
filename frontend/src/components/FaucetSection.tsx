@@ -1,29 +1,30 @@
 import Link from "next/link";
-import { UserContext } from "@/lib/UserContext";
-import { useContext, useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { useState } from "react";
 
 export default function FaucetSection({}) {
-  const [user] = useContext(UserContext);
+  const { user } = useUser();
   const [copyState, setCopyState] = useState({
     copied: false,
     text: "Copy wallet address",
   });
 
   // only show this component when a user is connected
-  if (!user?.address) return <></>;
-  // (optional) only show if the user.address is low on balance
-  // else if (!user?.balance >= 0.01) return <></>;
+  if (!user?.address) return null;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!user?.address) return alert("Please connect!");
 
-    navigator.clipboard.writeText(user?.address).then((res) => {
+    try {
+      await navigator.clipboard.writeText(user?.address);
+      setCopyState({ copied: true, text: "Copied!" });
       setTimeout(() => {
         setCopyState({ copied: false, text: "Copy wallet address" });
       }, 5000);
-      setCopyState({ copied: true, text: "Copied!" });
-    });
-  }
+    } catch (error) {
+      console.error("Failed to copy text: ", error);
+    }
+  };
 
   return (
     <section className="mx-auto max-w-lg space-y-3">
@@ -45,12 +46,12 @@ export default function FaucetSection({}) {
         </button>
 
         <Link
-          href={"https://goerlifaucet.com/"}
+          href={"https://sepoliafaucet.com/"}
           target={"_blank"}
           rel={"noreferrer"}
           className="btn-light block w-full"
         >
-          Open Goerli ETH faucet
+          Open Sepolia ETH faucet
         </Link>
       </div>
     </section>
