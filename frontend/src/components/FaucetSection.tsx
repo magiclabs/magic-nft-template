@@ -1,6 +1,6 @@
+import { useState } from "react";
 import Link from "next/link";
 import { useUser } from "@/context/UserContext";
-import { useState } from "react";
 
 export default function FaucetSection({}) {
   const { user } = useUser();
@@ -9,19 +9,23 @@ export default function FaucetSection({}) {
     text: "Copy wallet address",
   });
 
-  // only show this component when a user is connected
+  // Don't render the component if there is no connected user
   if (!user?.address) return null;
 
   const handleClick = async () => {
-    if (!user?.address) return alert("Please connect!");
-
     try {
+      // Attempt to copy the user's wallet address to the clipboard
       await navigator.clipboard.writeText(user?.address);
+
+      // Update the state to reflect that the text has been copied
       setCopyState({ copied: true, text: "Copied!" });
+
+      // After 1 second, reset the copyState to its initial state
       setTimeout(() => {
         setCopyState({ copied: false, text: "Copy wallet address" });
-      }, 5000);
+      }, 1000);
     } catch (error) {
+      // Log any errors that occur during the copying process
       console.error("Failed to copy text: ", error);
     }
   };
@@ -29,7 +33,7 @@ export default function FaucetSection({}) {
   return (
     <section className="mx-auto max-w-lg space-y-3">
       <div>
-        <p>Add free ETH to your wallet using Goerli testnet.</p>
+        <p>Add free ETH to your wallet using Sepolia testnet.</p>
         <p className="text-sm text-gray-500">
           *You will need to create an account using Alchemy
         </p>

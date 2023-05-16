@@ -3,48 +3,55 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "@/styles/Nav.module.css";
 import AppNavigation from "./AppNavigation";
-
-import { useMagicContext } from "@/context/MagicContext";
 import { useUser } from "@/context/UserContext";
-import { getUserData } from "@/lib/utils";
+import { useWeb3 } from "@/context/Web3Context";
+import { magic } from "@/lib/magic";
 
 export default function AppHeader({}) {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const { user, setUser } = useUser();
-  const { magic, web3 } = useMagicContext();
+  const { initializeWeb3 } = useWeb3();
+
+  // Reference to the navigation menu
   const navMenuRef = useRef(null);
 
+  // Function to handle wallet opening
   const openWallet = async () => {
     try {
-      // NOTE: this will only work if the user has connected via a
-      // magic wallet, not via browser wallet (e.g. MetaMask)
+      // Try to show the magic wallet UI
+      // This will only work if the user has connected via a magic wallet, not via browser wallet (e.g. MetaMask)
       await magic.wallet.showUI();
     } catch (error) {
-      console.error(error);
+      console.error("openWallet", error);
       // for non-magic wallets, copy the full wallet address to the clipboard
       await navigator.clipboard.writeText(user?.address);
       alert(`ETH wallet address copied to clipboard: ${user?.address}`);
     }
   };
 
-  function disconnect() {
-    // disconnect from magic
-    magic.wallet.disconnect();
+  // Function to handle disconnection
+  const disconnect = async () => {
+    // Disconnect from magic
+    await magic.user.logout();
 
-    // clear the state
+    // Clear the user state
     setUser(null);
-  }
+  };
 
+  // Function to handle login with Magic Connect
   const loginWithConnect = async () => {
     try {
+      // Attempt to connect with the user's wallet using Magic's UI
       await magic.wallet.connectWithUI();
-      const data = await getUserData(magic, web3);
-      setUser(data);
+      // If the wallet connection is successful, initialize web3 instance
+      await initializeWeb3();
     } catch (error) {
-      console.error(error);
+      // Log any errors that occur during the login process
+      console.error("loginWithConnect:", error);
     }
   };
 
+  // Function to handle clicks outside of the navbar
   const handleClickOutside = useCallback(
     (event) => {
       if (
@@ -58,10 +65,12 @@ export default function AppHeader({}) {
     [navbarOpen],
   );
 
+  // Function to handle navbar closing
   const handleClose = () => {
     setNavbarOpen(!navbarOpen);
   };
 
+  // Effect to handle click events for closing the navbar when clicking outside of it
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 

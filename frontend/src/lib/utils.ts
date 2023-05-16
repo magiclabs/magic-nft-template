@@ -2,19 +2,23 @@
   Helper function to collect all the desired connected user's data,
   both from Magic.link and the blockchain
 */
-export async function getUserData(magic, web3) {
+export async function getUserData(web3) {
   try {
-    const walletInfo = await magic.wallet.getInfo();
-    const address = (await web3.eth.getAccounts())[0];
+    console.log("Fetching user data...");
+
+    // Get the user's address
+    const [address] = await web3.eth.getAccounts();
+
+    // Get the user's balance
     const balanceInWei = await web3.eth.getBalance(address);
     const balance = web3.utils.fromWei(balanceInWei);
 
-    let shortAddress = `${address?.substring(0, 5)}...${address?.substring(
+    // Truncate the user's address for display purposes
+    const shortAddress = `${address.substring(0, 5)}...${address.substring(
       address.length - 4,
     )}`;
 
     return {
-      ...walletInfo,
       isLoggedIn: true,
       loading: false,
       address,
@@ -24,48 +28,44 @@ export async function getUserData(magic, web3) {
       refreshCollectibles: true,
     };
   } catch (error) {
-    console.error(error);
+    console.error("getUserData", error);
   }
 }
 
 export async function requestMintNFT(address, contract) {
-  console.log(`Request to mint an NFT to address ${address}...`);
-
-  let txData = {};
-
   try {
-    const name = await contract.methods.name().call();
+    // Print initial log message.
+    console.log(`Request to mint an NFT to address ${address}...`);
 
-    // estimate the amount of gas required
-    const gas = await contract.methods
+    // Retrieve the contract name.
+    const name = await contract.methods.name().call();
+    console.log(`Contract name: ${name}`);
+
+    // Estimate the gas required to mint the NFT.
+    const estimatedGas = await contract.methods
       .safeMint(address)
       .estimateGas({ from: address });
-    console.log(`Estimated gas: ${gas}`);
+    console.log(`Estimated gas: ${estimatedGas}`);
 
-    // construct and send the mint request to the blockchain
-    const transaction = contract.methods.safeMint(address).send({
+    // Prepare the transaction to mint the NFT.
+    const transaction = contract.methods.safeMint(address);
+
+    // Send the transaction and wait for its receipt.
+    const receipt = await transaction.send({
       from: address,
-      gas,
+      gas: estimatedGas,
     });
-
-    // listen for the transactionHash event and populate txData
-    transaction.on("transactionHash", (hash) => {
-      txData = { hash };
-      console.log("Transaction hash:", hash);
-    });
-
-    // wait for the transaction to complete
-    const receipt = await transaction;
     console.log("Transaction receipt:", receipt);
 
-    // extract the minted tokenId from the transaction response
+    // Extract the minted tokenId from the transaction receipt.
     const tokenId = receipt?.events?.Transfer?.returnValues?.tokenId;
     console.log("Minted tokenId:", tokenId);
 
-    // return the transaction data
-    return { ...txData, tokenId };
+    // Return the transaction hash and tokenId.
+    return { hash: receipt.transactionHash, tokenId };
   } catch (error) {
-    console.error(error);
+    // Log any errors that occur during the minting process.
+    console.error("requestMintNFT", error);
     return false;
   }
 }
@@ -74,52 +74,35 @@ export async function fetchNFTs(address, contract) {
   console.log(`Fetch the NFTs owned by ${address} from the collection...`);
 
   try {
-    // get the total count of tokens owned by the `address`
+    // Get the total count of tokens owned by the `address`.
     const tokenBalance = await contract.methods.balanceOf(address).call();
+    console.log(`Total NFTs owned: ${tokenBalance}`);
 
-    // init tracking arrays
-    let promisesForIds = [];
-    let promisesForUris = [];
-    let tokens = [];
+    const tokens = await Promise.all(
+      Array.from({ length: tokenBalance }, async (_, i) => {
+        try {
+          // Fetch the owned token ID.
+          const tokenId = await contract.methods
+            .tokenOfOwnerByIndex(address, i)
+            .call();
+          // Fetch the token URI.
+          const uri = await contract.methods.tokenURI(tokenId).call();
+          // Convert IPFS URI to HTTPS URI.
+          return ipfsToHttps(uri);
+        } catch (err) {
+          console.warn(`Error fetching token at index ${i}:`, err);
+          return null;
+        }
+      }),
+    );
 
-    // build the listing of promises to fetch the owned token IDs
-    for (let i = 0; i < tokenBalance; i++) {
-      try {
-        const tokenIndex = await contract.methods
-          .tokenOfOwnerByIndex(address, i)
-          .call();
-        promisesForIds.push(tokenIndex);
-      } catch (err) {
-        console.warn(err);
-      }
-    }
+    // Filter out null values (where token fetch failed).
+    const validTokens = tokens.filter(Boolean);
+    console.log("Total NFTs found:", validTokens.length);
 
-    // await all promises to fetch the owned token IDs
-    const tokenIDs = (await Promise.allSettled(promisesForIds)) as {
-      status: "fulfilled" | "rejected";
-      value: number;
-    }[];
-
-    for (let i = 0; i < tokenIDs.length; i++) {
-      // add each token id to the next round of promises
-      try {
-        const uri = await contract.methods.tokenURI(tokenIDs[i].value).call();
-        const httpsUri = ipfsToHttps(uri);
-        tokens.push(httpsUri);
-        promisesForUris.push(httpsUri);
-      } catch (err) {
-        console.warn(err);
-      }
-    }
-
-    // await all promises for fetching the token URIs
-    await Promise.allSettled(promisesForUris);
-
-    console.log("Total NFTs found:", tokens?.length);
-
-    return tokens;
+    return validTokens;
   } catch (err) {
-    console.error(err);
+    console.error(`Error fetching NFTs:`, err);
     return false;
   }
 }

@@ -500,24 +500,24 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@magic-sdk/commons@^13.1.2":
-  version "13.1.2"
-  resolved "https://registry.npmjs.org/@magic-sdk/commons/-/commons-13.1.2.tgz"
-  integrity sha512-r96xA8QUcPO2uihhfbhef1JzBF1HEbYr61ZWcj1sS6SZIS4libEUstJUyf0WK+K2JVFHBfU6ONhZfa1DBlK2uA==
+"@magic-sdk/commons@^13.1.3":
+  version "13.1.3"
+  resolved "https://registry.npmjs.org/@magic-sdk/commons/-/commons-13.1.3.tgz"
+  integrity sha512-4cdQz81G/W3TjxnR1YAlKQslXr1BpyAjmv+VbhtrUzcIAJGKZXFQ8hbpkOPauK5qc+isHJPbEQ2Qj/BNn0R7Sg==
 
-"@magic-sdk/provider@^17.1.2", "@magic-sdk/provider@>=4.3.0":
-  version "17.1.2"
-  resolved "https://registry.npmjs.org/@magic-sdk/provider/-/provider-17.1.2.tgz"
-  integrity sha512-801EF92VEFm3f0BzkQZqF9qvP+l4Ky0p09kGSFYI9O60wT6G7IbUK0DC/CFcgFrrebGZHPCoAECDSc3uH/JaLA==
+"@magic-sdk/provider@^17.1.3", "@magic-sdk/provider@>=4.3.0":
+  version "17.1.3"
+  resolved "https://registry.npmjs.org/@magic-sdk/provider/-/provider-17.1.3.tgz"
+  integrity sha512-1Bhu09EQmeNtBu4LwsYxaXOtbPvDRlzyMqCOlVls3pz1O0JZNoVGuDe4RBH4nLS6+3kTIIpyh+iAz4MLaVctnA==
   dependencies:
-    "@magic-sdk/types" "^15.1.2"
+    "@magic-sdk/types" "^15.1.3"
     eventemitter3 "^4.0.4"
     web3-core "1.5.2"
 
-"@magic-sdk/types@^15.1.2", "@magic-sdk/types@>=3.1.1":
-  version "15.1.2"
-  resolved "https://registry.npmjs.org/@magic-sdk/types/-/types-15.1.2.tgz"
-  integrity sha512-CeNC7I9O5bTeObKXAuInMYDvAkxagiu+n0IcvTo23ZsmA9NZDqfmw2r5OhJTuW7XMyTt+VjH1CJORHraoC26qA==
+"@magic-sdk/types@^15.1.3", "@magic-sdk/types@>=3.1.1":
+  version "15.1.3"
+  resolved "https://registry.npmjs.org/@magic-sdk/types/-/types-15.1.3.tgz"
+  integrity sha512-ee0pIHoJkm3BX3WiunJYdQwqP0PNK46Rnelhc7RYq+pG46SuWAUGrJo2dzT7+RYJNo7dRqKNnVJ/WahPSLvkuQ==
 
 "@metamask/eth-sig-util@^4.0.0":
   version "4.0.1"
@@ -5431,20 +5431,20 @@ lru-cache@^6.0.0:
     "@next/font" "13.1.6"
     eslint "8.34.0"
     eslint-config-next "13.1.6"
-    magic-sdk "^17.1.3"
+    magic-sdk "^17.1.4"
     next "13.1.6"
     react "18.2.0"
     react-dom "18.2.0"
     web3 "^1.8.2"
 
-magic-sdk@^17.1.3:
-  version "17.1.3"
-  resolved "https://registry.npmjs.org/magic-sdk/-/magic-sdk-17.1.3.tgz"
-  integrity sha512-+Khhahtmf5CXqovPD9ge18+dvp4/c3XKae4pEuWLs1EHoly0ZNGKzYESPi1jmrak79VkC8lAHHrxm/3AGDlINA==
+magic-sdk@^17.1.4:
+  version "17.1.4"
+  resolved "https://registry.npmjs.org/magic-sdk/-/magic-sdk-17.1.4.tgz"
+  integrity sha512-VNRVIEiC+RH2l8U3XGMrJiPhTA7bpfen7cEqe25p/jCl6fPXxd9ISN1ZJN5ypj2KO8obbllY0evgkm6UgDi5zg==
   dependencies:
-    "@magic-sdk/commons" "^13.1.2"
-    "@magic-sdk/provider" "^17.1.2"
-    "@magic-sdk/types" "^15.1.2"
+    "@magic-sdk/commons" "^13.1.3"
+    "@magic-sdk/provider" "^17.1.3"
+    "@magic-sdk/types" "^15.1.3"
     localforage "^1.7.4"
 
 make-error@^1.1.1:

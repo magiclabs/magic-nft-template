@@ -1,74 +1,84 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { fetchNFTs, getUserData } from "@/lib/utils";
-import { useMagicContext } from "@/context/MagicContext";
+import { useWeb3 } from "./Web3Context";
 
+// Define custom user data type
 interface UserData {
   address?: string;
+  shortAddress?: string;
   balance?: string;
   collectibles?: string[];
   isLoggedIn?: boolean;
   loading?: boolean;
   refreshCollectibles?: boolean;
-  shortAddress?: string;
-  walletType?: string;
-  tokenIdForModal?: number | boolean;
+  tokenIdForModal?: number;
 }
 
+// Define user context type
 type UserContextType = {
   user: UserData | null;
   setUser: React.Dispatch<React.SetStateAction<UserData | undefined>> | null;
 };
 
+// Create context with default values
 const UserContext = createContext<UserContextType>({
   user: null,
   setUser: null,
 });
 
+// Custom hook to use the UserContext
 export const useUser = () => useContext(UserContext);
 
+// Provider component to wrap around components that need access to the context
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { magic, web3, contract } = useMagicContext();
+  // Get web3 and contract instances from Web3Context
+  const { web3, contract } = useWeb3();
+
+  // State to hold the user data
   const [user, setUser] = useState<UserData>();
 
+  // Fetch user data when web3 instance is available
   useEffect(() => {
-    fetchData();
-  }, [magic, web3]);
+    const fetchData = async () => {
+      if (!web3) return;
+      setUser({ loading: true });
 
-  const fetchData = async () => {
-    if (!web3) return;
-    setUser({ loading: true });
+      const account = await web3.eth.getAccounts();
 
-    const account = await web3.eth.getAccounts();
-
-    if (account.length > 0) {
-      const data = await getUserData(magic, web3);
-      setUser(data);
-    } else {
-      setUser({ loading: false });
-    }
-  };
-
-  useEffect(() => {
-    const fetchAndUpdateNFTs = async () => {
-      if (!user?.address || !user?.refreshCollectibles) return;
-
-      setUser({ ...user, refreshCollectibles: true });
-
-      try {
-        const res = await fetchNFTs(user.address, contract);
-
-        if (Array.isArray(res)) {
-          setUser({
-            ...user,
-            collectibles: res.reverse(),
-            refreshCollectibles: false,
-          });
-        }
-      } catch (error) {
-        console.error(error);
+      if (account.length > 0) {
+        const data = await getUserData(web3);
+        setUser(data);
+      } else {
+        setUser({ loading: false });
       }
     };
 
+    fetchData();
+  }, [web3]);
+
+  // Function to fetch and update NFTs for the user
+  const fetchAndUpdateNFTs = async () => {
+    if (!user?.address || !user?.refreshCollectibles) return;
+
+    setUser({ ...user, refreshCollectibles: true });
+
+    try {
+      const res = await fetchNFTs(user.address, contract);
+
+      if (Array.isArray(res)) {
+        setUser({
+          ...user,
+          collectibles: res.reverse(),
+          refreshCollectibles: false,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Fetch and update NFTs when address or refreshCollectibles state changes
+  useEffect(() => {
     fetchAndUpdateNFTs();
   }, [user?.address, user?.refreshCollectibles]);
 

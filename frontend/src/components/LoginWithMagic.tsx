@@ -1,23 +1,23 @@
-import { useUser } from "@/context/UserContext";
-import { getUserData } from "@/lib/utils";
-import { useMagicContext } from "@/context/MagicContext";
+import { useWeb3 } from "@/context/Web3Context";
+import { magic } from "@/lib/magic";
 
-export default function LoginWithMagic({ className = "" }) {
-  const { setUser } = useUser();
-  const { magic, web3 } = useMagicContext();
+export default function LoginWithMagic() {
+  const { initializeWeb3 } = useWeb3();
 
   const handleLogin = async () => {
     try {
+      // Attempt to connect with the user's wallet using Magic's UI
       await magic.wallet.connectWithUI();
-      const data = await getUserData(magic, web3);
-      setUser(data);
+      // If the wallet connection is successful, initialize web3 instance
+      await initializeWeb3();
     } catch (error) {
-      console.error(error);
+      // Log any errors that occur during the login process
+      console.error("handleLogin", error);
     }
   };
 
   return (
-    <div className={className}>
+    <div>
       <button
         onClick={handleLogin}
         className="btn inline-flex space-x-3 text-lg"

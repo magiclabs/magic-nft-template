@@ -1,6 +1,6 @@
-import { useUser } from "@/context/UserContext";
 import LoginWithMagic from "./LoginWithMagic";
 import MintNFTButton from "./MintNFTButton";
+import { useUser } from "@/context/UserContext";
 
 export default function ConnectOrMint({}) {
   const { user } = useUser();
