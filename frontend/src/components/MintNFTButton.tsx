@@ -59,37 +59,6 @@ export default function MintNFTButton({
     }
   };
 
-  // const handleMint = async () => {
-  //   setLoading(true);
-
-  //   try {
-  //     const res = await requestMintNFT(user.address, contract);
-  //     if (!res) {
-  //       console.log("Mint failed (or was canceled by the user).");
-  //       return;
-  //     }
-  //     console.log("Mint complete!");
-  //     // update the `user.refreshCollectibles` values to auto reload the owned NFTs
-  //     setUser({
-  //       ...user,
-  //       refreshCollectibles: true,
-  //       tokenIdForModal: res?.tokenId, // track the id to show the success modal
-  //     });
-
-  //     console.log("Updating the user's balance...");
-
-  //     // get and set the user's new balance after the mint
-  //     const wei = await web3.eth.getBalance(user.address);
-  //     const balance = web3.utils.fromWei(wei);
-
-  //     setUser({ ...user, balance });
-  //   } catch (err) {
-  //     console.warn(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   return (
     <div className={className}>
       <button
