@@ -20,7 +20,10 @@ export default function AppHeader({}) {
     try {
       // Try to show the magic wallet UI
       // This will only work if the user has connected via a magic wallet, not via browser wallet (e.g. MetaMask)
-      await magic.wallet.showUI();
+      /// @ts-ignore
+      magic.wallet.showUI().on("disconnect", () => {
+        disconnect();
+      });
     } catch (error) {
       console.error("openWallet", error);
       // for non-magic wallets, copy the full wallet address to the clipboard
@@ -36,6 +39,9 @@ export default function AppHeader({}) {
 
     // Clear the user state
     setUser(null);
+
+    // Re-initialize web3 instance to ensure correct provider is used
+    await initializeWeb3();
   };
 
   // Function to handle login with Magic Connect

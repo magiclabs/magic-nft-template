@@ -14,6 +14,7 @@ type Web3ContextType = {
   web3: Web3 | null;
   initializeWeb3: () => void;
   contract: any;
+  isAccountChanged: boolean;
 };
 
 // Define contract address
@@ -24,6 +25,7 @@ const Web3Context = createContext<Web3ContextType>({
   web3: null,
   initializeWeb3: () => {},
   contract: null,
+  isAccountChanged: false,
 });
 
 // Custom hook to use the Web3 context
@@ -34,6 +36,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   // State variable to hold an instance of Web3 and the contract
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [contract, setContract] = useState<any | null>(null);
+  const [isAccountChanged, setIsAccountChanged] = useState<boolean>(false);
 
   // Initialize Web3
   const initializeWeb3 = useCallback(async () => {
@@ -43,6 +46,11 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
 
       // Create a new instance of Web3 with the provider
       const web3Instance = new Web3(provider);
+
+      // Subscribe to accounts changed event
+      provider.on("accountsChanged", async () => {
+        setIsAccountChanged((state) => !state);
+      });
 
       // Create a contract instance
       const contractInstance = new web3Instance.eth.Contract(
@@ -69,6 +77,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         web3,
         initializeWeb3,
         contract,
+        isAccountChanged,
       }}
     >
       {children}
