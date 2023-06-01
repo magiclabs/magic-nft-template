@@ -45,6 +45,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUser({ loading: true });
 
       const account = await web3.eth.getAccounts();
+      console.log(account);
 
       if (account.length > 0) {
         const data = await getUserData(web3);

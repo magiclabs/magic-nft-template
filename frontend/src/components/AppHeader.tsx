@@ -21,7 +21,7 @@ export default function AppHeader({}) {
       // Try to show the magic wallet UI
       // This will only work if the user has connected via a magic wallet, not via browser wallet (e.g. MetaMask)
       /// @ts-ignore
-      magic.wallet.showUI().on("disconnect", () => {
+      await magic.wallet.showUI().on("disconnect", () => {
         disconnect();
       });
     } catch (error) {

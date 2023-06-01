@@ -52,6 +52,15 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         setIsAccountChanged((state) => !state);
       });
 
+      // Subscribe to chain changed event
+      provider.on("chainChanged", async () => {
+        const chainId = await web3Instance.eth.getChainId();
+        const sepoliaChainId = 11155111;
+        if (chainId !== sepoliaChainId) {
+          alert("Please switch to the Sepolia network");
+        }
+      });
+
       // Create a contract instance
       const contractInstance = new web3Instance.eth.Contract(
         contractABI as any,
