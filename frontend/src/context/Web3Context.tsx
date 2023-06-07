@@ -18,7 +18,7 @@ type Web3ContextType = {
 };
 
 // Define contract address
-const CONTRACT_ADDRESS = "0xf4759a2bf9a8b6dc8318efc53e6e27b452c42310";
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
 // Create the context with default values
 const Web3Context = createContext<Web3ContextType>({
