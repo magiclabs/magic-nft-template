@@ -4,7 +4,7 @@ import { Magic } from "magic-sdk";
 const createMagic = () => {
   return (
     typeof window !== "undefined" &&
-    new Magic("pk_live_51FA35CBAD23D818", {
+    new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY, {
       network: {
         rpcUrl: "https://rpc2.sepolia.org",
         chainId: 11155111,
