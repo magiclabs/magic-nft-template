@@ -1,17 +1,16 @@
 import { Magic } from "magic-sdk";
 
-// const customNodeOptions = {
-//   rpcUrl: "https://polygon-rpc.com", // your ethereum, polygon, or optimism mainnet/testnet rpc URL
-//   chainId: 137,
-// };
-
-const createMagic = (key) => {
+// Initialize the Magic instance
+const createMagic = () => {
   return (
     typeof window !== "undefined" &&
-    new Magic(key, {
-      network: "goerli", // or "mainnet" or customNodeOptions
+    new Magic("pk_live_51FA35CBAD23D818", {
+      network: {
+        rpcUrl: "https://rpc2.sepolia.org",
+        chainId: 11155111,
+      },
     })
   );
 };
 
-export const magic = createMagic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY);
+export const magic = createMagic();

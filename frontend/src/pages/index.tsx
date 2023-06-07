@@ -1,6 +1,4 @@
-import Layout from "@/components/layout";
-import { useContext } from "react";
-import { UserContext } from "@/lib/UserContext";
+import Layout from "@/components/Layout";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
 import CollectibleCard from "@/components/CollectibleCard";
@@ -16,8 +14,6 @@ const tokens = [
 ];
 
 export default function Home() {
-  const [user, setUser] = useContext(UserContext);
-
   return (
     <Layout title="Home" className="">
       <section className="hero">

@@ -1,34 +1,39 @@
+import { useState } from "react";
 import Link from "next/link";
-import { UserContext } from "@/lib/UserContext";
-import { useContext, useState } from "react";
+import { useUser } from "@/context/UserContext";
 
 export default function FaucetSection({}) {
-  const [user] = useContext(UserContext);
+  const { user } = useUser();
   const [copyState, setCopyState] = useState({
     copied: false,
     text: "Copy wallet address",
   });
 
-  // only show this component when a user is connected
-  if (!user?.address) return <></>;
-  // (optional) only show if the user.address is low on balance
-  // else if (!user?.balance >= 0.01) return <></>;
+  // Don't render the component if there is no connected user
+  if (!user?.address) return null;
 
-  const handleClick = () => {
-    if (!user?.address) return alert("Please connect!");
+  const handleClick = async () => {
+    try {
+      // Attempt to copy the user's wallet address to the clipboard
+      await navigator.clipboard.writeText(user?.address);
 
-    navigator.clipboard.writeText(user?.address).then((res) => {
+      // Update the state to reflect that the text has been copied
+      setCopyState({ copied: true, text: "Copied!" });
+
+      // After 1 second, reset the copyState to its initial state
       setTimeout(() => {
         setCopyState({ copied: false, text: "Copy wallet address" });
-      }, 5000);
-      setCopyState({ copied: true, text: "Copied!" });
-    });
-  }
+      }, 1000);
+    } catch (error) {
+      // Log any errors that occur during the copying process
+      console.error("Failed to copy text: ", error);
+    }
+  };
 
   return (
     <section className="mx-auto max-w-lg space-y-3">
       <div>
-        <p>Add free ETH to your wallet using Goerli testnet.</p>
+        <p>Add free ETH to your wallet using Sepolia testnet.</p>
         <p className="text-sm text-gray-500">
           *You will need to create an account using Alchemy
         </p>
@@ -45,12 +50,12 @@ export default function FaucetSection({}) {
         </button>
 
         <Link
-          href={"https://goerlifaucet.com/"}
+          href={"https://sepoliafaucet.com/"}
           target={"_blank"}
           rel={"noreferrer"}
           className="btn-light block w-full"
         >
-          Open Goerli ETH faucet
+          Open Sepolia ETH faucet
         </Link>
       </div>
     </section>

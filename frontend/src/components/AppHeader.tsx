@@ -1,53 +1,63 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { UserContext } from "@/lib/UserContext";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import AppNavigation from "./AppNavigation";
-
 import styles from "@/styles/Nav.module.css";
-
+import AppNavigation from "./AppNavigation";
+import { useUser } from "@/context/UserContext";
+import { useWeb3 } from "@/context/Web3Context";
 import { magic } from "@/lib/magic";
-import { getUserData } from "@/lib/utils";
 
 export default function AppHeader({}) {
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useUser();
+  const { initializeWeb3 } = useWeb3();
+
+  // Reference to the navigation menu
   const navMenuRef = useRef(null);
 
-  function openWallet() {
-    magic.wallet.getInfo().then((walletInfo) => {
-      if (walletInfo?.walletType == "magic") {
-        // NOTE: this will only work if the user has connected via a
-        // magic wallet, not via browser wallet (e.g. MetaMask)
-        magic.wallet.showUI().catch((err) => console.error(err));
-      } else {
-        // for non-magic wallets, copy the full wallet address to the clipboard
-        navigator.clipboard
-          .writeText(user?.address)
-          .then((res) =>
-            alert(`ETH wallet address copied to clipboard: ${user?.address}`),
-          );
-      }
-    });
-  }
+  // Function to handle wallet opening
+  const openWallet = async () => {
+    try {
+      // Try to show the magic wallet UI
+      // This will only work if the user has connected via a magic wallet, not via browser wallet (e.g. MetaMask)
+      /// @ts-ignore
+      await magic.wallet.showUI().on("disconnect", () => {
+        disconnect();
+      });
+    } catch (error) {
+      console.error("openWallet", error);
+      // for non-magic wallets, copy the full wallet address to the clipboard
+      await navigator.clipboard.writeText(user?.address);
+      alert(`ETH wallet address copied to clipboard: ${user?.address}`);
+    }
+  };
 
-  function disconnect() {
-    // disconnect from magic
-    magic.wallet.disconnect();
+  // Function to handle disconnection
+  const disconnect = async () => {
+    // Disconnect from magic
+    await magic.user.logout();
 
-    // clear the state
-    setUser({});
-  }
+    // Clear the user state
+    setUser(null);
 
-  function loginWithConnect() {
-    magic.wallet
-      .connectWithUI()
-      .then((res) => {
-        getUserData().then((data) => setUser(data));
-      })
-      .catch((err) => console.error(err));
-  }
+    // Re-initialize web3 instance to ensure correct provider is used
+    await initializeWeb3();
+  };
 
+  // Function to handle login with Magic Connect
+  const loginWithConnect = async () => {
+    try {
+      // Attempt to connect with the user's wallet using Magic's UI
+      await magic.wallet.connectWithUI();
+      // If the wallet connection is successful, initialize web3 instance
+      await initializeWeb3();
+    } catch (error) {
+      // Log any errors that occur during the login process
+      console.error("loginWithConnect:", error);
+    }
+  };
+
+  // Function to handle clicks outside of the navbar
   const handleClickOutside = useCallback(
     (event) => {
       if (
@@ -61,10 +71,12 @@ export default function AppHeader({}) {
     [navbarOpen],
   );
 
+  // Function to handle navbar closing
   const handleClose = () => {
     setNavbarOpen(!navbarOpen);
   };
 
+  // Effect to handle click events for closing the navbar when clicking outside of it
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 

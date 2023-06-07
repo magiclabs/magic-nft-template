@@ -1,50 +1,52 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/lib/UserContext";
-import { requestMintNFT } from "@/lib/utils";
-import { contract, web3 } from "@/lib/web3";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-
+import Link from "next/link";
 import styles from "@/styles/Modal.module.css";
 import CollectibleCard from "./CollectibleCard";
-import Link from "next/link";
+import { useUser } from "@/context/UserContext";
+import { useWeb3 } from "@/context/Web3Context";
 
 export default function Modal() {
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useUser();
+  const { contract } = useWeb3();
   const [showModal, setShowModal] = useState(false);
   const [tokenURI, setTokenURI] = useState("");
 
   useEffect(() => {
-    // // do nothing if the user is not logged in
-    if (!user?.address || !user?.tokenIdForModal) return;
+    // Define an async function within the effect to handle the fetching of the token URI
+    const fetchTokenURI = async () => {
+      // Exit the function if there's no tokenIdForModal in the user state
+      if (!user?.tokenIdForModal) return;
 
-    if (user?.tokenIdForModal) {
-      setUser({ ...user, tokenIdForModal: false });
+      // Reset the tokenIdForModal in the user state to null
+      setUser({
+        ...user,
+        tokenIdForModal: null,
+      });
 
-      (async () => {
-        await contract.methods
-          .tokenURI(user?.tokenIdForModal)
-          .call()
-          .then((uri) => {
-            console.log(`Token ID ${uri.value} has URI of ${uri}`);
+      try {
+        // Call the tokenURI method in the contract with the tokenIdForModal
+        const uri = await contract.methods
+          .tokenURI(user.tokenIdForModal)
+          .call();
+        console.log(`Token ID ${user.tokenIdForModal} has URI of ${uri}`);
 
-            setTokenURI(uri);
-            setShowModal(true);
-            console.log("show the minted modal");
+        // Set the fetched URI in the local state
+        setTokenURI(uri);
 
-            return uri;
-          })
-          .catch((err) => console.warn(err));
-      })();
+        // Show the modal
+        setShowModal(true);
+        console.log("show the minted modal");
+      } catch (error) {
+        // Log any errors
+        console.warn("fetchTokenURI", error);
+      }
+    };
 
-    }
-  }, [
-    user?.address,
-    user?.refreshCollectibles,
-    user?.collectibles,
-    user?.tokenIdForModal,
-  ]);
+    fetchTokenURI();
+  }, [user?.tokenIdForModal]);
 
-  if (!showModal) return <></>;
+  if (!showModal) return null;
 
   return (
     <>
@@ -64,11 +66,11 @@ export default function Modal() {
 
             <div className={styles.content}>
               <p className="text-center text-lg">You have minted a new NFT!</p>
-              {tokenURI &&
+              {tokenURI && (
                 <div className="mx-auto w-64">
                   <CollectibleCard tokenURI={tokenURI} />
                 </div>
-              }
+              )}
             </div>
 
             <div

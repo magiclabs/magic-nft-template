@@ -1,13 +1,13 @@
-import Layout from "@/components/layout";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/lib/UserContext";
+import Layout from "@/components/Layout";
+import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import LoginWithMagic from "@/components/LoginWithMagic";
 import MerchForm from "@/components/MerchForm";
 import Image from "next/image";
 
 export default function CollectiblesPage() {
-  const [user, setUser] = useContext(UserContext);
+  const { user } = useUser();
 
   // initialize the state used to track the current page's data
   const [loading, setLoading] = useState(user?.refreshCollectibles);

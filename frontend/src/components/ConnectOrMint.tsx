@@ -1,11 +1,9 @@
-import { useContext } from "react";
-import { UserContext } from "@/lib/UserContext";
-
 import LoginWithMagic from "./LoginWithMagic";
 import MintNFTButton from "./MintNFTButton";
+import { useUser } from "@/context/UserContext";
 
 export default function ConnectOrMint({}) {
-  const [user, setUser] = useContext(UserContext);
+  const { user } = useUser();
 
   return (
     <section className="space-x-4">
