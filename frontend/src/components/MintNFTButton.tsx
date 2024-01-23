@@ -17,7 +17,7 @@ export default function MintNFTButton({
     // Fetch the user's balance in wei
     const wei = await web3.eth.getBalance(user.address);
     // Convert the balance from wei to Ether
-    const balance = web3.utils.fromWei(wei);
+    const balance = web3.utils.fromWei(wei, "ether");
     // Update the user's balance in the state
     setUser({ ...user, balance });
   };

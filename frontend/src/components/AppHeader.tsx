@@ -44,10 +44,10 @@ export default function AppHeader({}) {
     await initializeWeb3();
   };
 
-  // Function to handle login with Magic Connect
-  const loginWithConnect = async () => {
+  // Function to handle login with Magic
+  const loginWithMagic = async () => {
     try {
-      // Attempt to connect with the user's wallet using Magic's UI
+      // Attempt to connect with the user's wallet using Magic's login UI
       await magic.wallet.connectWithUI();
       // If the wallet connection is successful, initialize web3 instance
       await initializeWeb3();
@@ -172,7 +172,7 @@ export default function AppHeader({}) {
                 </Link>
 
                 <button
-                  onClick={() => loginWithConnect()}
+                  onClick={() => loginWithMagic()}
                   type="button"
                   className="btn"
                 >
