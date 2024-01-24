@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { requestMintNFT } from "@/lib/utils";
 import { AnimatedLoader } from "./AnimatedLoader";
 import { useUser } from "@/context/UserContext";
@@ -13,14 +13,16 @@ export default function MintNFTButton({
   const [loading, setLoading] = useState(false);
 
   // Function to update the user's balance
-  const updateBalance = async () => {
+  const updateBalance = useCallback(async () => {
     // Fetch the user's balance in wei
     const wei = await web3.eth.getBalance(user.address);
     // Convert the balance from wei to Ether
     const balance = web3.utils.fromWei(wei, "ether");
     // Update the user's balance in the state
-    setUser({ ...user, balance });
-  };
+    setUser((prev) => {
+      return { ...prev, balance };
+    });
+  }, [web3]);
 
   const handleMint = async () => {
     // Set loading state to true
@@ -40,10 +42,12 @@ export default function MintNFTButton({
       console.log("Mint complete!");
 
       // Update the user's state to refresh the collectibles and set the new token ID
-      setUser({
-        ...user,
-        refreshCollectibles: true,
-        tokenIdForModal: res.tokenId,
+      setUser((prev) => {
+        return {
+          ...prev,
+          refreshCollectibles: true,
+          tokenIdForModal: res.tokenId,
+        };
       });
 
       // Log balance update

@@ -47,22 +47,22 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchAndUpdateNFTs = useCallback(async () => {
     if (!user?.address || !user?.refreshCollectibles) return;
 
-    setUser({ ...user, refreshCollectibles: true });
-
     try {
       const res = await fetchNFTs(user.address, contract);
 
       if (Array.isArray(res)) {
-        setUser({
-          ...user,
-          collectibles: res.reverse(),
-          refreshCollectibles: false,
+        setUser((prev) => {
+          return {
+            ...prev,
+            collectibles: res.reverse(),
+            refreshCollectibles: false,
+          };
         });
       }
     } catch (error) {
       console.error(error);
     }
-  }, [user?.address, user?.refreshCollectibles]);
+  }, [user?.address, user?.refreshCollectibles, setUser]);
 
   // Fetch user data when web3 instance is available
   useEffect(() => {
@@ -88,7 +88,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   // Fetch and update NFTs when address or refreshCollectibles state changes
   useEffect(() => {
     fetchAndUpdateNFTs();
-  }, [user?.address]);
+  }, [user?.address, user?.refreshCollectibles]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

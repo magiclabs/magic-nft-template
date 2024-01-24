@@ -19,9 +19,11 @@ export default function Modal() {
       if (!user?.tokenIdForModal) return;
 
       // Reset the tokenIdForModal in the user state to null
-      setUser({
-        ...user,
-        tokenIdForModal: null,
+      setUser((prev) => {
+        return {
+          ...prev,
+          tokenIdForModal: null,
+        };
       });
 
       try {
@@ -79,7 +81,9 @@ export default function Modal() {
               <button
                 className="btn btn-light mx-auto w-full"
                 type="button"
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                }}
               >
                 Close
               </button>
