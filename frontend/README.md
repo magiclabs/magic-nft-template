@@ -5,21 +5,19 @@ This guide is meant to walk you through how
 customize and build on top of it to create your own project.
 
 [Magic](https://magic.link) makes it super simple to spin up secure,
-non-custodial wallets for users while also supporting third party wallets. This
-NFT Starter Kit illustrates how to integrate
-[Magic Connect](https://magic.link/connect) with a basic NFT site that allows
+non-custodial wallets for users. This NFT Starter Kit illustrates how to integrate
+[Magic's Dedicated Wallet](https://magic.link/docs/wallets/wallet-types#dedicated-wallet-white-labeled-wallets) with a basic NFT site that allows
 users to mint and view NFTs from a particular NFT collection. The guide below
-walks through the Magic Connect integration as well as the remaining items that
+walks through the Dedicated Wallet integration as well as some items that
 may be new for developers just getting into Web3 (e.g. connecting to the
 Ethereum network, reading data from the network, submitting transactions, etc.)
 
-## Magic Connect
+## Magic Dedicated Wallet
 
-[Magic Connect](https://magic.link/connect) is a seamless, single sign-on
-solution for Web3. It provides simple onboarding, a unified wallet UX, secure
+[Magic's Dedicated Wallet](https://magic.link/docs/wallets/wallet-types#dedicated-wallet-white-labeled-wallets) is a seamless authentication and wallet solution for Web3. It provides simple onboarding, a unified wallet UX, secure
 transaction and wallet management, and streamlined on-ramp payments.
 
-All of this backed by Magic's Delegated Key Management system. It's a
+All of this is backed by Magic's Delegated Key Management system. It's a
 non-custodial solution to wallet management that's both more secure and more
 user-friendly than traditional wallet solutions. This guide doesn't cover the
 underlying technology, but it's worth reading the
@@ -28,19 +26,19 @@ if you're interested.
 
 ### The Magic SDK
 
-The Magic SDK provides all the developer tools you need to get Magic Connect up
+The Magic SDK provides all the developer tools you need to get Magic up
 and running.
 
 In `package.json`, you'll notice that this site has the `magic-sdk` JS package
 listed as a dependency. Once the SDK is installed, you simply need to create an
 instance of `Magic` and use the appropriate methods from the
-[Wallet module](https://magic.link/docs/connect/wallet-api-reference/javascript-client-sdk#wallet-module-methods).
+[Wallet module](https://magic.link/docs/api/client-side-sdks/web#wallet-module).
 
 #### Create your `Magic` instance
 
 The `src/lib/magic.ts` file shows the first step to working with the Magic SDK:
 create an instance of `Magic` using an
-[API Key](https://magic.link/docs/connect/getting-started/quickstart#api-keys)
+[API Key](https://magic.link/docs/home/quickstart/cli#add-your-api-key)
 from your Magic Dashboard and a config object. This site uses the config object
 to set the network to `Sepolia`, an Ethereum test network that we'll be using
 throughout this guide.
@@ -67,12 +65,12 @@ export const magic = createMagic();
 #### Use the Wallet module
 
 The remainder of the app uses the
-[Wallet module](https://magic.link/docs/connect/wallet-api-reference/javascript-client-sdk#wallet-module-methods)
-`magic.wallet`. Specifically, the following three methods:
+[Wallet module](https://magic.link/docs/api/client-side-sdks/web#wallet-module)
+`magic.wallet` and the [User module](https://magic.link/docs/api/client-side-sdks/web#user-module) `magic.user`. Specifically, the following three methods:
 
-1. [`connectWithUI()`](<https://magic.link/docs/connect/wallet-api-reference/javascript-client-sdk#connectwithui()>) -
-   displays the Magic Connect UI for sign up and authentication. This is called
-   when the user clicks the button to connet or sign up. You can see example
+1. [`magic.wallet.connectWithUI()`](https://magic.link/docs/api/client-side-sdks/web#connectwithui) -
+   displays the [Magic Login UI](https://magic.link/docs/authentication/features/login-ui) for sign-up and authentication. This is called
+   when the user clicks the button to connect or sign up. You can see example
    usage in `src/components/AppHeader.tsx` and
    `src/components/LoginWithMagic.tsx`.
 
@@ -80,23 +78,18 @@ The remainder of the app uses the
    await magic.wallet.connectWithUI();
    ```
 
-2. [`showUI()`](<https://magic.link/docs/connect/wallet-api-reference/javascript-client-sdk#showui()>) -
+2. [`magic.wallet.showUI()`](https://magic.link/docs/api/client-side-sdks/web#showui) -
    once you're connected, you can use this method to show the wallet UI. User
-   interaction is then handled by the SDK. Note that this _only_ works for Magic
-   Connect. If you support other wallets and the user connects with one of
-   those, this method will throw an error.
+   interaction is then handled by the SDK.
 
    ```jsx
-   await magic.wallet.showUI().on("disconnect", () => {
-     disconnect();
-   });
+   await magic.wallet.showUI()
    ```
 
-3. [`disconnect()`](<https://magic.link/docs/connect/wallet-api-reference/javascript-client-sdk#disconnect()>) -
-   disconnects from _any connected wallet_, Magic Connect or otherwise.
+3. [`magic.user.logout()`](https://magic.link/docs/api/client-side-sdks/web#logout) - disconnects from _any connected wallet_ and logs out the user.
 
    ```jsx
-   await magic.wallet.disconnect();
+   await magic.user.logout();
    ```
 
 ## Interact with the blockchain
@@ -105,11 +98,9 @@ After you have initialized your Magic object, you can send transactions and read
 from your chosen blockchain network using popular web3 libraries like `web3.js`
 or `ethers.js`. In this demo, we are using the Sepolia test network.
 
-You can see all of the EVM RPC methods that Magic supports
-[here](https://magic.link/docs/connect/wallet-api-reference/javascript-client-sdk#evm-rpc-methods).
-In this project, we use the following methods:
+While this isn't a comprehensive list of supported RPC methods, we use the following in this project:
 
-- `getAccounts` - returns a list of addresses owned by client. Typically, this
+- `getAccounts` - returns a list of addresses owned by the client. Typically, this
   is a single address representing the connected user's address.
 - `getBalance` - returns the balance of the given address's account
 - `estimateGas` - generates and returns an estimate of how much gas is necessary
@@ -162,7 +153,7 @@ const [address] = await web3.eth.getAccounts();
 
 // Get the user's balance
 const balanceInWei = await web3.eth.getBalance(address);
-const balance = web3.utils.fromWei(balanceInWei);
+const balance = web3.utils.fromWei(balanceInWei, "ether");
 ```
 
 #### Call contract methods
@@ -174,7 +165,7 @@ methods.
 Contract methods are written such that the developer marks those that are
 read-only versus those that mutate data in some way. Any methods that involve
 writing data require a transaction, whereas read-only methods can be called
-without a transaction (and therefore no signature required from the user).
+without a transaction (and therefore no signature is required from the user).
 
 When calling read-only methods, simply use dot syntax to call the method,
 followed by `.call()`. For example, in `lib/utils.ts` we get the user's balance
@@ -192,8 +183,8 @@ transaction cost, called gas.
 
 Then you issue the actual transaction by calling the same method name and adding
 `.send`. `send` lets you add configuration options. We add the user's address
-and the estimated gas. Users connected to Magic Connect will have their
-transaction signed by the Magic SDK, while users who chose to connect with other
+and the estimated gas. Users connected to a Magic wallet will have their
+transaction signed by the Magic SDK, while users who choose to connect with other
 supported wallets will be prompted to sign using that wallet's normal UI.
 
 The return value will be a transaction receipt that you can use to get events
@@ -256,7 +247,7 @@ it mentions:
 - `NEXT_PUBLIC_CONTRACT_ADDRESS` - the address of the NFT contract you want the
   site to use for minting NFTs. You can use ours
   (`0xf4759a2bf9a8b6dc8318efc53e6e27b452c42310`) for testing on the Sepolia
-  testnet if you'd like, but eventually you should replace it with your own
+  testnet if you'd like, but eventually, you should replace it with your own
   contract address.
 
 With the environment variables set, you can run the development server:

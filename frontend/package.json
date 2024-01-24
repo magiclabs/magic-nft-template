@@ -9,14 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "13.1.6",
+    "@next/font": "13.4.2",
+    "@types/web3": "^1.2.2",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
-    "magic-sdk": "^17.1.4",
-    "next": "13.1.6",
+    "magic-sdk": "^22.0.0",
+    "next": "13.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "web3": "^1.8.2"
+    "web3": "^4.4.0"
   },
   "devDependencies": {
     "@types/react": "18.0.28",

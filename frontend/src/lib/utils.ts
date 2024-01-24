@@ -11,7 +11,7 @@ export async function getUserData(web3) {
 
     // Get the user's balance
     const balanceInWei = await web3.eth.getBalance(address);
-    const balance = web3.utils.fromWei(balanceInWei);
+    const balance = web3.utils.fromWei(balanceInWei, "ether");
 
     // Truncate the user's address for display purposes
     const shortAddress = `${address.substring(0, 5)}...${address.substring(
@@ -77,9 +77,8 @@ export async function fetchNFTs(address, contract) {
     // Get the total count of tokens owned by the `address`.
     const tokenBalance = await contract.methods.balanceOf(address).call();
     console.log(`Total NFTs owned: ${tokenBalance}`);
-
     const tokens = await Promise.all(
-      Array.from({ length: tokenBalance }, async (_, i) => {
+      Array.from({ length: Number(tokenBalance) }, async (_, i) => {
         try {
           // Fetch the owned token ID.
           const tokenId = await contract.methods

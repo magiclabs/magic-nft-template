@@ -56,7 +56,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       provider.on("chainChanged", async () => {
         const chainId = await web3Instance.eth.getChainId();
         const sepoliaChainId = 11155111;
-        if (chainId !== sepoliaChainId) {
+        if (Number(chainId) !== sepoliaChainId) {
           alert("Please switch to the Sepolia network");
         }
       });
@@ -78,7 +78,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   // Effect to initialize Web3 when the component mounts
   useEffect(() => {
     initializeWeb3();
-  }, []);
+  }, [initializeWeb3]);
 
   return (
     <Web3Context.Provider
