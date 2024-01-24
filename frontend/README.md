@@ -66,9 +66,9 @@ export const magic = createMagic();
 
 The remainder of the app uses the
 [Wallet module](https://magic.link/docs/api/client-side-sdks/web#wallet-module)
-`magic.wallet`. Specifically, the following three methods:
+`magic.wallet` and the [User module](https://magic.link/docs/api/client-side-sdks/web#user-module) `magic.user`. Specifically, the following three methods:
 
-1. [`connectWithUI()`](https://magic.link/docs/api/client-side-sdks/web#connectwithui) -
+1. [`magic.wallet.connectWithUI()`](https://magic.link/docs/api/client-side-sdks/web#connectwithui) -
    displays the [Magic Login UI](https://magic.link/docs/authentication/features/login-ui) for sign-up and authentication. This is called
    when the user clicks the button to connect or sign up. You can see example
    usage in `src/components/AppHeader.tsx` and
@@ -78,20 +78,18 @@ The remainder of the app uses the
    await magic.wallet.connectWithUI();
    ```
 
-2. [`showUI()`](https://magic.link/docs/api/client-side-sdks/web#showui) -
+2. [`magic.wallet.showUI()`](https://magic.link/docs/api/client-side-sdks/web#showui) -
    once you're connected, you can use this method to show the wallet UI. User
    interaction is then handled by the SDK.
 
    ```jsx
-   await magic.wallet.showUI().on("disconnect", () => {
-     disconnect();
-   });
+   await magic.wallet.showUI()
    ```
 
-3. `disconnect()` - disconnects from _any connected wallet_.
+3. [`magic.user.logout()`](https://magic.link/docs/api/client-side-sdks/web#logout) - disconnects from _any connected wallet_ and logs out the user.
 
    ```jsx
-   await magic.wallet.disconnect();
+   await magic.user.logout();
    ```
 
 ## Interact with the blockchain

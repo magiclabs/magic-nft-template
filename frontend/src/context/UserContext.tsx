@@ -1,4 +1,10 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useCallback,
+} from "react";
 import { fetchNFTs, getUserData } from "@/lib/utils";
 import { useWeb3 } from "./Web3Context";
 
@@ -37,6 +43,27 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   // State to hold the user data
   const [user, setUser] = useState<UserData>();
 
+  // Function to fetch and update NFTs for the user
+  const fetchAndUpdateNFTs = useCallback(async () => {
+    if (!user?.address || !user?.refreshCollectibles) return;
+
+    setUser({ ...user, refreshCollectibles: true });
+
+    try {
+      const res = await fetchNFTs(user.address, contract);
+
+      if (Array.isArray(res)) {
+        setUser({
+          ...user,
+          collectibles: res.reverse(),
+          refreshCollectibles: false,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [contract, user]);
+
   // Fetch user data when web3 instance is available
   useEffect(() => {
     const fetchData = async () => {
@@ -58,31 +85,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     fetchData();
   }, [web3, isAccountChanged]);
 
-  // Function to fetch and update NFTs for the user
-  const fetchAndUpdateNFTs = async () => {
-    if (!user?.address || !user?.refreshCollectibles) return;
-
-    setUser({ ...user, refreshCollectibles: true });
-
-    try {
-      const res = await fetchNFTs(user.address, contract);
-
-      if (Array.isArray(res)) {
-        setUser({
-          ...user,
-          collectibles: res.reverse(),
-          refreshCollectibles: false,
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   // Fetch and update NFTs when address or refreshCollectibles state changes
   useEffect(() => {
     fetchAndUpdateNFTs();
-  }, [user?.address, user?.refreshCollectibles]);
+  }, [user?.address, user?.refreshCollectibles, fetchAndUpdateNFTs]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
