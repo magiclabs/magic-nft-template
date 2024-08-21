@@ -1,0 +1,15 @@
+# Ensure we do not allow all domains for image optimization,
+# which will lead to an XSS security vulnerability.
+name: NextJS Image Domain Check
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  call_nextjs_image_regex:
+    uses: magiclabs/gha-reusable-workflows/.github/workflows/forbidden_string_check.yml@master
+    with:
+      file_extensions: '.js,.ts'
+      regex_pattern: "domains:\\s*\\[\\s*\\\"\\*\\\"\\s*\\]"
